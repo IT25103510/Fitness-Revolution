@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Trainers – Fitness Revolution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --lime: #c8f000; --lime-dim: rgba(200,240,0,0.12); --lime-border: rgba(200,240,0,0.3);
+            --bg: #0a0a0a; --surface: #141414; --surface2: #1c1c1c; --border: rgba(255,255,255,0.07);
+            --text: #f0f0f0; --muted: #666;
+            --red: #ef4444; --yellow: #f59e0b; --green: #22c55e; --purple: #a855f7; --blue: #3b82f6;
+        }
+        body { background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; min-height: 100vh; }
+        .marquee-bar { background: var(--lime); color: #000; font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 0.12em; padding: 7px 0; overflow: hidden; white-space: nowrap; }
+        .marquee-inner { display: inline-block; animation: marquee 24s linear infinite; }
+        @keyframes marquee { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
+        .navbar { display: flex; align-items: center; gap: 1rem; padding: 0 2rem; height: 60px; background: rgba(10,10,10,0.95); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+        .navbar-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.08em; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+        .brand-dot { color: var(--lime); }
+        .admin-badge { font-size: 0.72rem; font-weight: 600; color: var(--red); background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); padding: 3px 10px; border-radius: 20px; letter-spacing: 0.05em; }
+        .nav-links { display: flex; gap: 0.2rem; margin-left: auto; align-items: center; }
+        .nav-links a { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 6px 14px; border-radius: 4px; transition: color 0.2s, background 0.2s; }
+        .nav-links a:hover { color: var(--lime); background: var(--lime-dim); }
+        .nav-links a.active { color: var(--lime); background: var(--lime-dim); border-bottom: 2px solid var(--lime); }
+        .nav-links a.logout { color: var(--red) !important; }
+        .nav-links a.logout:hover { background: rgba(239,68,68,0.1); }
+        .container { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem; }
+        .section-heading { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.06em; color: #fff; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+        .section-heading span { color: var(--lime); }
+        .section-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .stats-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.1rem 1rem; text-align: center; position: relative; overflow: hidden; transition: border-color 0.2s; }
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--lime); transform: scaleX(0); transition: transform 0.3s; }
+        .stat-card:hover { border-color: var(--lime-border); }
+        .stat-card:hover::before { transform: scaleX(1); }
+        .stat-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+        .stat-value { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; line-height: 1; }
+        .c-green { color: var(--green); } .c-yellow { color: var(--yellow); } .c-red { color: var(--red); } .c-blue { color: var(--blue); } .c-purple { color: var(--purple); }
+        .two-col { display: grid; grid-template-columns: 420px 1fr; gap: 1.5rem; }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1.5rem; }
+        .card + .card { margin-top: 1rem; }
+        .card-title { display: flex; align-items: center; gap: 0.5rem; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.08em; color: var(--lime); margin-bottom: 1.2rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+        .form-group { margin-bottom: 0.85rem; }
+        .form-label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+        .form-control { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 9px 13px; color: var(--text); font-family: 'Barlow', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+        .form-control:focus { border-color: var(--lime); }
+        .form-control::placeholder { color: var(--muted); }
+        select.form-control option { background: var(--surface2); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 20px; border-radius: 4px; font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.08em; cursor: pointer; border: none; transition: all 0.2s; text-decoration: none; }
+        .btn-primary { background: var(--lime); color: #000; }
+        .btn-primary:hover { background: #d4f500; transform: translateY(-1px); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+        .btn-outline:hover { border-color: var(--lime); color: var(--lime); }
+        .btn-full { width: 100%; }
+        .search-bar { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+        .search-bar .form-control { flex: 1; }
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        thead th { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+        tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s; }
+        tbody tr:hover { background: rgba(255,255,255,0.03); }
+        tbody td { padding: 10px 12px; font-size: 0.85rem; vertical-align: middle; }
+        .avatar { width: 32px; height: 32px; background: var(--lime-dim); border: 1px solid var(--lime-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; color: var(--lime); flex-shrink: 0; }
+        .member-cell { display: flex; align-items: center; gap: 9px; }
+        .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
+        .badge-available   { background: rgba(34,197,94,0.12);  color: var(--green);  border: 1px solid rgba(34,197,94,0.3); }
+        .badge-unavailable { background: rgba(239,68,68,0.12);  color: var(--red);    border: 1px solid rgba(239,68,68,0.3); }
+        .badge-scheduled   { background: rgba(245,158,11,0.12); color: var(--yellow); border: 1px solid rgba(245,158,11,0.3); }
+        .badge-completed   { background: rgba(34,197,94,0.12);  color: var(--green);  border: 1px solid rgba(34,197,94,0.3); }
+        .badge-cancelled   { background: rgba(239,68,68,0.12);  color: var(--red);    border: 1px solid rgba(239,68,68,0.3); }
+        .action-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; color: var(--muted); padding: 4px 10px; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .action-btn:hover { border-color: var(--lime); color: var(--lime); }
+        .action-btn.del:hover { border-color: var(--red); color: var(--red); }
+        .tabs { display: flex; gap: 0.4rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .tab-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; color: var(--muted); padding: 6px 14px; font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; }
+        .tab-btn:hover { border-color: var(--lime); color: var(--lime); }
+        .tab-btn.active { background: var(--lime-dim); border-color: var(--lime); color: var(--lime); }
+        @media (max-width:1000px) { .two-col { grid-template-columns:1fr; } .stats-grid { grid-template-columns:repeat(3,1fr); } }
+    </style>
+</head>
+<body>
+<script>if(sessionStorage.getItem('role')!=='admin'){window.location.href='index.html';}</script>
+
+<div class="marquee-bar">
+    <span class="marquee-inner">⚡ PROFESSIONAL COACHES &nbsp;★&nbsp; INDIVIDUAL TRAINING PROGRAMS &nbsp;★&nbsp; CROSSFIT &nbsp;★&nbsp; WEIGHT TRAINING &nbsp;★&nbsp; YOGA &nbsp;★&nbsp; CARDIO &nbsp;★&nbsp; MARTIAL ARTS &nbsp;★&nbsp; NUTRITION COACHING &nbsp;★&nbsp; FITNESS REVOLUTION &nbsp;★&nbsp;</span>
+</div>
+
+<nav class="navbar">
+    <a class="navbar-brand" href="admin.html"><span class="brand-dot">⚡</span> FITNESS REVOLUTION</a>
+    <span class="admin-badge">🔐 ADMIN PANEL</span>
+    <div class="nav-links">
+        <a href="admin.html">Dashboard</a>
+        <a href="members.html">Members</a>
+        <a href="payments.html">Payments</a>
+        <a href="trainers.html" class="active">Trainers</a>
+        <a href="attendance.html">Attendance</a>
+        <a href="reports.html">Reports</a>
+        <a href="index.html" class="logout" onclick="sessionStorage.clear()">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="section-heading">TRAINERS <span>MANAGEMENT</span></div>
+
+    <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">Total Trainers</div><div class="stat-value c-green" id="sTotal">—</div></div>
+        <div class="stat-card"><div class="stat-label">Available</div><div class="stat-value c-green" id="sAvail">—</div></div>
+        <div class="stat-card"><div class="stat-label">Sessions</div><div class="stat-value c-blue" id="sSess">—</div></div>
+        <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-value c-green" id="sComp">—</div></div>
+        <div class="stat-card"><div class="stat-label">Scheduled</div><div class="stat-value c-yellow" id="sSched">—</div></div>
+        <div class="stat-card"><div class="stat-label">Cancelled</div><div class="stat-value c-red" id="sCanc">—</div></div>
+    </div>
+
+    <div class="two-col">
+        <div>
+            <!-- Add Trainer -->
+            <div class="card">
+                <div class="card-title"><span>🏋️</span><span id="formTitle">ADD TRAINER</span></div>
+                <input type="hidden" id="editId"/>
+                <div class="form-group"><label class="form-label">Full Name *</label><input class="form-control" id="fName" placeholder="Kasun Perera"/></div>
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label">Email *</label><input class="form-control" id="fEmail" placeholder="trainer@email.com"/></div>
+                    <div class="form-group"><label class="form-label">Phone</label><input class="form-control" id="fPhone" placeholder="077 000 0000"/></div>
+                </div>
+                <div class="form-group"><label class="form-label">Specialization</label>
+                    <select class="form-control" id="fSpec">
+                        <option value="WEIGHT_TRAINING">Weight Training</option>
+                        <option value="CARDIO">Cardio</option>
+                        <option value="YOGA">Yoga</option>
+                        <option value="CROSSFIT">CrossFit</option>
+                        <option value="SWIMMING">Swimming</option>
+                        <option value="MARTIAL_ARTS">Martial Arts</option>
+                        <option value="PILATES">Pilates</option>
+                        <option value="NUTRITION">Nutrition</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label">Experience (yrs)</label><input class="form-control" id="fExp" type="number" min="0" placeholder="5"/></div>
+                    <div class="form-group"><label class="form-label">Monthly Fee (Rs.)</label><input class="form-control" id="fFee" type="number" min="0" placeholder="15000"/></div>
+                </div>
+                <div id="trainerAlert"></div>
+                <div style="display:flex;gap:0.6rem">
+                    <button class="btn btn-primary btn-full" onclick="submitTrainer()"><span id="submitLabel">✓ ADD TRAINER</span></button>
+                    <button class="btn btn-outline" onclick="clearTrainerForm()">✕</button>
+                </div>
+            </div>
+
+            <!-- Book Session -->
+            <div class="card">
+                <div class="card-title"><span>📅</span>BOOK SESSION</div>
+                <div class="form-group"><label class="form-label">Trainer</label><select class="form-control" id="bTrainer"></select></div>
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label">Member ID</label><input class="form-control" id="bMemberId" placeholder="MBR-0001"/></div>
+                    <div class="form-group"><label class="form-label">Member Name</label><input class="form-control" id="bMemberName" placeholder="Full name"/></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label">Date</label><input class="form-control" id="bDate" type="date"/></div>
+                    <div class="form-group"><label class="form-label">Time Slot</label>
+                        <select class="form-control" id="bSlot">
+                            <option value="06:00-07:00">06:00 – 07:00</option>
+                            <option value="07:00-08:00">07:00 – 08:00</option>
+                            <option value="08:00-09:00">08:00 – 09:00</option>
+                            <option value="10:00-11:00">10:00 – 11:00</option>
+                            <option value="16:00-17:00">16:00 – 17:00</option>
+                            <option value="17:00-18:00">17:00 – 18:00</option>
+                            <option value="18:00-19:00">18:00 – 19:00</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="sessionAlert"></div>
+                <button class="btn btn-primary btn-full" onclick="bookSession()">📅 BOOK SESSION</button>
+            </div>
+        </div>
+
+        <div>
+            <!-- Trainers Table -->
+            <div class="card">
+                <div class="card-title"><span>👥</span>ALL TRAINERS</div>
+                <div class="search-bar">
+                    <input class="form-control" id="trainerSearch" placeholder="Search by name, specialization..." oninput="filterTrainers()"/>
+                    <select class="form-control" style="width:160px" id="filterAvail" onchange="filterTrainers()">
+                        <option value="">All Status</option>
+                        <option value="true">Available</option>
+                        <option value="false">Unavailable</option>
+                    </select>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Trainer</th><th>Specialization</th><th>Exp</th><th>Fee</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody id="trainerTable"><tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem">Loading...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Sessions Table -->
+            <div class="card">
+                <div class="card-title"><span>📋</span>SESSIONS</div>
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="showSessions('ALL',this)">All</button>
+                    <button class="tab-btn" onclick="showSessions('SCHEDULED',this)">Scheduled</button>
+                    <button class="tab-btn" onclick="showSessions('COMPLETED',this)">Completed</button>
+                    <button class="tab-btn" onclick="showSessions('CANCELLED',this)">Cancelled</button>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>ID</th><th>Trainer</th><th>Member</th><th>Date</th><th>Slot</th><th>Status</th><th></th></tr></thead>
+                        <tbody id="sessionTable"><tr><td colspan="7" style="text-align:center;color:var(--muted);padding:2rem">Loading...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/trainers.js"></script>
+</body>
+</html>
