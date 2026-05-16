@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Fitness Revolution — Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --bg: #0a0a0a; --bg2: #111; --bg3: #181818;
+            --lime: #c8f000; --lime2: #a8d900; --lime-dim: rgba(200,240,0,0.1); --lime-border: rgba(200,240,0,0.3);
+            --text: #fff; --muted: #777; --border: #222;
+            --danger: #ff3b3b;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; }
+        body { background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+
+        /* ── Ticker ── */
+        .ticker { background: var(--lime); padding: 7px 0; overflow: hidden; white-space: nowrap; flex-shrink: 0; }
+        .ticker-inner { display: inline-block; animation: tick 22s linear infinite; }
+        @keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .ticker-text { font-family: 'Bebas Neue', sans-serif; font-size: 0.82rem; letter-spacing: 0.14em; color: #000; padding: 0 20px; }
+
+        /* ── Main split ── */
+        .split { flex: 1; display: grid; grid-template-columns: 1fr 480px; min-height: 0; }
+
+        /* ── LEFT — gym visual ── */
+        .gym-side {
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        /* Dark gym atmosphere via layered CSS */
+        .gym-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                    radial-gradient(ellipse 80% 60% at 30% 40%, rgba(200,240,0,0.06) 0%, transparent 60%),
+                    radial-gradient(ellipse 60% 80% at 70% 70%, rgba(200,240,0,0.03) 0%, transparent 50%),
+                    linear-gradient(160deg, #0d0d0d 0%, #050505 50%, #0a0a0a 100%);
+        }
+
+        /* Grid lines */
+        .gym-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Diagonal accent bars */
+        .gym-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                    -55deg,
+                    transparent,
+                    transparent 120px,
+                    rgba(200,240,0,0.015) 120px,
+                    rgba(200,240,0,0.015) 122px
+            );
+        }
+
+        /* Abstract dumbbell / weight shapes */
+        .gym-shape {
+            position: absolute;
+            border: 1px solid rgba(200,240,0,0.08);
+        }
+        .gym-shape-1 {
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            top: 10%; left: 15%;
+            border-width: 2px;
+            border-color: rgba(200,240,0,0.06);
+            animation: pulse 6s ease-in-out infinite;
+        }
+        .gym-shape-2 {
+            width: 180px; height: 180px;
+            border-radius: 50%;
+            top: 10%; left: 15%;
+            margin: 60px;
+            border-color: rgba(200,240,0,0.1);
+            animation: pulse 6s ease-in-out infinite 1s;
+        }
+        .gym-shape-3 {
+            width: 500px; height: 500px;
+            border-radius: 50%;
+            bottom: -150px; right: -100px;
+            border-color: rgba(200,240,0,0.04);
+            animation: pulse 8s ease-in-out infinite 2s;
+        }
+        .gym-shape-4 {
+            width: 60px; height: 200px;
+            top: 50%; left: 50%;
+            transform: translate(-50%,-50%) rotate(-20deg);
+            border-radius: 8px;
+            border-color: rgba(200,240,0,0.12);
+            background: rgba(200,240,0,0.02);
+        }
+        /* Barbell bar */
+        .gym-bar {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-20deg);
+            width: 380px; height: 8px;
+            background: rgba(200,240,0,0.05);
+            border: 1px solid rgba(200,240,0,0.1);
+            border-radius: 4px;
+        }
+        .gym-bar::before, .gym-bar::after {
+            content: '';
+            position: absolute;
+            top: -26px;
+            width: 60px; height: 60px;
+            border: 2px solid rgba(200,240,0,0.1);
+            border-radius: 6px;
+            background: rgba(200,240,0,0.02);
+        }
+        .gym-bar::before { left: -20px; }
+        .gym-bar::after  { right: -20px; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.03); }
+        }
+
+        /* Content on gym side */
+        .gym-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 3rem;
+            height: 100%;
+        }
+        .gym-eyebrow {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            color: var(--lime);
+            margin-bottom: 0.5rem;
+        }
+        .gym-headline {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            line-height: 0.92;
+            letter-spacing: 0.03em;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+        .gym-headline em {
+            color: var(--lime);
+            font-style: normal;
+            display: block;
+        }
+        .gym-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        .gym-tag {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #000;
+            background: var(--lime);
+            padding: 4px 12px;
+        }
+        .gym-tag.outline {
+            background: transparent;
+            color: rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .gym-stats {
+            display: flex;
+            gap: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .gym-stat-val {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--lime);
+            line-height: 1;
+        }
+        .gym-stat-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* Top-left brand on gym side */
+        .gym-brand {
+            position: absolute;
+            top: 2rem; left: 2rem;
+            z-index: 3;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.1em;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .gym-brand-dot { color: var(--lime); font-size: 1.6rem; }
+
+        /* Lime glow line at the right edge */
+        .gym-side::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 2px; height: 100%;
+            background: linear-gradient(to bottom, transparent, var(--lime), transparent);
+            opacity: 0.4;
+            z-index: 5;
+        }
+
+        /* ── RIGHT — login panel ── */
+        .login-side {
+            background: var(--bg2);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .login-inner {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 3rem 2.5rem;
+        }
+
+        .login-heading {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2rem;
+            letter-spacing: 0.05em;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+        .login-heading span { color: var(--lime); }
+        .login-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 2rem; }
+
+        /* Tabs */
+        .tab-grid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border); margin-bottom: 0; }
+        .tab-btn {
+            background: var(--bg2); border: none; color: var(--muted);
+            font-family: 'Bebas Neue', sans-serif; font-size: 0.95rem; letter-spacing: 0.08em;
+            padding: 13px 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            gap: 8px; transition: all 0.15s; border-bottom: 2px solid transparent;
+        }
+        .tab-btn:first-child { border-right: 1px solid var(--border); }
+        .tab-btn:hover { color: var(--text); background: var(--bg3); }
+        .tab-btn.active { background: var(--bg3); color: var(--lime); border-bottom-color: var(--lime); }
+        .tab-btn svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 2; fill: none; flex-shrink: 0; }
+
+        /* Card */
+        .login-card { background: var(--bg3); border: 1px solid var(--border); border-top: none; padding: 1.8rem; }
+        .card-label {
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+            text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .card-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        /* Form */
+        .form-group { margin-bottom: 1rem; }
+        .form-label { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+        .form-control {
+            width: 100%; background: var(--bg2); border: 1px solid var(--border);
+            color: var(--text); font-family: 'Barlow', sans-serif; font-size: 0.9rem;
+            padding: 11px 14px; outline: none; transition: border-color 0.15s; border-radius: 0;
+        }
+        .form-control:focus { border-color: var(--lime); }
+        .form-control::placeholder { color: #444; }
+
+        /* Buttons */
+        .btn {
+            width: 100%; font-family: 'Bebas Neue', sans-serif; font-size: 1rem;
+            letter-spacing: 0.1em; padding: 13px 24px; border: none;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            gap: 8px; transition: all 0.15s;
+        }
+        .btn svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 2.5; fill: none; }
+        .btn-primary { background: var(--lime); color: #000; }
+        .btn-primary:hover { background: var(--lime2); }
+        .btn-outline { background: transparent; color: var(--lime); border: 1px solid var(--lime); }
+        .btn-outline:hover { background: var(--lime); color: #000; }
+
+        /* Alerts */
+        .alert { padding: 9px 14px; font-size: 0.82rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+        .alert svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; flex-shrink: 0; }
+        .alert-danger  { background: rgba(255,59,59,0.1);  border: 1px solid rgba(255,59,59,0.3);  color: #ff3b3b; }
+        .alert-success { background: rgba(200,240,0,0.08); border: 1px solid rgba(200,240,0,0.25); color: var(--lime); }
+
+        .form-hint { text-align: center; font-size: 0.75rem; color: var(--muted); margin-top: 0.75rem; }
+        .login-footer { padding: 1.2rem 2.5rem; border-top: 1px solid var(--border); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; }
+        .login-footer span { color: var(--lime); }
+
+        /* ── Mobile ── */
+        @media (max-width: 800px) {
+            .split { grid-template-columns: 1fr; }
+            .gym-side { min-height: 260px; }
+            .gym-headline { font-size: 3rem; }
+            .gym-stats { gap: 1.5rem; }
+            .login-inner { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Ticker -->
+<div class="ticker">
+    <div class="ticker-inner">
+        <span class="ticker-text">⚡ Convenient Location &amp; Schedule</span>
+        <span class="ticker-text">★ Professional Coaches</span>
+        <span class="ticker-text">⚡ Individual Training Programs</span>
+        <span class="ticker-text">★ Modern Equipment</span>
+        <span class="ticker-text">⚡ 24/7 Gym Access</span>
+        <span class="ticker-text">★ Nutrition Plans Included</span>
+        <span class="ticker-text">⚡ Best Results Guaranteed</span>
+        <span class="ticker-text">★ Fitness Revolution</span>
+        <!-- duplicate for seamless loop -->
+        <span class="ticker-text">⚡ Convenient Location &amp; Schedule</span>
+        <span class="ticker-text">★ Professional Coaches</span>
+        <span class="ticker-text">⚡ Individual Training Programs</span>
+        <span class="ticker-text">★ Modern Equipment</span>
+        <span class="ticker-text">⚡ 24/7 Gym Access</span>
+        <span class="ticker-text">★ Nutrition Plans Included</span>
+        <span class="ticker-text">⚡ Best Results Guaranteed</span>
+        <span class="ticker-text">★ Fitness Revolution</span>
+    </div>
+</div>
+
+<!-- Split -->
+<div class="split">
+
+    <!-- ── LEFT GYM SIDE ── -->
+    <div class="gym-side">
+        <div class="gym-bg"></div>
+
+        <!-- Decorative shapes -->
+        <div class="gym-shape gym-shape-1"></div>
+        <div class="gym-shape gym-shape-2"></div>
+        <div class="gym-shape gym-shape-3"></div>
+        <div class="gym-bar"></div>
+
+        <!-- Brand top-left -->
+        <a href="index.html" class="gym-brand">
+            <span class="gym-brand-dot">⚡</span> FITNESS REVOLUTION
+        </a>
+
+        <!-- Bottom content -->
+        <div class="gym-content">
+            <div class="gym-eyebrow">Welcome Back</div>
+            <div class="gym-headline">
+                WORK WITH
+                <em>PROFESSIONALS</em>
+            </div>
+            <div class="gym-tags">
+                <span class="gym-tag">CrossFit</span>
+                <span class="gym-tag">Weight Training</span>
+                <span class="gym-tag">Cardio</span>
+                <span class="gym-tag outline">Yoga</span>
+                <span class="gym-tag outline">Nutrition</span>
+                <span class="gym-tag outline">Martial Arts</span>
+            </div>
+            <div class="gym-stats">
+                <div>
+                    <div class="gym-stat-val">500+</div>
+                    <div class="gym-stat-label">Active Members</div>
+                </div>
+                <div>
+                    <div class="gym-stat-val">20+</div>
+                    <div class="gym-stat-label">Pro Trainers</div>
+                </div>
+                <div>
+                    <div class="gym-stat-val">5★</div>
+                    <div class="gym-stat-label">Rated Gym</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── RIGHT LOGIN SIDE ── -->
+    <div class="login-side">
+        <div class="login-inner">
+
+            <div class="login-heading">SIGN <span>IN</span></div>
+            <div class="login-sub">Select your role to continue</div>
+
+            <!-- Tabs -->
+            <div class="tab-grid">
+                <button class="tab-btn active" id="adminTab" onclick="showTab('admin')">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    Admin
+                </button>
+                <button class="tab-btn" id="memberTab" onclick="showTab('member')">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg>
+                    Member
+                </button>
+            </div>
+
+            <!-- Admin Panel -->
+            <div id="adminBox" class="login-card">
+                <div class="card-label">Admin Access</div>
+                <div class="form-group">
+                    <label class="form-label">Admin Password</label>
+                    <input type="password" class="form-control" id="adminPass" placeholder="Enter admin password"
+                           onkeydown="if(event.key==='Enter')adminLogin()"/>
+                </div>
+                <div id="adminAlert"></div>
+                <button class="btn btn-primary" onclick="adminLogin()">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    Login as Admin
+                </button>
+            </div>
+
+            <!-- Member Panel -->
+            <div id="memberBox" class="login-card" style="display:none">
+                <div class="card-label">Member Access</div>
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="memberEmail" placeholder="john@email.com"
+                           onkeydown="if(event.key==='Enter')memberLogin()"/>
+                </div>
+                <div id="memberAlert"></div>
+                <button class="btn btn-outline" onclick="memberLogin()">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg>
+                    Login as Member
+                </button>
+                <div class="form-hint">Use the email you registered with</div>
+            </div>
+
+        </div>
+
+        <div class="login-footer">
+            <span>Fitness <span>Revolution</span></span>
+            <span>&copy; 2025</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const ADMIN_PASSWORD = 'admin123';
+
+    function showTab(tab) {
+        if (tab === 'admin') {
+            document.getElementById('adminBox').style.display  = 'block';
+            document.getElementById('memberBox').style.display = 'none';
+            document.getElementById('adminTab').classList.add('active');
+            document.getElementById('memberTab').classList.remove('active');
+        } else {
+            document.getElementById('adminBox').style.display  = 'none';
+            document.getElementById('memberBox').style.display = 'block';
+            document.getElementById('memberTab').classList.add('active');
+            document.getElementById('adminTab').classList.remove('active');
+        }
+    }
+
+    function adminLogin() {
+        const pass = document.getElementById('adminPass').value;
+        if (pass === ADMIN_PASSWORD) {
+            sessionStorage.setItem('role', 'admin');
+            window.location.href = 'admin.html';
+        } else {
+            showAlert('adminAlert', 'Wrong password!', 'danger');
+        }
+    }
+
+    async function memberLogin() {
+        const email = document.getElementById('memberEmail').value.trim().toLowerCase();
+        if (!email) { showAlert('memberAlert', 'Email දාන්න', 'danger'); return; }
+
+        const members = await fetch('http://localhost:8080/api/members').then(r => r.json());
+        const member  = members.find(m => m.email.toLowerCase() === email);
+
+        if (!member) {
+            showAlert('memberAlert', 'Email හොයාගන්න බැහැ!', 'danger');
+            return;
+        }
+
+        sessionStorage.setItem('role',       'member');
+        sessionStorage.setItem('memberId',   member.id);
+        sessionStorage.setItem('memberName', member.name);
+        window.location.href = 'portal.html';
+    }
+
+    function showAlert(id, msg, type) {
+        const icons = {
+            danger:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+            success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>'
+        };
+        document.getElementById(id).innerHTML =
+            `<div class="alert alert-${type}">${icons[type]||''}${msg}</div>`;
+        setTimeout(() => document.getElementById(id).innerHTML = '', 3000);
+    }
+</script>
+</body>
+</html>

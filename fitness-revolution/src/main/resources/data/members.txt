@@ -1,0 +1,2 @@
+MBR-0001|jone silva|jone123@gmail.com|0713254789|colombo|MONTHLY|2026-05-11|2026-06-11|true
+MBR-0002|Kavishan|kavishan@gmail.com|077777|colombo|MONTHLY|2026-05-15|2026-06-15|true
