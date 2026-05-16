@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Payments – Fitness Revolution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <style>
+        :root {
+            --green:      #c8f026;
+            --green-dark: #a8cc10;
+            --green-glow: rgba(200,240,38,0.12);
+            --bg:         #0a0a0a;
+            --bg-card:    #111111;
+            --bg-input:   #181818;
+            --border:     #222222;
+            --muted:      #5a5a5a;
+        }
+        body { background: var(--bg); color: #e8e8e0; font-family: 'Barlow', sans-serif; }
+
+        .navbar { background: #050505; border-bottom: 2px solid var(--green); padding: 0 2rem; height: 60px; display: flex; align-items: center; gap: 1rem; position: sticky; top: 0; z-index: 100; }
+        .navbar-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em; color: #fff; text-decoration: none; }
+        .navbar-brand .dot { color: var(--green); }
+        .admin-pill { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #ef4444; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); padding: 3px 10px; }
+        .nav-links { margin-left: auto; display: flex; }
+        .nav-links a { color: var(--muted); text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.5rem 1rem; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; }
+        .nav-links a:hover { color: var(--green); }
+        .nav-links a.active { color: var(--green); border-bottom-color: var(--green); }
+
+        .page-header { display: flex; align-items: flex-end; gap: 1.5rem; margin-bottom: 2rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+        .page-subtitle { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
+        .page-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; letter-spacing: 0.05em; line-height: 1; color: #fff; }
+        .page-title span { color: var(--green); }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 2rem; }
+        .stat-card { background: var(--bg-card); padding: 1.25rem 1.5rem; position: relative; overflow: hidden; }
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--green); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+        .stat-card:hover::before { transform: scaleX(1); }
+        .stat-icon { font-size: 1.3rem; color: var(--green); opacity: 0.6; margin-bottom: 0.6rem; }
+        .stat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+        .stat-value { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.05em; line-height: 1; color: #fff; }
+        .c-green { color: var(--green) !important; }
+        .c-blue  { color: #60a5fa !important; }
+        .c-red   { color: #ef4444 !important; }
+        .c-yellow{ color: #f59e0b !important; }
+
+        .two-col { display: grid; grid-template-columns: 360px 1fr; gap: 1.5rem; align-items: start; }
+        @media(max-width:1000px) { .two-col { grid-template-columns: 1fr; } }
+
+        .card { background: var(--bg-card); border: 1px solid var(--border); margin-bottom: 1.5rem; }
+        .card-title { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #fff; display: flex; align-items: center; gap: 0.5rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); }
+        .card-title .icon { color: var(--green); font-size: 1.1rem; }
+        .card-body { padding: 1.5rem; }
+
+        .form-group { margin-bottom: 1rem; }
+        .form-label { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+        .form-control { width: 100%; background: var(--bg-input); border: 1px solid var(--border); color: #e8e8e0; padding: 0.65rem 0.9rem; font-size: 0.875rem; font-family: 'Barlow', sans-serif; outline: none; border-radius: 0; transition: border-color 0.2s, box-shadow 0.2s; appearance: none; }
+        .form-control:focus { border-color: var(--green); box-shadow: 0 0 0 2px var(--green-glow); }
+        .form-control option { background: #1a1a1a; }
+
+        .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.5rem; }
+
+        .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); margin-bottom: 1px; }
+        .plan-card { background: var(--bg-input); padding: 0.85rem 1rem; cursor: pointer; transition: background 0.15s; position: relative; display: block; border-bottom: 2px solid transparent; }
+        .plan-card input[type=radio] { position: absolute; opacity: 0; }
+        .plan-card:hover { background: #161616; }
+        .plan-card.selected { background: var(--green-glow); border-bottom-color: var(--green); }
+        .plan-name { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
+        .plan-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 0.05em; color: var(--green); margin-top: 2px; }
+        .plan-desc { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+
+        .method-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); margin-bottom: 1px; }
+        .method-btn { background: var(--bg-input); padding: 0.75rem; cursor: pointer; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); transition: all 0.15s; border-bottom: 2px solid transparent; }
+        .method-btn:hover { color: #e8e8e0; background: #161616; }
+        .method-btn.selected { background: var(--green-glow); color: var(--green); border-bottom-color: var(--green); }
+        .method-icon { font-size: 1.2rem; display: block; margin-bottom: 3px; }
+
+        .btn { padding: 0.65rem 1.5rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; border: none; border-radius: 0; transition: all 0.15s; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary { background: var(--green); color: #000; }
+        .btn-primary:hover { background: var(--green-dark); }
+        .btn-outline { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+        .btn-outline:hover { border-color: var(--green); color: var(--green); }
+        .btn-danger { background: #ef4444; color: #fff; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-full { width: 100%; justify-content: center; }
+        .btn-ghost { background: transparent; border: none; cursor: pointer; color: var(--muted); font-size: 1rem; padding: 0.2rem 0.4rem; transition: color 0.15s; }
+        .btn-ghost:hover { color: #ef4444; }
+
+        .alert { padding: 0.7rem 1rem; font-size: 0.85rem; border-left: 3px solid; }
+        .alert-success { background: rgba(200,240,38,0.06); border-color: var(--green); color: var(--green); }
+        .alert-danger  { background: rgba(239,68,68,0.06); border-color: #ef4444; color: #ef4444; }
+        #payAlert { padding: 0 1.5rem; }
+        #payAlert .alert { margin-bottom: 1rem; }
+
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        thead th { font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); padding: 0.75rem 1rem; border-bottom: 2px solid var(--border); text-align: left; white-space: nowrap; background: #0d0d0d; }
+        tbody td { padding: 0.8rem 1rem; border-bottom: 1px solid #191919; font-size: 0.84rem; vertical-align: middle; }
+        tbody tr:hover { background: rgba(200,240,38,0.02); }
+        tbody tr:last-child td { border-bottom: none; }
+
+        .badge { padding: 2px 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 0; }
+        .badge-success  { background: rgba(200,240,38,0.12); color: var(--green); border: 1px solid rgba(200,240,38,0.3); }
+        .badge-paid     { background: rgba(200,240,38,0.12); color: var(--green); border: 1px solid rgba(200,240,38,0.3); }
+        .badge-refunded { background: rgba(96,165,250,0.12); color: #60a5fa; border: 1px solid rgba(96,165,250,0.3); }
+        .badge-overdue  { background: rgba(239,68,68,0.12); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+        .badge-cash     { background: rgba(245,158,11,0.12); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+        .badge-card     { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.3); }
+        .badge-online   { background: rgba(200,240,38,0.12); color: var(--green); border: 1px solid rgba(200,240,38,0.3); }
+
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal-box { background: #111; border: 1px solid var(--border); border-top: 2px solid var(--green); padding: 2rem; width: 480px; max-width: 95vw; max-height: 90vh; overflow-y: auto; }
+        .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em; color: #fff; margin-bottom: 1.25rem; }
+        .invoice-header { text-align: center; border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1rem; }
+        .invoice-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em; color: var(--green); }
+        .invoice-row { display: flex; justify-content: space-between; font-size: 0.84rem; padding: 0.4rem 0; color: var(--muted); border-bottom: 1px solid #191919; }
+        .invoice-row span:last-child { color: #e8e8e0; font-weight: 600; }
+        .invoice-total { display: flex; justify-content: space-between; font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.05em; color: var(--green); padding-top: 1rem; margin-top: 0.5rem; }
+
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #333; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--green); }
+    </style>
+</head>
+<body>
+<script>
+    if (sessionStorage.getItem('role') !== 'admin') {
+        window.location.href = 'index.html';
+    }
+</script>
+
+<nav class="navbar">
+    <a class="navbar-brand" href="admin.html"><span class="dot">⚡</span> Fitness Revolution</a>
+    <span class="admin-pill">🔐 Admin Panel</span>
+    <div class="nav-links">
+        <a href="admin.html">Dashboard</a>
+        <a href="members.html">Members</a>
+        <a href="payments.html" class="active">Payments</a>
+        <a href="trainers.html">Trainers</a>
+        <a href="attendance.html">Attendance</a>
+        <a href="reports.html">Reports</a>
+        <a href="index.html" style="color:#ef4444" onclick="sessionStorage.clear()">Logout</a>
+    </div>
+</nav>
+
+<div class="container" style="max-width:1280px;margin:0 auto;padding:2rem 1.5rem;">
+
+    <div class="page-header">
+        <div>
+            <div class="page-subtitle">Finance</div>
+            <div class="page-title">PAY<span>MENTS</span></div>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="ti ti-receipt"></i></div>
+            <div class="stat-label">Total Payments</div>
+            <div class="stat-value c-green" id="sTotal">—</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="ti ti-currency-rupee"></i></div>
+            <div class="stat-label">Revenue</div>
+            <div class="stat-value c-green" id="sRevenue">—</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="ti ti-arrow-back-up"></i></div>
+            <div class="stat-label">Refunds</div>
+            <div class="stat-value c-blue" id="sRefunded">—</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="ti ti-alert-circle"></i></div>
+            <div class="stat-label">Overdue</div>
+            <div class="stat-value c-red" id="sOverdue">—</div>
+        </div>
+    </div>
+
+    <div class="two-col">
+        <!-- LEFT: Make Payment form -->
+        <div class="card">
+            <div class="card-title"><i class="ti ti-credit-card icon"></i> Make Payment</div>
+
+            <div class="card-body" style="padding-bottom:0;">
+                <div class="form-group">
+                    <label class="form-label">Select Member</label>
+                    <select class="form-control" id="fMemberId"></select>
+                </div>
+                <input type="hidden" id="fMemberName"/>
+            </div>
+
+            <div style="padding: 0 1.5rem 0.5rem;">
+                <span class="section-label">Select Plan</span>
+            </div>
+            <div class="plan-grid" id="planGrid">
+                <label class="plan-card selected"><input type="radio" name="plan" value="MONTHLY" checked onchange="selectPlan(this)"/><div class="plan-name">Monthly</div><div class="plan-price">Rs. 2,500</div><div class="plan-desc">Every month</div></label>
+                <label class="plan-card"><input type="radio" name="plan" value="YEARLY" onchange="selectPlan(this)"/><div class="plan-name">Yearly</div><div class="plan-price">Rs. 12,000</div><div class="plan-desc">Full year</div></label>
+                <label class="plan-card"><input type="radio" name="plan" value="STUDENT" onchange="selectPlan(this)"/><div class="plan-name">Student</div><div class="plan-price">Rs. 4,000</div><div class="plan-desc">6 months</div></label>
+                <label class="plan-card"><input type="radio" name="plan" value="FAMILY" onchange="selectPlan(this)"/><div class="plan-name">Family</div><div class="plan-price">Rs. 18,000</div><div class="plan-desc">1 year</div></label>
+            </div>
+
+            <div style="padding: 1rem 1.5rem 0.5rem;">
+                <span class="section-label">Payment Method</span>
+            </div>
+            <div class="method-grid">
+                <div class="method-btn selected" onclick="selectMethod('CASH',this)"><i class="ti ti-cash method-icon"></i>Cash</div>
+                <div class="method-btn" onclick="selectMethod('CARD',this)"><i class="ti ti-credit-card method-icon"></i>Card</div>
+                <div class="method-btn" onclick="selectMethod('ONLINE',this)"><i class="ti ti-device-mobile method-icon"></i>Online</div>
+            </div>
+
+            <div id="payAlert"></div>
+
+            <div style="padding: 1.25rem 1.5rem;">
+                <button class="btn btn-primary btn-full" onclick="submitPayment()">
+                    <i class="ti ti-check"></i> Process Payment
+                </button>
+            </div>
+        </div>
+
+        <!-- RIGHT: Tables -->
+        <div>
+            <div class="card">
+                <div class="card-title"><i class="ti ti-clipboard-list icon"></i> Recent Payments</div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>ID</th><th>Member</th><th>Plan</th><th>Method</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+                        <tbody id="payTable">
+                        <tr><td colspan="7" style="text-align:center;color:var(--muted);padding:2rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.08em;text-transform:uppercase;font-size:0.75rem;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="ti ti-arrow-back-up icon"></i> Refunds</div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Refund ID</th><th>Member</th><th>Amount</th><th>Reason</th><th>Date</th></tr></thead>
+                        <tbody id="refundTable">
+                        <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.08em;text-transform:uppercase;font-size:0.75rem;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Invoice Modal -->
+<div class="modal-overlay" id="invoiceModal">
+    <div class="modal-box">
+        <div class="invoice-header">
+            <div class="invoice-logo">⚡ Fitness Revolution</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-top:4px;">Official Invoice</div>
+            <div id="invId" style="font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.1em;color:var(--green);margin-top:8px;"></div>
+        </div>
+        <div id="invBody"></div>
+        <div class="invoice-total"><span>Total Paid</span><span id="invTotal"></span></div>
+        <div style="margin-top:1.25rem;display:flex;gap:0.75rem">
+            <button class="btn btn-primary btn-full" onclick="window.print()"><i class="ti ti-printer"></i> Print / PDF</button>
+            <button class="btn btn-outline btn-full" onclick="document.getElementById('invoiceModal').classList.remove('show')">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Refund Modal -->
+<div class="modal-overlay" id="refundModal">
+    <div class="modal-box">
+        <div class="modal-title">PROCESS <span style="color:var(--green);">REFUND</span></div>
+        <input type="hidden" id="refundPayId"/>
+        <div class="form-group">
+            <label class="form-label">Reason</label>
+            <input class="form-control" id="refundReason" placeholder="e.g. Cancelled membership"/>
+        </div>
+        <div id="refundAlert"></div>
+        <div style="display:flex;gap:0.75rem;margin-top:1rem">
+            <button class="btn btn-danger btn-full" onclick="submitRefund()"><i class="ti ti-arrow-back-up"></i> Confirm Refund</button>
+            <button class="btn btn-outline btn-full" onclick="document.getElementById('refundModal').classList.remove('show')">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/payments.js"></script>
+<script>
+    document.querySelectorAll('.modal-overlay').forEach(m => {
+        m.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); });
+    });
+</script>
+</body>
+</html>
