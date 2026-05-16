@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Make Payment – Fitness Revolution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <style>
+        :root {
+            --green:      #c8f026;
+            --green-dark: #a8cc10;
+            --green-glow: rgba(200,240,38,0.12);
+            --bg:         #0a0a0a;
+            --bg-card:    #111111;
+            --bg-input:   #181818;
+            --border:     #222222;
+            --muted:      #5a5a5a;
+        }
+        body { background: var(--bg); color: #e8e8e0; font-family: 'Barlow', sans-serif; }
+
+        /* NAVBAR */
+        .navbar {
+            background: #050505;
+            border-bottom: 2px solid var(--green);
+            padding: 0 2rem;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .navbar-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em; color: #fff; text-decoration: none; }
+        .navbar-brand .dot { color: var(--green); }
+        .member-pill {
+            font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700;
+            letter-spacing: 0.15em; text-transform: uppercase;
+            color: var(--green); background: var(--green-glow);
+            border: 1px solid rgba(200,240,38,0.25); padding: 3px 10px;
+        }
+        .nav-links { margin-left: auto; display: flex; }
+        .nav-links a {
+            color: var(--muted); text-decoration: none;
+            font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            padding: 0.5rem 1rem; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s;
+        }
+        .nav-links a:hover { color: var(--green); }
+        .nav-links a.active { color: var(--green); border-bottom-color: var(--green); }
+
+        /* PAGE HEADER */
+        .page-header { margin-bottom: 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+        .page-subtitle { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
+        .page-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; letter-spacing: 0.05em; line-height: 1; color: #fff; }
+        .page-title span { color: var(--green); }
+
+        /* MEMBER INFO CARD */
+        .card { background: var(--bg-card); border: 1px solid var(--border); margin-bottom: 1.5rem; }
+        .card-title {
+            font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; font-weight: 700;
+            letter-spacing: 0.15em; text-transform: uppercase; color: #fff;
+            display: flex; align-items: center; gap: 0.5rem;
+            padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);
+        }
+        .card-title .icon { color: var(--green); font-size: 1.1rem; }
+        .card-body { padding: 1.5rem; }
+
+        .member-info-row {
+            display: flex; align-items: center; gap: 1.25rem;
+            padding: 1.25rem 1.5rem;
+        }
+        .avatar {
+            width: 52px; height: 52px;
+            background: var(--green-glow); border: 1px solid rgba(200,240,38,0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.05em;
+            color: var(--green); flex-shrink: 0;
+        }
+        .member-meta { flex: 1; }
+        .member-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.05em; color: #fff; line-height: 1; }
+        .member-id { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; margin-top: 2px; }
+        .member-plan-block { text-align: right; }
+        .meta-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+        .meta-val { font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; color: var(--green); }
+        .meta-val.expiry { color: #f59e0b; }
+
+        /* FORM */
+        .form-group { margin-bottom: 1rem; }
+        .form-label { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+        .form-control { width: 100%; background: var(--bg-input); border: 1px solid var(--border); color: #e8e8e0; padding: 0.65rem 0.9rem; font-size: 0.875rem; font-family: 'Barlow', sans-serif; outline: none; border-radius: 0; transition: border-color 0.2s, box-shadow 0.2s; appearance: none; }
+        .form-control:focus { border-color: var(--green); box-shadow: 0 0 0 2px var(--green-glow); }
+
+        /* PLAN GRID */
+        .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); padding: 0 1.5rem; margin-bottom: 0.6rem; display: block; }
+        .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); margin: 0 0 1px; }
+        .plan-card {
+            background: var(--bg-input); padding: 1rem 1.25rem; cursor: pointer;
+            transition: background 0.15s; position: relative; display: block;
+            border-bottom: 2px solid transparent;
+        }
+        .plan-card input[type=radio] { position: absolute; opacity: 0; }
+        .plan-card:hover { background: #161616; }
+        .plan-card.selected { background: var(--green-glow); border-bottom-color: var(--green); }
+        .plan-name { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; }
+        .plan-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.05em; color: var(--green); margin-top: 2px; }
+        .plan-desc { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+
+        /* METHOD GRID */
+        .method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); margin-bottom: 1px; }
+        .method-btn {
+            background: var(--bg-input); padding: 0.85rem; cursor: pointer; text-align: center;
+            font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+            transition: all 0.15s; border-bottom: 2px solid transparent;
+        }
+        .method-btn:hover { color: #e8e8e0; background: #161616; }
+        .method-btn.selected { background: var(--green-glow); color: var(--green); border-bottom-color: var(--green); }
+        .method-icon { font-size: 1.3rem; display: block; margin-bottom: 4px; }
+
+        /* BUTTONS */
+        .btn { padding: 0.65rem 1.5rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; border: none; border-radius: 0; transition: all 0.15s; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary { background: var(--green); color: #000; }
+        .btn-primary:hover { background: var(--green-dark); }
+        .btn-outline { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+        .btn-outline:hover { border-color: var(--green); color: var(--green); }
+        .btn-full { width: 100%; justify-content: center; }
+
+        /* ALERT */
+        .alert { padding: 0.7rem 1rem; font-size: 0.85rem; border-left: 3px solid; }
+        .alert-success { background: rgba(200,240,38,0.06); border-color: var(--green); color: var(--green); }
+        .alert-danger  { background: rgba(239,68,68,0.06); border-color: #ef4444; color: #ef4444; }
+        #payAlert { padding: 0 1.5rem; }
+        #payAlert .alert { margin-bottom: 1rem; }
+
+        /* TABLE */
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        thead th { font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); padding: 0.75rem 1rem; border-bottom: 2px solid var(--border); text-align: left; white-space: nowrap; background: #0d0d0d; }
+        tbody td { padding: 0.8rem 1rem; border-bottom: 1px solid #191919; font-size: 0.84rem; vertical-align: middle; }
+        tbody tr:hover { background: rgba(200,240,38,0.02); }
+        tbody tr:last-child td { border-bottom: none; }
+
+        /* BADGES */
+        .badge { padding: 2px 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 0; }
+        .badge-success { background: rgba(200,240,38,0.12); color: var(--green); border: 1px solid rgba(200,240,38,0.3); }
+        .badge-paid    { background: rgba(200,240,38,0.12); color: var(--green); border: 1px solid rgba(200,240,38,0.3); }
+        .badge-refunded{ background: rgba(96,165,250,0.12); color: #60a5fa; border: 1px solid rgba(96,165,250,0.3); }
+        .badge-cash    { background: rgba(245,158,11,0.12); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+        .badge-card    { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.3); }
+        .badge-online  { background: rgba(200,240,38,0.12); color: var(--green); border: 1px solid rgba(200,240,38,0.3); }
+
+        /* INVOICE MODAL */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal-box { background: #111; border: 1px solid var(--border); border-top: 2px solid var(--green); padding: 2rem; width: 480px; max-width: 95vw; max-height: 90vh; overflow-y: auto; }
+        .invoice-header { text-align: center; border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1rem; }
+        .invoice-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em; color: var(--green); }
+        .invoice-sub { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+        .invoice-id { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; color: var(--green); margin-top: 8px; }
+        .invoice-row { display: flex; justify-content: space-between; font-size: 0.84rem; padding: 0.4rem 0; color: var(--muted); border-bottom: 1px solid #191919; }
+        .invoice-row span:last-child { color: #e8e8e0; font-weight: 600; }
+        .invoice-total { display: flex; justify-content: space-between; font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.05em; color: var(--green); padding-top: 1rem; margin-top: 0.5rem; }
+
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #333; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--green); }
+    </style>
+</head>
+<body>
+<script>
+    if (sessionStorage.getItem('role') !== 'member') {
+        window.location.href = 'index.html';
+    }
+</script>
+
+<nav class="navbar">
+    <a class="navbar-brand" href="portal.html"><span class="dot">⚡</span> Fitness Revolution</a>
+    <span class="member-pill">👤 Member Portal</span>
+    <div class="nav-links">
+        <a href="portal.html">My Dashboard</a>
+        <a href="member-payment.html" class="active">Make Payment</a>
+        <a href="index.html" style="color:#ef4444" onclick="sessionStorage.clear()">Logout</a>
+    </div>
+</nav>
+
+<div style="max-width:640px;margin:0 auto;padding:2rem 1.5rem;">
+
+    <div class="page-header">
+        <div class="page-subtitle">Member Portal</div>
+        <div class="page-title">MAKE <span>PAYMENT</span></div>
+    </div>
+
+    <!-- Member Info -->
+    <div class="card">
+        <div class="member-info-row">
+            <div class="avatar" id="mAvatar">?</div>
+            <div class="member-meta">
+                <div class="member-name" id="mName">—</div>
+                <div class="member-id" id="mId">—</div>
+            </div>
+            <div class="member-plan-block">
+                <div class="meta-label">Current Plan</div>
+                <div class="meta-val" id="mType">—</div>
+                <div class="meta-label" style="margin-top:6px;">Expires</div>
+                <div class="meta-val expiry" id="mExpiry">—</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Form -->
+    <div class="card">
+        <div class="card-title"><i class="ti ti-credit-card icon"></i> Make a Payment</div>
+
+        <div style="padding: 1.25rem 1.5rem 0;">
+            <span class="section-label" style="padding:0;margin-bottom:0.6rem;display:block;">Select Plan</span>
+        </div>
+        <div class="plan-grid" id="planGrid">
+            <label class="plan-card selected">
+                <input type="radio" name="plan" value="MONTHLY" checked onchange="selectPlan(this)"/>
+                <div class="plan-name">Monthly</div>
+                <div class="plan-price">Rs. 2,500</div>
+                <div class="plan-desc">Every month</div>
+            </label>
+            <label class="plan-card">
+                <input type="radio" name="plan" value="YEARLY" onchange="selectPlan(this)"/>
+                <div class="plan-name">Yearly</div>
+                <div class="plan-price">Rs. 12,000</div>
+                <div class="plan-desc">Full year</div>
+            </label>
+            <label class="plan-card">
+                <input type="radio" name="plan" value="STUDENT" onchange="selectPlan(this)"/>
+                <div class="plan-name">Student</div>
+                <div class="plan-price">Rs. 4,000</div>
+                <div class="plan-desc">6 months</div>
+            </label>
+            <label class="plan-card">
+                <input type="radio" name="plan" value="FAMILY" onchange="selectPlan(this)"/>
+                <div class="plan-name">Family</div>
+                <div class="plan-price">Rs. 18,000</div>
+                <div class="plan-desc">1 year · 4 members</div>
+            </label>
+        </div>
+
+        <div style="padding: 1.25rem 1.5rem 0;">
+            <span class="section-label" style="padding:0;margin-bottom:0.6rem;display:block;">Payment Method</span>
+        </div>
+        <div class="method-grid">
+            <div class="method-btn selected" onclick="selectMethod('CASH',this)">
+                <i class="ti ti-cash method-icon"></i>Cash
+            </div>
+            <div class="method-btn" onclick="selectMethod('CARD',this)">
+                <i class="ti ti-credit-card method-icon"></i>Card
+            </div>
+            <div class="method-btn" onclick="selectMethod('ONLINE',this)">
+                <i class="ti ti-device-mobile method-icon"></i>Online
+            </div>
+        </div>
+
+        <div id="payAlert"></div>
+
+        <div style="padding: 1.25rem 1.5rem;">
+            <button class="btn btn-primary btn-full" onclick="submitPayment()">
+                <i class="ti ti-check"></i> Process Payment
+            </button>
+        </div>
+    </div>
+
+    <!-- Payment History -->
+    <div class="card">
+        <div class="card-title"><i class="ti ti-clipboard-list icon"></i> My Payment History</div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr><th>Date</th><th>Plan</th><th>Method</th><th>Amount</th><th>Status</th></tr>
+                </thead>
+                <tbody id="myPayTable">
+                <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.08em;text-transform:uppercase;font-size:0.75rem;">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Invoice Modal -->
+<div class="modal-overlay" id="invoiceModal">
+    <div class="modal-box">
+        <div class="invoice-header">
+            <div class="invoice-logo">⚡ Fitness Revolution</div>
+            <div class="invoice-sub">Official Invoice</div>
+            <div class="invoice-id" id="invId"></div>
+        </div>
+        <div id="invBody"></div>
+        <div class="invoice-total">
+            <span>Total Paid</span>
+            <span id="invTotal"></span>
+        </div>
+        <div style="margin-top:1.25rem;display:flex;gap:0.75rem">
+            <button class="btn btn-primary btn-full" onclick="window.print()"><i class="ti ti-printer"></i> Print / PDF</button>
+            <button class="btn btn-outline btn-full" onclick="document.getElementById('invoiceModal').classList.remove('show')">Close</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API      = 'http://localhost:8080/api/payments';
+    const memberId   = sessionStorage.getItem('memberId');
+    const memberName = sessionStorage.getItem('memberName');
+    let selectedPlan   = 'MONTHLY';
+    let selectedMethod = 'CASH';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const members = await fetch('http://localhost:8080/api/members').then(r => r.json());
+        const member  = members.find(m => m.id === memberId);
+        if (!member) { window.location.href = 'index.html'; return; }
+        document.getElementById('mAvatar').textContent = member.name.charAt(0);
+        document.getElementById('mName').textContent   = member.name;
+        document.getElementById('mId').textContent     = member.id;
+        document.getElementById('mType').textContent   = member.membershipType;
+        document.getElementById('mExpiry').textContent = member.expiryDate;
+        loadMyPayments();
+    });
+
+    function selectPlan(radio) {
+        selectedPlan = radio.value;
+        document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+        radio.closest('.plan-card').classList.add('selected');
+    }
+
+    function selectMethod(method, el) {
+        selectedMethod = method;
+        document.querySelectorAll('.method-btn').forEach(b => b.classList.remove('selected'));
+        el.classList.add('selected');
+    }
+
+    async function submitPayment() {
+        const res = await fetch(API, {
+            method: 'POST', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ memberId, memberName, plan: selectedPlan, method: selectedMethod })
+        });
+        if (res.ok) {
+            const data = await res.json();
+            showAlert('payAlert', '✓ Payment successful! Membership activated.', 'success');
+            loadMyPayments();
+            showInvoice(data.invoice);
+        } else {
+            showAlert('payAlert', 'Payment failed. Please try again.', 'danger');
+        }
+    }
+
+    async function loadMyPayments() {
+        const list = await fetch(`${API}/member/${memberId}`).then(r => r.json());
+        const tb = document.getElementById('myPayTable');
+        if (!list.length) {
+            tb.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.08em;text-transform:uppercase;font-size:0.75rem;">No payments yet</td></tr>`;
+            return;
+        }
+        tb.innerHTML = [...list].reverse().map(p => `
+            <tr>
+              <td style="color:var(--muted);font-size:0.8rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.04em;">${p.date}</td>
+              <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:0.06em;">${p.plan}</td>
+              <td><span class="badge badge-${p.method.toLowerCase()}">${p.method}</span></td>
+              <td style="color:var(--green);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.05em;">Rs.${p.amount.toLocaleString()}</td>
+              <td><span class="badge badge-${p.status.toLowerCase()}">${p.status}</span></td>
+            </tr>`).join('');
+    }
+
+    function showInvoice(inv) {
+        document.getElementById('invId').textContent    = 'Invoice #' + inv.invoiceId;
+        document.getElementById('invTotal').textContent = 'Rs. ' + inv.amount.toLocaleString();
+        document.getElementById('invBody').innerHTML    = `
+            <div class="invoice-row"><span>Member ID</span><span>${inv.memberId}</span></div>
+            <div class="invoice-row"><span>Member Name</span><span>${inv.memberName}</span></div>
+            <div class="invoice-row"><span>Plan</span><span>${inv.plan}</span></div>
+            <div class="invoice-row"><span>Issue Date</span><span>${inv.issueDate}</span></div>
+            <div class="invoice-row"><span>Due Date</span><span>${inv.dueDate}</span></div>
+            <div class="invoice-row"><span>Status</span><span style="color:var(--green);">✓ PAID</span></div>`;
+        document.getElementById('invoiceModal').classList.add('show');
+    }
+
+    function showAlert(id, msg, type) {
+        const el = document.getElementById(id);
+        el.innerHTML = `<div class="alert alert-${type}" style="margin-bottom:1rem;">${msg}</div>`;
+        setTimeout(() => el.innerHTML = '', 4000);
+    }
+
+    document.getElementById('invoiceModal').addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('show');
+    });
+</script>
+</body>
+</html>
