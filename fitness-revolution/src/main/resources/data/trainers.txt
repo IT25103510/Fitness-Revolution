@@ -1,0 +1,1 @@
+TRN-0001|Imal|imal@gmail.com|07777|WEIGHT_TRAINING|5|5000.0|true|2026-05-15
