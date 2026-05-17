@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Reports – Fitness Revolution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --lime: #c8f000; --lime-dim: rgba(200,240,0,0.12); --lime-border: rgba(200,240,0,0.3);
+            --bg: #0a0a0a; --surface: #141414; --surface2: #1c1c1c; --border: rgba(255,255,255,0.07);
+            --text: #f0f0f0; --muted: #666;
+            --red: #ef4444; --yellow: #f59e0b; --green: #22c55e; --purple: #a855f7; --blue: #3b82f6;
+        }
+        body { background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; min-height: 100vh; }
+        .marquee-bar { background: var(--lime); color: #000; font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 0.12em; padding: 7px 0; overflow: hidden; white-space: nowrap; }
+        .marquee-inner { display: inline-block; animation: marquee 24s linear infinite; }
+        @keyframes marquee { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
+        .navbar { display: flex; align-items: center; gap: 1rem; padding: 0 2rem; height: 60px; background: rgba(10,10,10,0.95); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+        .navbar-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.08em; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+        .brand-dot { color: var(--lime); }
+        .admin-badge { font-size: 0.72rem; font-weight: 600; color: var(--red); background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); padding: 3px 10px; border-radius: 20px; letter-spacing: 0.05em; }
+        .nav-links { display: flex; gap: 0.2rem; margin-left: auto; align-items: center; }
+        .nav-links a { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 6px 14px; border-radius: 4px; transition: color 0.2s, background 0.2s; }
+        .nav-links a:hover { color: var(--lime); background: var(--lime-dim); }
+        .nav-links a.active { color: var(--lime); background: var(--lime-dim); border-bottom: 2px solid var(--lime); }
+        .nav-links a.logout { color: var(--red) !important; }
+        .nav-links a.logout:hover { background: rgba(239,68,68,0.1); }
+        .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem 2rem; }
+        .section-heading { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.06em; color: #fff; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+        .section-heading span { color: var(--lime); }
+        .section-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .reports-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1.5rem; position: relative; overflow: hidden; transition: border-color 0.2s; }
+        .card:hover { border-color: var(--lime-border); }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--lime); transform: scaleX(0); transition: transform 0.3s; }
+        .card:hover::before { transform: scaleX(1); }
+        .card-title { display: flex; align-items: center; gap: 0.5rem; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.08em; color: var(--lime); margin-bottom: 1.2rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+        /* Report rows */
+        .report-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+        .report-row:last-child { border-bottom: none; }
+        .report-key { font-size: 0.82rem; color: var(--muted); font-weight: 500; }
+        .report-val { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.04em; }
+        .c-green { color: var(--green); } .c-yellow { color: var(--yellow); } .c-red { color: var(--red); }
+        .c-blue { color: var(--blue); } .c-purple { color: var(--purple); } .c-lime { color: var(--lime); }
+        /* Big metric */
+        .big-metric { text-align: center; padding: 1rem 0 0.5rem; }
+        .big-metric-val { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 0.04em; color: var(--lime); line-height: 1; }
+        .big-metric-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+        /* Divider */
+        .divider { height: 1px; background: var(--border); margin: 0.75rem 0; }
+        p { color: var(--muted); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+<script>if(sessionStorage.getItem('role')!=='admin'){window.location.href='index.html';}</script>
+
+<div class="marquee-bar">
+    <span class="marquee-inner">⚡ SYSTEM REPORTS &nbsp;★&nbsp; MEMBER ANALYTICS &nbsp;★&nbsp; PAYMENT INSIGHTS &nbsp;★&nbsp; ATTENDANCE TRACKING &nbsp;★&nbsp; TRAINER PERFORMANCE &nbsp;★&nbsp; FITNESS REVOLUTION &nbsp;★&nbsp;</span>
+</div>
+
+<nav class="navbar">
+    <a class="navbar-brand" href="admin.html"><span class="brand-dot">⚡</span> FITNESS REVOLUTION</a>
+    <span class="admin-badge">🔐 ADMIN PANEL</span>
+    <div class="nav-links">
+        <a href="admin.html">Dashboard</a>
+        <a href="members.html">Members</a>
+        <a href="payments.html">Payments</a>
+        <a href="trainers.html">Trainers</a>
+        <a href="attendance.html">Attendance</a>
+        <a href="reports.html" class="active">Reports</a>
+        <a href="index.html" class="logout" onclick="sessionStorage.clear()">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="section-heading">SYSTEM <span>REPORTS</span></div>
+
+    <div class="reports-grid">
+        <div class="card">
+            <div class="card-title"><span>👥</span>MEMBER SUMMARY</div>
+            <div id="memberReport"><p>Loading...</p></div>
+        </div>
+        <div class="card">
+            <div class="card-title"><span>💳</span>PAYMENT SUMMARY</div>
+            <div id="paymentReport"><p>Loading...</p></div>
+        </div>
+        <div class="card">
+            <div class="card-title"><span>🏋️</span>TRAINER SUMMARY</div>
+            <div id="trainerReport"><p>Loading...</p></div>
+        </div>
+        <div class="card">
+            <div class="card-title"><span>📅</span>ATTENDANCE SUMMARY</div>
+            <div id="attReport"><p>Loading...</p></div>
+        </div>
+    </div>
+</div>
+
+<script src="js/reports.js"></script>
+</body>
+</html>
