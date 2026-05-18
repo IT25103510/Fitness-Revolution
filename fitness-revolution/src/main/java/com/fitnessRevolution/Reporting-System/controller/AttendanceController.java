@@ -3,13 +3,9 @@ package com.fitnessRevolution.controller;
 import com.fitnessRevolution.model.AttendanceRecord;
 import com.fitnessRevolution.service.AttendanceService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
+
+
 
 @RestController
 @RequestMapping("/api/attendance")
@@ -42,10 +38,8 @@ public class AttendanceController {
     }
 
     // ── All attendance records ────────────────────────────────────
-    @GetMapping
-    public List<AttendanceRecord> getAll() {
-        return service.getAll();
-    }
+    
+    
 
     // ── Today's attendance ────────────────────────────────────────
     @GetMapping("/today")
