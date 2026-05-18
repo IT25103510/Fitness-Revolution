@@ -76,12 +76,8 @@ public class AttendanceController {
     }
 
     // ── Check-out ─────────────────────────────────────────────────
-    @PutMapping("/checkout/{memberId}")
-    public ResponseEntity<?> checkOut(@PathVariable String memberId) {
-        return service.checkOut(memberId)
-                ? ResponseEntity.ok("Checked out")
-                : ResponseEntity.notFound().build();
-    }
+    
+    
 
     // ── Delete ────────────────────────────────────────────────────
     @DeleteMapping("/{id}")
