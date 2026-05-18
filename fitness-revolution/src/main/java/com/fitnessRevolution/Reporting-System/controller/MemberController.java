@@ -19,13 +19,7 @@ public class MemberController {
     @GetMapping("/stats") public Map<String,Object> stats() { return service.getStats(); }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getOne(@PathVariable String id) {
-        return service.getById(id).map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/search")
-    public List<Member> search(@RequestParam String q) { return service.search(q); }
+    
 
     @PostMapping
     public ResponseEntity<?> add(@RequestBody Map<String,String> b) {
@@ -42,11 +36,8 @@ public class MemberController {
         return ok ? ResponseEntity.ok("Updated") : ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/{id}/renew")
-    public ResponseEntity<?> renew(@PathVariable String id) {
-        return service.renew(id) ? ResponseEntity.ok("Renewed") : ResponseEntity.notFound().build();
-    }
-
+   
+    
     @PutMapping("/{id}/toggle")
     public ResponseEntity<?> toggle(@PathVariable String id) {
         return service.toggle(id) ? ResponseEntity.ok("Toggled") : ResponseEntity.notFound().build();
