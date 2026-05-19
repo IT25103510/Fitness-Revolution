@@ -1,12 +1,15 @@
 const API        = 'http://localhost:8080/api/payments';
 const MEMBERS_API = 'http://localhost:8080/api/members';
-let selectedPlan = 'MONTHLY', selectedMethod = 'CASH';
+const PLANS_API   = 'http://localhost:8080/api/membership-types/active';
+let selectedPlan = null, selectedMethod = 'CASH';
+let allPlans = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     loadStats();
     loadPayments();
     loadRefunds();
     loadMembersDropdown();
+    loadPlans();
 });
 
 async function loadMembersDropdown() {
@@ -15,15 +18,21 @@ async function loadMembersDropdown() {
 
     select.innerHTML = '<option value="">-- Select Member --</option>' +
         members.map(m =>
-            `<option value="${m.id}" data-name="${m.name}">${m.id} — ${m.name}</option>`
+            `<option value="${m.id}" data-name="${m.name}" data-plan="${m.membershipType||''}">${
+                m.id} — ${m.name}</option>`
         ).join('');
 
     select.onchange = function() {
         const opt = this.options[this.selectedIndex];
         document.getElementById('fMemberName').value = opt.dataset.name || '';
+        // Auto-highlight this member's current plan
+        const memberPlan = opt.dataset.plan;
+        if (memberPlan) {
+            highlightPlan(memberPlan);
+        }
     };
 
-    // Members page එකෙන් redirect වෙලා ආවොත් auto select
+    // Members page redirect auto-select
     const newMemberId   = sessionStorage.getItem('newMemberId');
     const newMemberName = sessionStorage.getItem('newMemberName');
 
@@ -35,6 +44,57 @@ async function loadMembersDropdown() {
         showAlert('payAlert',
             `Welcome ${newMemberName}! Please complete your payment to activate membership.`,
             'success');
+        // Trigger plan highlight
+        const opt = select.options[select.selectedIndex];
+        if (opt && opt.dataset.plan) highlightPlan(opt.dataset.plan);
+    }
+}
+
+// ── Load plans from API and render plan cards ──────────────
+async function loadPlans() {
+    try {
+        allPlans = await (await fetch(PLANS_API)).json();
+    } catch(e) {
+        // Fallback defaults if API fails
+        allPlans = [
+            { code:'MONTHLY',  name:'Monthly',  price:3000,  durationMonths:1  },
+            { code:'YEARLY',   name:'Yearly',   price:25000, durationMonths:12 },
+            { code:'STUDENT',  name:'Student',  price:1500,  durationMonths:6  },
+            { code:'FAMILY',   name:'Family',   price:20000, durationMonths:12 },
+        ];
+    }
+    renderPlanCards();
+}
+
+function renderPlanCards() {
+    const grid = document.getElementById('planGrid');
+    if (!allPlans.length) {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:1.5rem">No plans found</div>';
+        return;
+    }
+    grid.innerHTML = allPlans.map(p => {
+        const dur = p.durationMonths === 1 ? '1 Month'
+                  : p.durationMonths === 12 ? '1 Year'
+                  : p.durationMonths + ' Months';
+        return `<label class="plan-card" id="plan-${p.code}" onclick="highlightPlan('${p.code}')">
+            <input type="radio" name="plan" value="${p.code}"/>
+            <div class="plan-name">${p.name}</div>
+            <div class="plan-price">Rs. ${Number(p.price).toLocaleString()}</div>
+            <div class="plan-desc">${dur}</div>
+        </label>`;
+    }).join('');
+    // Auto-select first plan
+    highlightPlan(allPlans[0].code);
+}
+
+function highlightPlan(code) {
+    selectedPlan = code;
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+    const card = document.getElementById('plan-' + code);
+    if (card) {
+        card.classList.add('selected');
+        const radio = card.querySelector('input[type=radio]');
+        if (radio) radio.checked = true;
     }
 }
 
@@ -47,9 +107,7 @@ async function loadStats() {
 }
 
 function selectPlan(radio) {
-    selectedPlan = radio.value;
-    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
-    radio.closest('.plan-card').classList.add('selected');
+    highlightPlan(radio.value);
 }
 
 function selectMethod(method, el) {
@@ -63,6 +121,9 @@ async function submitPayment() {
     const memberName = document.getElementById('fMemberName').value.trim();
     if (!memberId || !memberName) {
         showAlert('payAlert', 'Member select කරන්න!', 'danger'); return;
+    }
+    if (!selectedPlan) {
+        showAlert('payAlert', 'Plan එකක් select කරන්න!', 'danger'); return;
     }
     const res = await fetch(API, {
         method:  'POST',
