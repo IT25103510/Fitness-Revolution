@@ -2,7 +2,7 @@ const API = 'http://localhost:8080/api/trainers';
 let allTrainers = [], allSessions = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadStats(); loadTrainers(); loadSessions();
+    loadStats(); loadTrainers(); loadSessions(); loadSessionMembers();
     document.getElementById('bDate').valueAsDate = new Date();
 });
 
@@ -83,6 +83,33 @@ function editTrainer(id) {
 async function toggleTrainer(id) { await fetch(`${API}/${id}/toggle`,{method:'PUT'}); loadTrainers(); loadStats(); }
 async function deleteTrainer(id) { if (!confirm('Delete trainer?')) return; await fetch(`${API}/${id}`,{method:'DELETE'}); loadTrainers(); loadStats(); }
 
+// ── Populate Book-Session member dropdown ──────────────────
+async function loadSessionMembers() {
+    try {
+        const members = await (await fetch('http://localhost:8080/api/members')).json();
+        const sel = document.getElementById('bMemberSelect');
+        sel.innerHTML = '<option value="">— Select Member —</option>';
+        members.forEach(m => {
+            const opt = document.createElement('option');
+            opt.value = m.id;
+            opt.dataset.id   = m.id;
+            opt.dataset.name = m.name;
+            opt.textContent  = `${m.name} (${m.id})`;
+            sel.appendChild(opt);
+        });
+    } catch(e) {
+        console.error('Failed to load members for session booking:', e);
+    }
+}
+
+// Called by onchange on #bMemberSelect
+function onSessionMemberSelect() {
+    const sel = document.getElementById('bMemberSelect');
+    const opt = sel.options[sel.selectedIndex];
+    document.getElementById('bMemberId').value   = opt.dataset.id   || '';
+    document.getElementById('bMemberName').value = opt.dataset.name || '';
+}
+
 async function bookSession() {
     const trainerId  = document.getElementById('bTrainer').value;
     const memberId   = document.getElementById('bMemberId').value.trim();
@@ -90,10 +117,15 @@ async function bookSession() {
     const date       = document.getElementById('bDate').value;
     const timeSlot   = document.getElementById('bSlot').value;
     const type       = allTrainers.find(t=>t.trainerId===trainerId)?.specialization || 'GENERAL';
-    if (!trainerId||!memberId||!memberName||!date) { showAlert('sessionAlert','Fill all fields','danger'); return; }
+    if (!trainerId||!memberId||!memberName||!date) { showAlert('sessionAlert','Fill all required fields','danger'); return; }
     const res = await fetch(`${API}/sessions`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({trainerId,memberId,memberName,date,timeSlot,type}) });
-    if (res.ok) { showAlert('sessionAlert','Session booked!','success'); document.getElementById('bMemberId').value=''; document.getElementById('bMemberName').value=''; loadSessions(); loadStats(); }
-    else { const e=await res.text(); showAlert('sessionAlert','Error: '+e,'danger'); }
+    if (res.ok) {
+        showAlert('sessionAlert','Session booked!','success');
+        document.getElementById('bMemberSelect').value = '';
+        document.getElementById('bMemberId').value   = '';
+        document.getElementById('bMemberName').value = '';
+        loadSessions(); loadStats();
+    } else { const e=await res.text(); showAlert('sessionAlert','Error: '+e,'danger'); }
 }
 
 async function loadSessions() {
