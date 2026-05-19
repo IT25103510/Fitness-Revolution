@@ -9,19 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-/**
- * REST API for MembershipType CRUD.
- *
- * Endpoints:
- *   GET    /api/membership-types          → getAll()
- *   GET    /api/membership-types/active   → getActive()
- *   GET    /api/membership-types/stats    → getStats()
- *   GET    /api/membership-types/{code}   → getOne()
- *   POST   /api/membership-types          → create()
- *   PUT    /api/membership-types/{code}   → update()
- *   PUT    /api/membership-types/{code}/toggle → toggle active/inactive
- *   DELETE /api/membership-types/{code}   → delete()
- */
+
 @RestController
 @RequestMapping("/api/membership-types")
 @CrossOrigin(origins = "*")
@@ -30,25 +18,25 @@ public class MembershipTypeController {
     @Autowired
     private MembershipTypeService service;
 
-    // ── GET ALL ──────────────────────────────────────────────────────────
+    
     @GetMapping
     public List<MembershipType> getAll() {
         return service.getAll();
     }
 
-    // ── GET ACTIVE ONLY ──────────────────────────────────────────────────
+    
     @GetMapping("/active")
     public List<MembershipType> getActive() {
         return service.getActive();
     }
 
-    // ── GET STATS ────────────────────────────────────────────────────────
+   
     @GetMapping("/stats")
     public Map<String, Object> stats() {
         return service.getStats();
     }
 
-    // ── GET ONE ──────────────────────────────────────────────────────────
+   
     @GetMapping("/{code}")
     public ResponseEntity<?> getOne(@PathVariable String code) {
         return service.getByCode(code)
@@ -56,17 +44,7 @@ public class MembershipTypeController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // ── CREATE ───────────────────────────────────────────────────────────
-    /**
-     * Request body (JSON):
-     * {
-     *   "code": "PREMIUM",
-     *   "name": "Premium",
-     *   "price": 5000,
-     *   "durationMonths": 1,
-     *   "description": "Premium access with personal trainer"
-     * }
-     */
+    
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Map<String, Object> body) {
         try {
@@ -95,16 +73,7 @@ public class MembershipTypeController {
         }
     }
 
-    // ── UPDATE ───────────────────────────────────────────────────────────
-    /**
-     * Request body (JSON) — code path variable ekei update karanne:
-     * {
-     *   "name": "Monthly Plus",
-     *   "price": 3500,
-     *   "durationMonths": 1,
-     *   "description": "Updated description"
-     * }
-     */
+   
     @PutMapping("/{code}")
     public ResponseEntity<?> update(@PathVariable String code,
                                     @RequestBody Map<String, Object> body) {
@@ -130,7 +99,7 @@ public class MembershipTypeController {
         }
     }
 
-    // ── TOGGLE ACTIVE / INACTIVE ──────────────────────────────────────────
+   
     @PutMapping("/{code}/toggle")
     public ResponseEntity<?> toggle(@PathVariable String code) {
         boolean ok = service.toggle(code);
@@ -138,7 +107,7 @@ public class MembershipTypeController {
                 : ResponseEntity.notFound().build();
     }
 
-    // ── DELETE ───────────────────────────────────────────────────────────
+    
     @DeleteMapping("/{code}")
     public ResponseEntity<?> delete(@PathVariable String code) {
         boolean ok = service.delete(code);
