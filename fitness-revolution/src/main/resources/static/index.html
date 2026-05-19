@@ -32,39 +32,49 @@
             background: #000;
         }
 
-        /* Dark gym atmosphere via layered CSS */
+        /* Dark gym atmosphere - hero photo background */
         .gym-bg {
             position: absolute;
             inset: 0;
-            background:
-                    radial-gradient(ellipse 80% 60% at 30% 40%, rgba(200,240,0,0.06) 0%, transparent 60%),
-                    radial-gradient(ellipse 60% 80% at 70% 70%, rgba(200,240,0,0.03) 0%, transparent 50%),
-                    linear-gradient(160deg, #0d0d0d 0%, #050505 50%, #0a0a0a 100%);
+            background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1400&q=80&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center 30%;
+            background-repeat: no-repeat;
         }
-
-        /* Grid lines */
+        /* Dark overlay on top of photo - keeps lime theme */
         .gym-bg::before {
             content: '';
             position: absolute;
             inset: 0;
-            background-image:
-                    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-            background-size: 60px 60px;
+            background:
+                    linear-gradient(160deg,
+                    rgba(0,0,0,0.75) 0%,
+                    rgba(0,0,0,0.55) 40%,
+                    rgba(0,0,0,0.70) 100%),
+                    radial-gradient(ellipse 80% 60% at 30% 40%, rgba(200,240,0,0.08) 0%, transparent 60%);
+            z-index: 1;
         }
 
-        /* Diagonal accent bars */
+
+
+        /* Diagonal accent bars (subtle lime overlay on photo) */
         .gym-bg::after {
             content: '';
             position: absolute;
             inset: 0;
+            z-index: 2;
             background: repeating-linear-gradient(
                     -55deg,
                     transparent,
                     transparent 120px,
-                    rgba(200,240,0,0.015) 120px,
-                    rgba(200,240,0,0.015) 122px
+                    rgba(200,240,0,0.03) 120px,
+                    rgba(200,240,0,0.03) 122px
             );
+        }
+
+        /* Ensure content sits above photo overlay */
+        .gym-shape, .gym-bar, .gym-brand, .gym-content {
+            z-index: 2;
         }
 
         /* Abstract dumbbell / weight shapes */
@@ -318,6 +328,52 @@
             .gym-stats { gap: 1.5rem; }
             .login-inner { padding: 2rem 1.5rem; }
         }
+
+        /* ── CONTACT PILLS ── */
+        .gym-contact {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.8rem;
+            flex-wrap: wrap;
+        }
+        .gym-contact-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0;
+            text-decoration: none;
+            border-radius: 0;
+            overflow: hidden;
+            font-family: 'Barlow Condensed', 'Barlow', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: transform 0.18s, box-shadow 0.18s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        }
+        .gym-contact-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+        }
+        .pill-icon {
+            display: flex; align-items: center; justify-content: center;
+            width: 34px; height: 34px; flex-shrink: 0;
+        }
+        .pill-text {
+            padding: 0 14px 0 10px;
+            height: 34px;
+            display: flex; align-items: center;
+        }
+        /* Phone — lime theme */
+        .phone-pill .pill-icon { background: var(--lime); color: #000; }
+        .phone-pill .pill-text { background: rgba(200,240,0,0.12); color: var(--lime); border: 1px solid rgba(200,240,0,0.35); border-left: none; }
+        .phone-pill:hover .pill-text { background: rgba(200,240,0,0.22); }
+        /* Facebook — lime theme (same as phone) */
+        .fb-pill .pill-icon { background: var(--lime); color: #000; }
+        .fb-pill .pill-text { background: rgba(200,240,0,0.12); color: var(--lime); border: 1px solid rgba(200,240,0,0.35); border-left: none; }
+        .fb-pill:hover .pill-text { background: rgba(200,240,0,0.22); }
+
     </style>
 </head>
 <body>
@@ -391,6 +447,24 @@
                     <div class="gym-stat-val">5★</div>
                     <div class="gym-stat-label">Rated Gym</div>
                 </div>
+            </div>
+
+            <!-- Contact & Social -->
+            <div class="gym-contact">
+                <!-- Phone pill -->
+                <a href="tel:0785489965" class="gym-contact-pill phone-pill">
+                    <span class="pill-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.19 1.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.55a16 16 0 006.54 6.54l1.62-1.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+                    </span>
+                    <span class="pill-text">0785 489 965</span>
+                </a>
+                <!-- Facebook pill -->
+                <a href="https://www.facebook.com/FitnessRevolution" target="_blank" class="gym-contact-pill fb-pill">
+                    <span class="pill-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                    </span>
+                    <span class="pill-text">Fitness Revolution</span>
+                </a>
             </div>
         </div>
     </div>
@@ -486,8 +560,15 @@
         const email = document.getElementById('memberEmail').value.trim().toLowerCase();
         if (!email) { showAlert('memberAlert', 'Email දාන්න', 'danger'); return; }
 
-        const members = await fetch('http://localhost:8080/api/members').then(r => r.json());
-        const member  = members.find(m => m.email.toLowerCase() === email);
+        let members = [];
+        try {
+            members = await fetch('http://localhost:8080/api/members').then(r => r.json());
+        } catch (e) {
+            showAlert('memberAlert', 'Server සම්බන්ධ කරගන්න බැහැ! Backend running ද?', 'danger');
+            return;
+        }
+
+        const member = members.find(m => m.email.toLowerCase() === email);
 
         if (!member) {
             showAlert('memberAlert', 'Email හොයාගන්න බැහැ!', 'danger');
@@ -496,7 +577,7 @@
 
         sessionStorage.setItem('role',       'member');
         sessionStorage.setItem('memberId',   member.id);
-        sessionStorage.setItem('memberName', member.name);
+        sessionStorage.setItem('memberName', member.name || member.id);
         window.location.href = 'portal.html';
     }
 
