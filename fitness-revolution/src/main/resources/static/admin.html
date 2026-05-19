@@ -7,330 +7,88 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
     <style>
         :root {
-            --bg: #0a0a0a;
-            --bg2: #111111;
-            --bg3: #181818;
-            --bg4: #1e1e1e;
-            --accent: #c8ff00;
-            --accent2: #a8d900;
-            --accent-dim: rgba(200,255,0,0.08);
-            --text: #ffffff;
-            --muted: #777777;
-            --muted2: #555555;
-            --border: #222222;
-            --border2: #2a2a2a;
-            --danger: #ff3b3b;
-            --warning: #f59e0b;
-            --success: #22c55e;
-            --blue: #3b82f6;
-            --purple: #a855f7;
+            --bg: #0a0a0a; --bg2: #111111; --bg3: #181818; --bg4: #1e1e1e;
+            --accent: #c8ff00; --accent2: #a8d900; --accent-dim: rgba(200,255,0,0.08);
+            --text: #ffffff; --muted: #777777; --muted2: #555555;
+            --border: #222222; --border2: #2a2a2a;
+            --danger: #ff3b3b; --warning: #f59e0b; --success: #22c55e; --blue: #3b82f6; --purple: #a855f7;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; min-height: 100vh; }
+        body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; opacity: 0.25; pointer-events: none; z-index: 0; }
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Barlow', sans-serif;
-            min-height: 100vh;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image:
-                    linear-gradient(var(--border) 1px, transparent 1px),
-                    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 60px 60px;
-            opacity: 0.25;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 0;
-            height: 60px;
-            background: var(--bg2);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .navbar-brand {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 18px;
-            font-weight: 900;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 0 20px;
-            border-right: 1px solid var(--border);
-            height: 100%;
-            white-space: nowrap;
-        }
+        .navbar { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 0; height: 60px; background: var(--bg2); border-bottom: 1px solid var(--border); }
+        .navbar-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 6px; padding: 0 20px; border-right: 1px solid var(--border); height: 100%; white-space: nowrap; }
         .navbar-brand .bolt { color: var(--accent); }
-
-        .admin-badge {
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--danger);
-            background: rgba(255,59,59,0.1);
-            border: 1px solid rgba(255,59,59,0.25);
-            padding: 4px 10px;
-            margin: 0 16px;
-            white-space: nowrap;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            margin-left: auto;
-        }
-
-        .nav-links a {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            padding: 0 14px;
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--muted);
-            text-decoration: none;
-            border-bottom: 2px solid transparent;
-            transition: all 0.15s;
-            white-space: nowrap;
-        }
+        .admin-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--danger); background: rgba(255,59,59,0.1); border: 1px solid rgba(255,59,59,0.25); padding: 4px 10px; margin: 0 16px; white-space: nowrap; }
+        .nav-links { display: flex; align-items: center; height: 100%; margin-left: auto; }
+        .nav-links a { display: flex; align-items: center; height: 100%; padding: 0 14px; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; transition: all 0.15s; white-space: nowrap; }
         .nav-links a:hover { color: var(--text); }
         .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent); }
         .nav-links a.danger { color: var(--danger); }
         .nav-links a.danger:hover { background: rgba(255,59,59,0.08); }
         .nav-links a.member-link { color: var(--success); }
 
-        .ticker {
-            background: var(--accent);
-            padding: 7px 0;
-            overflow: hidden;
-            position: relative;
-            z-index: 5;
-        }
-        .ticker-inner {
-            display: flex;
-            animation: tick 28s linear infinite;
-            white-space: nowrap;
-        }
+        .ticker { background: var(--accent); padding: 7px 0; overflow: hidden; position: relative; z-index: 5; }
+        .ticker-inner { display: flex; animation: tick 28s linear infinite; white-space: nowrap; }
         @keyframes tick { from { transform: translateX(0) } to { transform: translateX(-50%) } }
-        .ticker-text {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-            color: #000;
-            padding: 0 24px;
-            text-transform: uppercase;
-        }
+        .ticker-text { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; color: #000; padding: 0 24px; text-transform: uppercase; }
 
-        .hero-banner {
-            position: relative;
-            height: 220px;
-            overflow: hidden;
-            z-index: 1;
-        }
-        .hero-banner img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center 30%;
-            filter: brightness(0.35);
-        }
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: flex-end;
-            padding: 28px 32px;
-            background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, transparent 60%);
-        }
+        .hero-banner { position: relative; height: 220px; overflow: hidden; z-index: 1; }
+        .hero-banner img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; filter: brightness(0.35); }
+        .hero-overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 28px 32px; background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, transparent 60%); }
         .hero-content { display: flex; align-items: flex-end; justify-content: space-between; width: 100%; }
-        .hero-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 48px;
-            font-weight: 900;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            line-height: 1;
-            color: var(--text);
-        }
+        .hero-title { font-family: 'Barlow Condensed', sans-serif; font-size: 48px; font-weight: 900; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1; color: var(--text); }
         .hero-title span { color: var(--accent); }
-        .hero-sub {
-            font-size: 13px;
-            color: var(--muted);
-            letter-spacing: 0.04em;
-            margin-top: 6px;
-        }
+        .hero-sub { font-size: 13px; color: var(--muted); letter-spacing: 0.04em; margin-top: 6px; }
         .hero-time { text-align: right; font-family: 'Barlow Condensed', sans-serif; }
-        .hero-time .time-val {
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 0.04em;
-        }
-        .hero-time .time-label {
-            font-size: 11px;
-            color: var(--muted);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
+        .hero-time .time-val { font-size: 36px; font-weight: 700; color: var(--accent); letter-spacing: 0.04em; }
+        .hero-time .time-label { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
-        .wrap {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 28px 24px 48px;
-            position: relative;
-            z-index: 1;
-        }
+        .wrap { max-width: 1400px; margin: 0 auto; padding: 28px 24px 48px; position: relative; z-index: 1; }
 
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 1px;
-            background: var(--border);
-            border: 1px solid var(--border);
-            margin-bottom: 24px;
-        }
-        .stat-card {
-            background: var(--bg2);
-            padding: 18px 16px;
-            position: relative;
-            transition: background 0.15s;
-        }
+        .stats-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 24px; }
+        .stat-card { background: var(--bg2); padding: 18px 16px; position: relative; transition: background 0.15s; }
         .stat-card:hover { background: var(--bg3); }
-        .stat-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 2px;
-            background: transparent;
-            transition: background 0.15s;
-        }
+        .stat-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: transparent; transition: background 0.15s; }
         .stat-card:hover::after { background: var(--accent); }
-        .stat-label {
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 10px;
-        }
-        .stat-value {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: 0.02em;
-            line-height: 1;
-        }
+        .stat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+        .stat-value { font-family: 'Barlow Condensed', sans-serif; font-size: 32px; font-weight: 900; letter-spacing: 0.02em; line-height: 1; }
         .stat-icon { position: absolute; top: 16px; right: 14px; font-size: 20px; opacity: 0.3; }
-        .c-green  { color: var(--accent); }
-        .c-blue   { color: var(--blue); }
-        .c-yellow { color: var(--warning); }
-        .c-purple { color: var(--purple); }
-        .c-red    { color: var(--danger); }
+        .c-green { color: var(--accent); } .c-blue { color: var(--blue); } .c-yellow { color: var(--warning); } .c-purple { color: var(--purple); } .c-red { color: var(--danger); }
 
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
 
         .card { background: var(--bg2); border: 1px solid var(--border); padding: 20px; }
         .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-        .card-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 14px;
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .card-title { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); display: flex; align-items: center; gap: 8px; }
         .card-title-dot { width: 8px; height: 8px; background: var(--accent); display: inline-block; }
-        .card-action {
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: var(--accent);
-            text-decoration: none;
-            border: 1px solid var(--accent);
-            padding: 4px 10px;
-            transition: all 0.15s;
-        }
+        .card-action { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); text-decoration: none; border: 1px solid var(--accent); padding: 4px 10px; transition: all 0.15s; }
         .card-action:hover { background: var(--accent); color: #000; }
 
         .table-wrap { overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; font-size: 13px; }
         thead tr { border-bottom: 1px solid var(--border2); }
-        th {
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--muted);
-            padding: 8px 12px 8px 0;
-            text-align: left;
-        }
+        th { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 8px 12px 8px 0; text-align: left; }
         td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--border); color: var(--text); }
         tbody tr:last-child td { border-bottom: none; }
         tbody tr:hover td { background: var(--bg3); }
         .member-id { font-size: 10px; color: var(--muted); font-family: monospace; }
 
-        .badge {
-            display: inline-block;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 3px 8px;
-        }
-        .badge-active    { background: rgba(200,255,0,0.12); color: var(--accent); border: 1px solid rgba(200,255,0,0.3); }
-        .badge-expired   { background: rgba(255,59,59,0.1); color: var(--danger); border: 1px solid rgba(255,59,59,0.25); }
-        .badge-expiring  { background: rgba(245,158,11,0.1); color: var(--warning); border: 1px solid rgba(245,158,11,0.25); }
-        .badge-inactive  { background: rgba(119,119,119,0.1); color: var(--muted); border: 1px solid var(--border2); }
-        .badge-paid      { background: rgba(200,255,0,0.12); color: var(--accent); border: 1px solid rgba(200,255,0,0.3); }
-        .badge-pending   { background: rgba(245,158,11,0.1); color: var(--warning); border: 1px solid rgba(245,158,11,0.25); }
-        .badge-gold      { background: rgba(234,179,8,0.1); color: #eab308; border: 1px solid rgba(234,179,8,0.25); }
-        .badge-silver    { background: rgba(148,163,184,0.1); color: #94a3b8; border: 1px solid rgba(148,163,184,0.25); }
-        .badge-platinum  { background: rgba(168,85,247,0.1); color: var(--purple); border: 1px solid rgba(168,85,247,0.25); }
+        .badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; }
+        .badge-active   { background: rgba(200,255,0,0.12); color: var(--accent); border: 1px solid rgba(200,255,0,0.3); }
+        .badge-expired  { background: rgba(255,59,59,0.1); color: var(--danger); border: 1px solid rgba(255,59,59,0.25); }
+        .badge-expiring { background: rgba(245,158,11,0.1); color: var(--warning); border: 1px solid rgba(245,158,11,0.25); }
+        .badge-inactive { background: rgba(119,119,119,0.1); color: var(--muted); border: 1px solid var(--border2); }
+        .badge-paid     { background: rgba(200,255,0,0.12); color: var(--accent); border: 1px solid rgba(200,255,0,0.3); }
+        .badge-pending  { background: rgba(245,158,11,0.1); color: var(--warning); border: 1px solid rgba(245,158,11,0.25); }
+        .badge-gold     { background: rgba(234,179,8,0.1); color: #eab308; border: 1px solid rgba(234,179,8,0.25); }
+        .badge-silver   { background: rgba(148,163,184,0.1); color: #94a3b8; border: 1px solid rgba(148,163,184,0.25); }
+        .badge-platinum { background: rgba(168,85,247,0.1); color: var(--purple); border: 1px solid rgba(168,85,247,0.25); }
 
         .actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 12px 14px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
+        .btn { display: flex; align-items: center; justify-content: center; gap: 6px; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 14px; text-decoration: none; border: none; cursor: pointer; transition: all 0.15s; }
         .btn-primary { background: var(--accent); color: #000; }
         .btn-primary:hover { background: var(--accent2); }
         .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border2); }
@@ -339,46 +97,19 @@
 
         .trainer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
         .trainer-card { position: relative; overflow: hidden; aspect-ratio: 3/4; background: var(--bg3); }
-        .trainer-card img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            filter: brightness(0.6) saturate(0.7);
-            transition: all 0.3s;
-        }
+        .trainer-card img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6) saturate(0.7); transition: all 0.3s; }
         .trainer-card:hover img { filter: brightness(0.5) saturate(1); transform: scale(1.04); }
-        .trainer-card-overlay {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.92));
-            padding: 24px 12px 12px;
-        }
-        .trainer-name {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 15px;
-            font-weight: 800;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: var(--text);
-        }
+        .trainer-card-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.92)); padding: 24px 12px 12px; }
+        .trainer-name { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text); }
         .trainer-role { font-size: 10px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-top: 2px; }
         .trainer-status { position: absolute; top: 10px; right: 10px; }
 
         .activity-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
         .activity-item:last-child { border-bottom: none; }
         .activity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
-        .activity-dot.green  { background: var(--accent); }
-        .activity-dot.yellow { background: var(--warning); }
-        .activity-dot.red    { background: var(--danger); }
-        .activity-dot.blue   { background: var(--blue); }
+        .activity-dot.green { background: var(--accent); } .activity-dot.yellow { background: var(--warning); } .activity-dot.red { background: var(--danger); } .activity-dot.blue { background: var(--blue); }
         .activity-text { font-size: 13px; color: var(--text); line-height: 1.4; }
         .activity-time { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
-        .progress-row { margin-bottom: 14px; }
-        .progress-top { display: flex; justify-content: space-between; margin-bottom: 6px; }
-        .progress-label { font-size: 12px; font-weight: 600; color: var(--text); }
-        .progress-val { font-size: 12px; color: var(--muted); }
-        .progress-bar { height: 4px; background: var(--border2); overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--accent); }
 
         .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 80px; margin-top: 12px; }
         .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
@@ -390,12 +121,7 @@
         .empty { text-align: center; color: var(--muted); font-size: 13px; padding: 20px 0; }
 
         @media (max-width: 1100px) { .stats-row { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 768px) {
-            .grid-2, .grid-3 { grid-template-columns: 1fr; }
-            .stats-row { grid-template-columns: repeat(2, 1fr); }
-            .hero-title { font-size: 32px; }
-            .trainer-grid { grid-template-columns: repeat(2, 1fr); }
-        }
+        @media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } .stats-row { grid-template-columns: repeat(2, 1fr); } .hero-title { font-size: 32px; } .trainer-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
@@ -406,6 +132,7 @@
     <div class="nav-links">
         <a href="admin.html" class="active">Dashboard</a>
         <a href="members.html">Members</a>
+        <a href="memberships.html">Memberships</a>
         <a href="payments.html">Payments</a>
         <a href="trainers.html">Trainers</a>
         <a href="attendance.html">Attendance</a>
@@ -555,41 +282,33 @@
         </div>
     </div>
 
-    <div class="grid-2" style="margin-bottom:16px;">
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title"><span class="card-title-dot"></span> Membership Breakdown</div>
+    <!-- GYM PHOTOS FULL WIDTH -->
+    <div style="overflow:hidden;margin-bottom:16px;border:1px solid var(--border);">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 300px;height:180px;gap:2px;background:var(--border);">
+            <div style="overflow:hidden;">
+                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500&q=80&auto=format&fit=crop"
+                     style="width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(0.6) saturate(0.8);transform:scale(1);transition:transform 0.4s"
+                     onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'" alt="gym"/>
             </div>
-            <div class="progress-row"><div class="progress-top"><span class="progress-label">Gold</span><span class="progress-val" id="goldPct">—</span></div><div class="progress-bar"><div class="progress-fill" id="goldBar" style="width:0%;background:#eab308"></div></div></div>
-            <div class="progress-row"><div class="progress-top"><span class="progress-label">Silver</span><span class="progress-val" id="silverPct">—</span></div><div class="progress-bar"><div class="progress-fill" id="silverBar" style="width:0%;background:#94a3b8"></div></div></div>
-            <div class="progress-row"><div class="progress-top"><span class="progress-label">Platinum</span><span class="progress-val" id="platPct">—</span></div><div class="progress-bar"><div class="progress-fill" id="platBar" style="width:0%;background:var(--purple)"></div></div></div>
-            <div class="progress-row"><div class="progress-top"><span class="progress-label">Basic</span><span class="progress-val" id="basicPct">—</span></div><div class="progress-bar"><div class="progress-fill" id="basicBar" style="width:0%;background:var(--muted)"></div></div></div>
-            <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
-                <div class="card-title" style="font-size:12px;margin-bottom:12px;"><span class="card-title-dot" style="background:#2dd4bf"></span> Revenue by Plan</div>
-                <div class="progress-row"><div class="progress-top"><span class="progress-label">Platinum</span><span class="progress-val" id="revPlat">—</span></div><div class="progress-bar"><div class="progress-fill" id="revPlatBar" style="width:0%;background:var(--purple)"></div></div></div>
-                <div class="progress-row"><div class="progress-top"><span class="progress-label">Gold</span><span class="progress-val" id="revGold">—</span></div><div class="progress-bar"><div class="progress-fill" id="revGoldBar" style="width:0%;background:#eab308"></div></div></div>
-                <div class="progress-row"><div class="progress-top"><span class="progress-label">Silver</span><span class="progress-val" id="revSilver">—</span></div><div class="progress-bar"><div class="progress-fill" id="revSilverBar" style="width:0%;background:#94a3b8"></div></div></div>
+            <div style="overflow:hidden;">
+                <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=500&q=80&auto=format&fit=crop"
+                     style="width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(0.6) saturate(0.8);transform:scale(1);transition:transform 0.4s"
+                     onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'" alt="gym"/>
             </div>
-        </div>
-
-        <div class="card" style="padding:0;overflow:hidden;">
-            <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:140px 140px;gap:2px;">
-                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500&q=80&auto=format&fit=crop" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.6) saturate(0.8)" alt="gym"/>
-                <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=500&q=80&auto=format&fit=crop" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.6) saturate(0.8)" alt="gym"/>
-                <img src="https://images.unsplash.com/photo-1583454155184-870a1f63aebc?w=500&q=80&auto=format&fit=crop" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.6) saturate(0.8)" alt="gym"/>
-                <div style="background:var(--bg3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:16px;">
-                    <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--accent);letter-spacing:0.04em" id="photoStatVal">—</div>
-                    <div style="font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;text-align:center">Check-in Today</div>
-                    <div style="width:40px;height:2px;background:var(--accent)"></div>
-                    <div style="font-size:11px;color:var(--muted2);letter-spacing:0.06em;text-transform:uppercase">Fitness Revolution</div>
-                </div>
+            <div style="overflow:hidden;">
+                <img src="https://images.unsplash.com/photo-1583454155184-870a1f63aebc?w=500&q=80&auto=format&fit=crop"
+                     style="width:100%;height:100%;object-fit:cover;object-position:center top;filter:brightness(0.6) saturate(0.8);transform:scale(1);transition:transform 0.4s"
+                     onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'" alt="gym"/>
             </div>
-            <div style="padding:16px 20px;background:var(--bg2);">
-                <div class="card-title" style="font-size:12px;margin-bottom:10px;"><span class="card-title-dot"></span> Gym Summary</div>
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
-                    <div style="text-align:center"><div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--accent)" id="sumActive">—</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Active</div></div>
-                    <div style="text-align:center"><div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--warning)" id="sumExpiring">—</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Expiring</div></div>
-                    <div style="text-align:center"><div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--danger)" id="sumExpired">—</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Expired</div></div>
+            <div style="background:var(--bg3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:20px;">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;color:var(--accent);letter-spacing:0.04em;line-height:1" id="photoStatVal">—</div>
+                <div style="font-size:10px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;text-align:center">Check-in Today</div>
+                <div style="width:32px;height:2px;background:var(--accent);margin:2px 0"></div>
+                <div style="font-size:9px;color:var(--muted2);letter-spacing:0.08em;text-transform:uppercase">Fitness Revolution</div>
+                <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
+                    <div style="text-align:center"><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--accent)" id="sumActive">—</div><div style="font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Active</div></div>
+                    <div style="text-align:center"><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--warning)" id="sumExpiring">—</div><div style="font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Expiring</div></div>
+                    <div style="text-align:center"><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--danger)" id="sumExpired">—</div><div style="font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Expired</div></div>
                 </div>
             </div>
         </div>
@@ -598,105 +317,74 @@
 </div>
 
 <script>
-    if (sessionStorage.getItem('role') !== 'admin') {
-        window.location.href = 'index.html';
-    }
-
-    function logout() {
-        sessionStorage.clear();
-        window.location.href = 'index.html';
-    }
+    if (sessionStorage.getItem('role') !== 'admin') { window.location.href = 'index.html'; }
+    function logout() { sessionStorage.clear(); window.location.href = 'index.html'; }
 
     function updateClock() {
         const now = new Date();
-        const h = String(now.getHours()).padStart(2,'0');
-        const m = String(now.getMinutes()).padStart(2,'0');
-        document.getElementById('liveClock').textContent = h + ':' + m;
-        document.getElementById('liveDate').textContent =
-            now.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' });
+        document.getElementById('liveClock').textContent = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+        document.getElementById('liveDate').textContent = now.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' });
     }
-    updateClock();
-    setInterval(updateClock, 60000);
+    updateClock(); setInterval(updateClock, 60000);
 
     const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-    const fakeAtt = [18, 24, 21, 30, 27, 35, 14];
+    const fakeAtt = [18,24,21,30,27,35,14];
     const maxAtt = Math.max(...fakeAtt);
     const todayIdx = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
-    document.getElementById('attendanceChart').innerHTML = days.map((d, i) => {
-        const pct = Math.round((fakeAtt[i] / maxAtt) * 100);
+    document.getElementById('attendanceChart').innerHTML = days.map((d,i) => {
+        const pct = Math.round((fakeAtt[i]/maxAtt)*100);
         return `<div class="bar-col"><div class="bar-fill${i===todayIdx?' active':''}" style="height:${pct}%"></div><div class="bar-day">${d}</div><div class="bar-num">${fakeAtt[i]}</div></div>`;
     }).join('');
 
-    const API = {
-        members:    'http://localhost:8080/api/members',
-        payments:   'http://localhost:8080/api/payments',
-        trainers:   'http://localhost:8080/api/trainers',
-        attendance: 'http://localhost:8080/api/attendance'
-    };
+    const API = { members:'http://localhost:8080/api/members', payments:'http://localhost:8080/api/payments', trainers:'http://localhost:8080/api/trainers', attendance:'http://localhost:8080/api/attendance' };
 
     function membershipBadge(type) {
-        const t = (type || '').toLowerCase();
-        if (t === 'gold')     return `<span class="badge badge-gold">Gold</span>`;
-        if (t === 'silver')   return `<span class="badge badge-silver">Silver</span>`;
-        if (t === 'platinum') return `<span class="badge badge-platinum">Platinum</span>`;
-        return `<span class="badge badge-inactive">${type || 'Basic'}</span>`;
+        const t = (type||'').toLowerCase();
+        if(t==='gold')     return `<span class="badge badge-gold">Gold</span>`;
+        if(t==='silver')   return `<span class="badge badge-silver">Silver</span>`;
+        if(t==='platinum') return `<span class="badge badge-platinum">Platinum</span>`;
+        return `<span class="badge badge-inactive">${type||'Basic'}</span>`;
     }
-
     function getStatus(m) {
-        if (!m.active) return 'Inactive';
-        if (new Date(m.expiryDate) < new Date()) return 'Expired';
-        const d = Math.ceil((new Date(m.expiryDate) - new Date()) / 86400000);
-        if (d <= 7) return 'Expiring';
+        if(!m.active) return 'Inactive';
+        if(new Date(m.expiryDate)<new Date()) return 'Expired';
+        const d=Math.ceil((new Date(m.expiryDate)-new Date())/86400000);
+        if(d<=7) return 'Expiring';
         return 'Active';
     }
-
     function statusBadge(m) {
-        const s = getStatus(m);
-        const cls = s==='Active'?'badge-active':s==='Expired'?'badge-expired':s==='Expiring'?'badge-expiring':'badge-inactive';
+        const s=getStatus(m);
+        const cls=s==='Active'?'badge-active':s==='Expired'?'badge-expired':s==='Expiring'?'badge-expiring':'badge-inactive';
         return `<span class="badge ${cls}">${s}</span>`;
     }
 
     document.addEventListener('DOMContentLoaded', async () => {
         try {
-            const [mStats, pStats, tStats, aStats] = await Promise.all([
-                fetch(`${API.members}/stats`).then(r => r.json()),
-                fetch(`${API.payments}/stats`).then(r => r.json()),
-                fetch(`${API.trainers}/stats`).then(r => r.json()),
-                fetch(`${API.attendance}/stats`).then(r => r.json())
+            const [mStats,pStats,tStats,aStats] = await Promise.all([
+                fetch(`${API.members}/stats`).then(r=>r.json()),
+                fetch(`${API.payments}/stats`).then(r=>r.json()),
+                fetch(`${API.trainers}/stats`).then(r=>r.json()),
+                fetch(`${API.attendance}/stats`).then(r=>r.json())
             ]);
-            document.getElementById('sMembers').textContent     = mStats.total;
-            document.getElementById('sActive').textContent      = mStats.active;
-            document.getElementById('sRevenue').textContent     = 'Rs.' + Number(pStats.revenue).toLocaleString();
-            document.getElementById('sPayments').textContent    = pStats.total;
-            document.getElementById('sTrainers').textContent    = tStats.total;
-            document.getElementById('sAttendance').textContent  = aStats.today;
-            document.getElementById('photoStatVal').textContent = aStats.today;
+            document.getElementById('sMembers').textContent    = mStats.total;
+            document.getElementById('sActive').textContent     = mStats.active;
+            document.getElementById('sRevenue').textContent    = 'Rs.'+Number(pStats.revenue).toLocaleString();
+            document.getElementById('sPayments').textContent   = pStats.total;
+            document.getElementById('sTrainers').textContent   = tStats.total;
+            document.getElementById('sAttendance').textContent = aStats.today;
+            document.getElementById('photoStatVal').textContent= aStats.today;
         } catch(e) {}
 
         try {
-            const members = await fetch(API.members).then(r => r.json());
-            const recent = [...members].slice(-5).reverse();
-            document.getElementById('recentMembers').innerHTML = recent.length
-                ? recent.map(m => `<tr><td>${m.name}<br><span class="member-id">${m.id}</span></td><td>${membershipBadge(m.membershipType)}</td><td>${statusBadge(m)}</td><td style="color:var(--muted);font-size:12px">${m.expiryDate||'—'}</td></tr>`).join('')
-                : `<tr><td colspan="4" class="empty">No members yet</td></tr>`;
+            const members = await fetch(API.members).then(r=>r.json());
+            document.getElementById('recentMembers').innerHTML = [...members].slice(-5).reverse().map(m=>
+                `<tr><td>${m.name}<br><span class="member-id">${m.id}</span></td><td>${membershipBadge(m.membershipType)}</td><td>${statusBadge(m)}</td><td style="color:var(--muted);font-size:12px">${m.expiryDate||'—'}</td></tr>`
+            ).join('') || `<tr><td colspan="4" class="empty">No members yet</td></tr>`;
 
-            const expiring = members.filter(m => { const d=Math.ceil((new Date(m.expiryDate)-new Date())/86400000); return d>=0&&d<=7&&m.active; });
+            const expiring = members.filter(m=>{const d=Math.ceil((new Date(m.expiryDate)-new Date())/86400000);return d>=0&&d<=7&&m.active;});
             document.getElementById('expiringSoon').innerHTML = expiring.length
-                ? expiring.map(m => `<tr><td>${m.name}</td><td>${membershipBadge(m.membershipType)}</td><td style="color:var(--warning);font-size:12px">${m.expiryDate}</td></tr>`).join('')
+                ? expiring.map(m=>`<tr><td>${m.name}</td><td>${membershipBadge(m.membershipType)}</td><td style="color:var(--warning);font-size:12px">${m.expiryDate}</td></tr>`).join('')
                 : `<tr><td colspan="3" class="empty">None expiring ✅</td></tr>`;
-
-            const types = {gold:0,silver:0,platinum:0,basic:0};
-            members.forEach(m => { const t=(m.membershipType||'basic').toLowerCase(); if(types[t]!==undefined)types[t]++; else types.basic++; });
-            const total = members.length || 1;
-            const pct = v => Math.round(v/total*100)+'%';
-            document.getElementById('goldPct').textContent   = `${types.gold} (${pct(types.gold)})`;
-            document.getElementById('silverPct').textContent = `${types.silver} (${pct(types.silver)})`;
-            document.getElementById('platPct').textContent   = `${types.platinum} (${pct(types.platinum)})`;
-            document.getElementById('basicPct').textContent  = `${types.basic} (${pct(types.basic)})`;
-            document.getElementById('goldBar').style.width   = pct(types.gold);
-            document.getElementById('silverBar').style.width = pct(types.silver);
-            document.getElementById('platBar').style.width   = pct(types.platinum);
-            document.getElementById('basicBar').style.width  = pct(types.basic);
 
             document.getElementById('sumActive').textContent   = members.filter(m=>getStatus(m)==='Active').length;
             document.getElementById('sumExpiring').textContent = members.filter(m=>getStatus(m)==='Expiring').length;
@@ -707,27 +395,16 @@
         }
 
         try {
-            const payments = await fetch(API.payments).then(r => r.json());
-            const recentP = [...payments].slice(-5).reverse();
-            document.getElementById('recentPayments').innerHTML = recentP.length
-                ? recentP.map(p => `<tr><td>${p.memberName}</td><td style="color:var(--muted);font-size:12px">${p.plan}</td><td style="font-weight:600;color:var(--accent)">Rs.${p.amount.toLocaleString()}</td><td><span class="badge badge-${(p.status||'paid').toLowerCase()}">${p.status}</span></td></tr>`).join('')
-                : `<tr><td colspan="4" class="empty">No payments yet</td></tr>`;
-
-            const rev = {platinum:0,gold:0,silver:0};
-            payments.forEach(p => { const pl=(p.plan||'').toLowerCase(); if(pl.includes('platinum'))rev.platinum+=p.amount; else if(pl.includes('gold'))rev.gold+=p.amount; else if(pl.includes('silver'))rev.silver+=p.amount; });
-            const maxRev = Math.max(...Object.values(rev)) || 1;
-            document.getElementById('revPlat').textContent      = 'Rs.'+rev.platinum.toLocaleString();
-            document.getElementById('revGold').textContent      = 'Rs.'+rev.gold.toLocaleString();
-            document.getElementById('revSilver').textContent    = 'Rs.'+rev.silver.toLocaleString();
-            document.getElementById('revPlatBar').style.width   = Math.round(rev.platinum/maxRev*100)+'%';
-            document.getElementById('revGoldBar').style.width   = Math.round(rev.gold/maxRev*100)+'%';
-            document.getElementById('revSilverBar').style.width = Math.round(rev.silver/maxRev*100)+'%';
+            const payments = await fetch(API.payments).then(r=>r.json());
+            document.getElementById('recentPayments').innerHTML = [...payments].slice(-5).reverse().map(p=>
+                `<tr><td>${p.memberName}</td><td style="color:var(--muted);font-size:12px">${p.plan}</td><td style="font-weight:600;color:var(--accent)">Rs.${p.amount.toLocaleString()}</td><td><span class="badge badge-${(p.status||'paid').toLowerCase()}">${p.status}</span></td></tr>`
+            ).join('') || `<tr><td colspan="4" class="empty">No payments yet</td></tr>`;
         } catch(e) {
             document.getElementById('recentPayments').innerHTML = `<tr><td colspan="4" class="empty">Backend offline</td></tr>`;
         }
 
         try {
-            const trainers = await fetch(API.trainers).then(r => r.json());
+            const trainers = await fetch(API.trainers).then(r=>r.json());
             if(trainers[0]) document.getElementById('t1name').textContent = trainers[0].name||'Trainer';
             if(trainers[1]) document.getElementById('t2name').textContent = trainers[1].name||'Trainer';
             if(trainers[2]) document.getElementById('t3name').textContent = trainers[2].name||'Trainer';
