@@ -3,7 +3,7 @@ package com.fitnessRevolution.model;
 /**
  * MembershipType model – file storage use karanna pipe (|) CSV format.
  * Format: code|name|price|durationMonths|description|active
- * Example: MONTHLY|Monthly|3000.0|1|Standard monthly membership|true
+ * Example: MONTHLY|Regular|3000.0|1|Basic gym access for one month|true
  */
 public class MembershipType {
 

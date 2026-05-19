@@ -1,4 +1,5 @@
-MONTHLY|Monthly|3000.0|1|Standard monthly membership|true
-YEARLY|Yearly|25000.0|12|Full year – best value|true
-STUDENT|Student|1500.0|6|6-month student plan|true
-FAMILY|Family|20000.0|12|Up to 4 family members|true
+MONTHLY|Regular|3000.0|1|Basic gym access for one month|true
+PREMIUM|Premium|8000.0|3|Premium facilities and priority support for 3 months|true
+YEARLY|VIP|25000.0|12|VIP full year membership with best value benefits|true
+STUDENT|Student Package|1500.0|6|Special 6-month student package|true
+FAMILY|Family Package|20000.0|12|Family package for up to 4 members|true

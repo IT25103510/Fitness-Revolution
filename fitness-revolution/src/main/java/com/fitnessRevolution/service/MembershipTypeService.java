@@ -11,10 +11,11 @@ import java.util.stream.Collectors;
 public class MembershipTypeService {
 
     private static final List<MembershipType> DEFAULTS = List.of(
-            new MembershipType("MONTHLY",  "Monthly",  3000.0,  1,  "Standard monthly membership", true),
-            new MembershipType("YEARLY",   "Yearly",   25000.0, 12, "Full year – best value",       true),
-            new MembershipType("STUDENT",  "Student",  1500.0,  6,  "6-month student plan",         true),
-            new MembershipType("FAMILY",   "Family",   20000.0, 12, "Up to 4 family members",       true)
+            new MembershipType("MONTHLY", "Regular",         3000.0,  1,  "Basic gym access for one month", true),
+            new MembershipType("PREMIUM", "Premium",         8000.0,  3,  "Premium facilities and priority support for 3 months", true),
+            new MembershipType("YEARLY",  "VIP",             25000.0, 12, "VIP full year membership with best value benefits", true),
+            new MembershipType("STUDENT", "Student Package", 1500.0,  6,  "Special 6-month student package", true),
+            new MembershipType("FAMILY",  "Family Package",  20000.0, 12, "Family package for up to 4 members", true)
     );
 
     public MembershipType create(String code, String name, double price,
