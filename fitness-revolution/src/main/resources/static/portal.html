@@ -53,7 +53,7 @@
         /* Hero card */
         .hero-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1.5rem 2rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; position: relative; overflow: hidden; }
         .hero-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--lime), transparent); }
-        .hero-card::after { content: '⚡'; position: absolute; right: 2rem; font-size: 6rem; opacity: 0.04; font-family: 'Bebas Neue', sans-serif; }
+        .hero-card::after { content: '<i class="fa-solid fa-bolt"></i>'; position: absolute; right: 2rem; font-size: 6rem; opacity: 0.04; font-family: 'Bebas Neue', sans-serif; }
         .avatar { width: 64px; height: 64px; background: var(--lime-dim); border: 2px solid var(--lime-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--lime); flex-shrink: 0; }
         .member-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em; color: #fff; }
         .member-sub { color: var(--muted); font-size: 0.82rem; margin-top: 2px; }
@@ -140,16 +140,18 @@
             .hero-meta { margin-left: 0; text-align: left; }
         }
     </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
 
 <div class="marquee-bar">
-    <span class="marquee-inner">⚡ WELCOME BACK &nbsp;★&nbsp; TRACK YOUR FITNESS JOURNEY &nbsp;★&nbsp; VIEW ATTENDANCE &amp; PAYMENTS &nbsp;★&nbsp; RENEW YOUR MEMBERSHIP &nbsp;★&nbsp; FITNESS REVOLUTION &nbsp;★&nbsp; WELCOME BACK &nbsp;★&nbsp; TRACK YOUR FITNESS JOURNEY &nbsp;★&nbsp;</span>
+    <span class="marquee-inner"><i class="fa-solid fa-bolt"></i> WELCOME BACK &nbsp;★&nbsp; TRACK YOUR FITNESS JOURNEY &nbsp;★&nbsp; VIEW ATTENDANCE &amp; PAYMENTS &nbsp;★&nbsp; RENEW YOUR MEMBERSHIP &nbsp;★&nbsp; FITNESS REVOLUTION &nbsp;★&nbsp; WELCOME BACK &nbsp;★&nbsp; TRACK YOUR FITNESS JOURNEY &nbsp;★&nbsp;</span>
 </div>
 
 <nav class="navbar">
-    <a class="navbar-brand" href="portal.html"><span class="brand-dot">⚡</span> FITNESS REVOLUTION</a>
-    <span class="portal-badge">👤 MEMBER PORTAL</span>
+    <a class="navbar-brand" href="portal.html"><span class="brand-dot"><i class="fa-solid fa-bolt"></i></span> FITNESS REVOLUTION</a>
+    <span class="portal-badge"><i class="fa-solid fa-user"></i> MEMBER PORTAL</span>
     <div class="nav-links">
         <a href="portal.html" class="active">My Dashboard</a>
         <a href="index.html" class="logout" onclick="logout()">Logout</a>
@@ -165,7 +167,7 @@
     <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to bottom,transparent,rgba(10,10,10,0.65));"></div>
     <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--lime),rgba(200,240,0,0.2));"></div>
     <div style="position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 3rem;max-width:1280px;margin:0 auto;">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:.68rem;letter-spacing:.35em;color:var(--lime);margin-bottom:.5rem;opacity:.9;">⚡ MEMBER PORTAL</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:.68rem;letter-spacing:.35em;color:var(--lime);margin-bottom:.5rem;opacity:.9;"><i class="fa-solid fa-bolt"></i> MEMBER PORTAL</div>
         <div style="font-family:'Bebas Neue',sans-serif;font-size:3.4rem;letter-spacing:.05em;color:#fff;line-height:1;text-shadow:0 2px 24px rgba(0,0,0,.7);">
             WELCOME BACK,<br><span id="bannerMemberName" style="color:var(--lime);font-size:3.8rem;">—</span>
         </div>
@@ -206,7 +208,7 @@
 
         <div class="two-col">
             <div class="card">
-                <div class="card-title"><span>💳</span> MY PAYMENT HISTORY</div>
+                <div class="card-title"><span><i class="fa-solid fa-credit-card"></i></span> MY PAYMENT HISTORY</div>
                 <div class="table-wrap">
                     <table>
                         <thead><tr><th>Date</th><th>Plan</th><th>Method</th><th>Amount</th><th>Status</th></tr></thead>
@@ -215,7 +217,7 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-title"><span>📅</span> MY ATTENDANCE</div>
+                <div class="card-title"><span><i class="fa-solid fa-calendar-days"></i></span> MY ATTENDANCE</div>
                 <div class="table-wrap">
                     <table>
                         <thead><tr><th>Date</th><th>Check In</th><th>Check Out</th><th>Status</th></tr></thead>
@@ -226,7 +228,7 @@
         </div>
 
         <div class="pay-cta">
-            <div class="pay-cta-icon">💳</div>
+            <div class="pay-cta-icon"><i class="fa-solid fa-credit-card"></i></div>
             <h3>RENEW YOUR MEMBERSHIP</h3>
             <p>Upgrade your plan or extend your membership — keep the momentum going</p>
             <a href="member-payment.html" class="btn btn-primary">GO TO PAYMENTS →</a>
@@ -247,11 +249,11 @@
             <div style="margin-bottom:1.2rem;">
                 <label style="display:block;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;">Category <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#444;font-size:.68rem;">(select one or more)</span></label>
                 <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
-                    <button type="button" onclick="toggleCategory(this,'General')"      class="cat-btn cat-active">🏠 General</button>
-                    <button type="button" onclick="toggleCategory(this,'Trainer')"      class="cat-btn">🏋️ Trainer</button>
-                    <button type="button" onclick="toggleCategory(this,'Facilities')"   class="cat-btn">🏟️ Facilities</button>
-                    <button type="button" onclick="toggleCategory(this,'Membership')"   class="cat-btn">💳 Membership</button>
-                    <button type="button" onclick="toggleCategory(this,'App / Portal')" class="cat-btn">📱 App / Portal</button>
+                    <button type="button" onclick="toggleCategory(this,'General')"      class="cat-btn cat-active"><i class="fa-solid fa-house"></i> General</button>
+                    <button type="button" onclick="toggleCategory(this,'Trainer')"      class="cat-btn"><i class="fa-solid fa-dumbbell"></i> Trainer</button>
+                    <button type="button" onclick="toggleCategory(this,'Facilities')"   class="cat-btn"><i class="fa-solid fa-building-columns"></i>️ Facilities</button>
+                    <button type="button" onclick="toggleCategory(this,'Membership')"   class="cat-btn"><i class="fa-solid fa-credit-card"></i> Membership</button>
+                    <button type="button" onclick="toggleCategory(this,'App / Portal')" class="cat-btn"><i class="fa-solid fa-mobile-screen"></i> App / Portal</button>
                 </div>
             </div>
 
@@ -284,7 +286,7 @@
 
             <!-- AI reply box -->
             <div class="ai-reply" id="aiReply">
-                <div class="ai-reply-label">⚡ FITNESS REVOLUTION — AI RESPONSE</div>
+                <div class="ai-reply-label"><i class="fa-solid fa-bolt"></i> FITNESS REVOLUTION — AI RESPONSE</div>
                 <div class="ai-reply-text" id="aiReplyText">
                     <div class="ai-typing"><span></span><span></span><span></span></div>
                 </div>
@@ -304,7 +306,7 @@
                         <th style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.75rem 1rem;border-bottom:1px solid var(--border);text-align:left;">Category</th>
                         <th style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.75rem 1rem;border-bottom:1px solid var(--border);text-align:left;">Rating</th>
                         <th style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.75rem 1rem;border-bottom:1px solid var(--border);text-align:left;">Message</th>
-                        <th style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.75rem 1rem;border-bottom:1px solid var(--border);text-align:left;">⚡ AI Response</th>
+                        <th style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.75rem 1rem;border-bottom:1px solid var(--border);text-align:left;"><i class="fa-solid fa-bolt"></i> AI Response</th>
                     </tr></thead>
                     <tbody id="myFeedbackTable">
                     <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem;font-size:.85rem;">No feedback submitted yet</td></tr>
@@ -459,7 +461,7 @@
                 <td style="padding:.8rem 1rem;border-bottom:1px solid rgba(255,255,255,0.04);font-size:.83rem;color:#ccc;max-width:240px">${f.message}</td>
                 <td style="padding:.8rem 1rem;border-bottom:1px solid rgba(255,255,255,0.04);font-size:.8rem;color:#999;max-width:280px;line-height:1.55">${
                 f.aiResponse
-                    ? `<span style="color:rgba(200,240,0,.6);margin-right:4px;font-size:.7rem;">⚡</span>${f.aiResponse}`
+                    ? `<span style="color:rgba(200,240,0,.6);margin-right:4px;font-size:.7rem;"><i class="fa-solid fa-bolt"></i></span>${f.aiResponse}`
                     : '<span style="color:var(--muted);font-size:.75rem">—</span>'
             }</td>
               </tr>`).join('')
@@ -475,8 +477,8 @@
         const aiText    = document.getElementById('aiReplyText');
         const submitBtn = document.getElementById('fbSubmitBtn');
 
-        if (!_fbRating) { showStatus('⚠ Please select a rating.', 'var(--red)'); return; }
-        if (!message)   { showStatus('⚠ Please write a message.', 'var(--red)'); return; }
+        if (!_fbRating) { showStatus('<i class="fa-solid fa-triangle-exclamation"></i> Please select a rating.', 'var(--red)'); return; }
+        if (!message)   { showStatus('<i class="fa-solid fa-triangle-exclamation"></i> Please write a message.', 'var(--red)'); return; }
 
         submitBtn.disabled = true;
         submitBtn.style.opacity = '0.5';
@@ -548,7 +550,7 @@ Instructions:
         submitBtn.disabled = false;
         submitBtn.style.opacity = '1';
 
-        showStatus('✔ Feedback submitted!', 'var(--lime)');
+        showStatus('<i class="fa-solid fa-check"></i> Feedback submitted!', 'var(--lime)');
         loadMyFeedback(memberId);
         setTimeout(() => { statusEl.style.display = 'none'; }, 4000);
     }
