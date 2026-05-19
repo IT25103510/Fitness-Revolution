@@ -78,3 +78,4 @@ public class TrainerController {
                 ? ResponseEntity.ok("Cancelled") : ResponseEntity.notFound().build();
     }
 }
+
