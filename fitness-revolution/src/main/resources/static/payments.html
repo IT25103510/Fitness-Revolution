@@ -126,6 +126,34 @@
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: #333; }
         ::-webkit-scrollbar-thumb:hover { background: var(--green); }
+
+        /* ── PRINT STYLES ─────────────────────────────────────── */
+        @media print {
+            body > * { display: none !important; }
+            #invoiceModal {
+                display: block !important;
+                position: static !important;
+                background: none !important;
+                padding: 0 !important;
+            }
+            .modal-box {
+                border: none !important;
+                box-shadow: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 1.5cm !important;
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .modal-box > div:last-child { display: none !important; }
+            body, .modal-box { background: #fff !important; color: #000 !important; }
+            .invoice-header  { border-bottom: 1px solid #ccc !important; }
+            .invoice-logo    { color: #000 !important; }
+            .invoice-sub, .invoice-id { color: #444 !important; }
+            .invoice-row     { color: #000 !important; border-bottom: 1px solid #ddd !important; }
+            .invoice-row span:last-child { color: #000 !important; }
+            .invoice-total   { color: #000 !important; border-top: 2px solid #000 !important; padding-top: 0.5rem; }
+        }
     </style>
 </head>
 <body>
@@ -141,6 +169,7 @@
     <div class="nav-links">
         <a href="admin.html">Dashboard</a>
         <a href="members.html">Members</a>
+        <a href="memberships.html">Memberships</a>
         <a href="payments.html" class="active">Payments</a>
         <a href="trainers.html">Trainers</a>
         <a href="attendance.html">Attendance</a>
@@ -192,16 +221,7 @@
                     <select class="form-control" id="fMemberId"></select>
                 </div>
                 <input type="hidden" id="fMemberName"/>
-            </div>
-
-            <div style="padding: 0 1.5rem 0.5rem;">
-                <span class="section-label">Select Plan</span>
-            </div>
-            <div class="plan-grid" id="planGrid">
-                <label class="plan-card selected"><input type="radio" name="plan" value="MONTHLY" checked onchange="selectPlan(this)"/><div class="plan-name">Monthly</div><div class="plan-price">Rs. 2,500</div><div class="plan-desc">Every month</div></label>
-                <label class="plan-card"><input type="radio" name="plan" value="YEARLY" onchange="selectPlan(this)"/><div class="plan-name">Yearly</div><div class="plan-price">Rs. 12,000</div><div class="plan-desc">Full year</div></label>
-                <label class="plan-card"><input type="radio" name="plan" value="STUDENT" onchange="selectPlan(this)"/><div class="plan-name">Student</div><div class="plan-price">Rs. 4,000</div><div class="plan-desc">6 months</div></label>
-                <label class="plan-card"><input type="radio" name="plan" value="FAMILY" onchange="selectPlan(this)"/><div class="plan-name">Family</div><div class="plan-price">Rs. 18,000</div><div class="plan-desc">1 year</div></label>
+                <div id="memberTypeInfo" style="font-size:0.78rem;margin-top:0.4rem;padding:0 0.2rem;"></div>
             </div>
 
             <div style="padding: 1rem 1.5rem 0.5rem;">
@@ -262,7 +282,7 @@
         <div id="invBody"></div>
         <div class="invoice-total"><span>Total Paid</span><span id="invTotal"></span></div>
         <div style="margin-top:1.25rem;display:flex;gap:0.75rem">
-            <button class="btn btn-primary btn-full" onclick="window.print()"><i class="ti ti-printer"></i> Print / PDF</button>
+            <button class="btn btn-primary btn-full" onclick="printInvoice()"><i class="ti ti-printer"></i> Print / PDF</button>
             <button class="btn btn-outline btn-full" onclick="document.getElementById('invoiceModal').classList.remove('show')">Close</button>
         </div>
     </div>
@@ -290,6 +310,47 @@
     document.querySelectorAll('.modal-overlay').forEach(m => {
         m.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); });
     });
+
+    function printInvoice() {
+        const invId    = document.getElementById('invId').textContent;
+        const invBody  = document.getElementById('invBody').innerHTML;
+        const invTotal = document.getElementById('invTotal').textContent;
+
+        const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>Invoice – Fitness Revolution</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&family=Barlow+Condensed:wght@600;700&display=swap');
+    body { font-family: 'Barlow', sans-serif; background: #fff; color: #111; margin: 0; padding: 2cm; }
+    .invoice-header { text-align: center; border-bottom: 2px solid #c8f026; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+    .invoice-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.05em; color: #111; }
+    .invoice-sub { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #777; margin-top: 4px; }
+    .invoice-id { font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.1em; color: #555; margin-top: 8px; }
+    .invoice-row { display: flex; justify-content: space-between; font-size: 0.9rem; padding: 0.5rem 0; color: #333; border-bottom: 1px solid #e5e5e5; }
+    .invoice-row span:last-child { color: #000; font-weight: 600; }
+    .invoice-total { display: flex; justify-content: space-between; font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.05em; color: #111; padding-top: 1rem; margin-top: 0.5rem; border-top: 2px solid #111; }
+    .footer { margin-top: 2rem; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; }
+  </style>
+</head>
+<body>
+  <div class="invoice-header">
+    <div class="invoice-logo">⚡ Fitness Revolution</div>
+    <div class="invoice-sub">Official Invoice</div>
+    <div class="invoice-id">\${invId}</div>
+  </div>
+  \${invBody}
+  <div class="invoice-total"><span>Total Paid</span><span>\${invTotal}</span></div>
+  <div class="footer">Thank you for choosing Fitness Revolution</div>
+  <script>window.onload = function(){ window.print(); window.onafterprint = function(){ window.close(); }; }<\/script>
+</body>
+</html>`;
+
+        const win = window.open('', '_blank', 'width=700,height=900');
+        win.document.write(html);
+        win.document.close();
+    }
 </script>
 </body>
 </html>
