@@ -258,7 +258,7 @@ function editMember(id) {
     document.getElementById('fPhone').value   = m.phone   || '';
     document.getElementById('fAddress').value = m.address || '';
     document.getElementById('formTitle').textContent   = 'EDIT MEMBER';
-    document.getElementById('submitLabel').textContent = '✓ UPDATE MEMBER';
+    document.getElementById('submitLabel').innerHTML = '<i class="fa-solid fa-check"></i> UPDATE MEMBER';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -282,7 +282,7 @@ function clearForm() {
     ['editId','fName','fEmail','fPhone','fAddress'].forEach(id =>
         document.getElementById(id).value = '');
     document.getElementById('formTitle').textContent   = 'ADD MEMBER';
-    document.getElementById('submitLabel').textContent = '✓ ADD MEMBER';
+    document.getElementById('submitLabel').innerHTML = '<i class="fa-solid fa-check"></i> ADD MEMBER';
     document.getElementById('formAlert').innerHTML = '';
 }
 
