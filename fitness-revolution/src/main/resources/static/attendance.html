@@ -148,13 +148,15 @@
         ::-webkit-scrollbar-thumb { background:#333; }
         ::-webkit-scrollbar-thumb:hover { background:var(--green); }
     </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
 <script>if(sessionStorage.getItem('role')!=='admin'){window.location.href='index.html';}</script>
 
 <nav class="navbar">
-    <a class="navbar-brand" href="admin.html"><span class="dot">⚡</span> Fitness Revolution</a>
-    <span class="admin-pill">🔐 Admin Panel</span>
+    <a class="navbar-brand" href="admin.html"><span class="dot"><i class="fa-solid fa-bolt"></i></span> Fitness Revolution</a>
+    <span class="admin-pill"><i class="fa-solid fa-lock"></i> Admin Panel</span>
     <div class="nav-links">
         <a href="admin.html">Dashboard</a>
         <a href="members.html">Members</a>
