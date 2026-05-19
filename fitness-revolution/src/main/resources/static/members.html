@@ -113,6 +113,8 @@
 
         @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: repeat(3, 1fr); } }
     </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
 
@@ -123,12 +125,12 @@
 </script>
 
 <div class="marquee-bar">
-    <span class="marquee-inner">⚡ CONVENIENT LOCATION &amp; SCHEDULE &nbsp;★&nbsp; INDIVIDUAL TRAINING PROGRAMS &nbsp;★&nbsp; PROFESSIONAL COACHES &nbsp;★&nbsp; PREMIUM FACILITIES &nbsp;★&nbsp; BEST RESULTS GUARANTEED &nbsp;★&nbsp; FITNESS REVOLUTION &nbsp;★&nbsp; CONVENIENT LOCATION &amp; SCHEDULE &nbsp;★&nbsp; INDIVIDUAL TRAINING PROGRAMS &nbsp;★&nbsp;</span>
+    <span class="marquee-inner"><i class="fa-solid fa-bolt"></i> CONVENIENT LOCATION &amp; SCHEDULE &nbsp;★&nbsp; INDIVIDUAL TRAINING PROGRAMS &nbsp;★&nbsp; PROFESSIONAL COACHES &nbsp;★&nbsp; PREMIUM FACILITIES &nbsp;★&nbsp; BEST RESULTS GUARANTEED &nbsp;★&nbsp; FITNESS REVOLUTION &nbsp;★&nbsp; CONVENIENT LOCATION &amp; SCHEDULE &nbsp;★&nbsp; INDIVIDUAL TRAINING PROGRAMS &nbsp;★&nbsp;</span>
 </div>
 
 <nav class="navbar">
-    <a class="navbar-brand" href="admin.html"><span class="brand-dot">⚡</span> FITNESS REVOLUTION</a>
-    <span class="admin-badge">🔐 ADMIN PANEL</span>
+    <a class="navbar-brand" href="admin.html"><span class="brand-dot"><i class="fa-solid fa-bolt"></i></span> FITNESS REVOLUTION</a>
+    <span class="admin-badge"><i class="fa-solid fa-lock"></i> ADMIN PANEL</span>
     <div class="nav-links">
         <a href="admin.html">Dashboard</a>
         <a href="members.html" class="active">Members</a>
@@ -156,7 +158,7 @@
     <div class="two-col">
 
         <div class="card">
-            <div class="card-title"><span class="icon">👤</span><span id="formTitle">ADD MEMBER</span></div>
+            <div class="card-title"><span class="icon"><i class="fa-solid fa-user"></i></span><span id="formTitle">ADD MEMBER</span></div>
             <input type="hidden" id="editId"/>
             <div class="form-group">
                 <label class="form-label">Full Name *</label>
@@ -180,14 +182,14 @@
             <div id="formAlert"></div>
             <div style="display:flex;gap:0.6rem">
                 <button class="btn btn-primary btn-full" onclick="submitMember()">
-                    <span id="submitLabel">✓ ADD MEMBER</span>
+                    <span id="submitLabel"><i class="fa-solid fa-check"></i> ADD MEMBER</span>
                 </button>
-                <button class="btn btn-outline" onclick="clearForm()">✕</button>
+                <button class="btn btn-outline" onclick="clearForm()"><i class="fa-solid fa-xmark"></i></button>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-title"><span class="icon">👥</span>ALL MEMBERS</div>
+            <div class="card-title"><span class="icon"><i class="fa-solid fa-users"></i></span>ALL MEMBERS</div>
             <div class="search-bar">
                 <input class="form-control" id="searchBox" placeholder="Search by name, email..." oninput="filterMembers()"/>
                 <select class="form-control" style="width:160px" id="filterStatus" onchange="filterMembers()">
