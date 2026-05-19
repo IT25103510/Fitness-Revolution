@@ -22,7 +22,7 @@ public class FileStorageUtil {
                     .resolve("src/main/resources/data/");
             DATA_DIR = dataPath.toString() + File.separator;
         } catch (Exception e) {
-            throw new RuntimeException("DATA_DIR resolve කරන්න බැරි වුණා: " + e.getMessage(), e);
+            throw new RuntimeException("couldn't resolve DATA_DIR: " + e.getMessage(), e);
         }
     }
 
