@@ -25,108 +25,28 @@
             --blue: #3b82f6;
         }
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Barlow', sans-serif;
-            min-height: 100vh;
-        }
+        body { background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; min-height: 100vh; }
 
-        /* ── Marquee ── */
-        .marquee-bar {
-            background: var(--lime);
-            color: #000;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 0.85rem;
-            letter-spacing: 0.12em;
-            padding: 7px 0;
-            overflow: hidden;
-            white-space: nowrap;
-        }
+        .marquee-bar { background: var(--lime); color: #000; font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 0.12em; padding: 7px 0; overflow: hidden; white-space: nowrap; }
         .marquee-inner { display: inline-block; animation: marquee 22s linear infinite; }
         @keyframes marquee { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
 
-        /* ── Navbar ── */
-        .navbar {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0 2rem;
-            height: 60px;
-            background: rgba(10,10,10,0.95);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(12px);
-        }
-        .navbar-brand {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.4rem;
-            letter-spacing: 0.08em;
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .navbar { display: flex; align-items: center; gap: 1rem; padding: 0 2rem; height: 60px; background: rgba(10,10,10,0.95); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+        .navbar-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.08em; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 6px; }
         .brand-dot { color: var(--lime); }
-        .admin-badge {
-            font-size: 0.72rem;
-            font-weight: 600;
-            color: var(--red);
-            background: rgba(239,68,68,0.1);
-            border: 1px solid rgba(239,68,68,0.3);
-            padding: 3px 10px;
-            border-radius: 20px;
-            letter-spacing: 0.05em;
-        }
+        .admin-badge { font-size: 0.72rem; font-weight: 600; color: var(--red); background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); padding: 3px 10px; border-radius: 20px; letter-spacing: 0.05em; }
         .nav-links { display: flex; gap: 0.2rem; margin-left: auto; align-items: center; }
-        .nav-links a {
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: var(--muted);
-            text-decoration: none;
-            padding: 6px 14px;
-            border-radius: 4px;
-            transition: color 0.2s, background 0.2s;
-        }
+        .nav-links a { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 6px 14px; border-radius: 4px; transition: color 0.2s, background 0.2s; }
         .nav-links a:hover { color: var(--lime); background: var(--lime-dim); }
         .nav-links a.active { color: var(--lime); background: var(--lime-dim); border-bottom: 2px solid var(--lime); }
         .nav-links a.logout { color: var(--red) !important; }
         .nav-links a.logout:hover { background: rgba(239,68,68,0.1); }
 
-        /* ── Layout ── */
         .container { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem; }
 
-        /* ── Stats ── */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        .stat-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 1.2rem 1rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: border-color 0.2s;
-        }
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: var(--lime);
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
+        .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.2rem 1rem; text-align: center; position: relative; overflow: hidden; transition: border-color 0.2s; }
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--lime); transform: scaleX(0); transition: transform 0.3s; }
         .stat-card:hover { border-color: var(--lime-border); }
         .stat-card:hover::before { transform: scaleX(1); }
         .stat-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
@@ -136,66 +56,21 @@
         .c-red { color: var(--red); }
         .c-purple { color: var(--purple); }
 
-        /* ── Two-col layout ── */
         .two-col { display: grid; grid-template-columns: 400px 1fr; gap: 1.5rem; }
 
-        /* ── Card ── */
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 1.5rem;
-        }
-        .card-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.15rem;
-            letter-spacing: 0.08em;
-            color: var(--lime);
-            margin-bottom: 1.2rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid var(--border);
-        }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1.5rem; }
+        .card-title { display: flex; align-items: center; gap: 0.5rem; font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; letter-spacing: 0.08em; color: var(--lime); margin-bottom: 1.2rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
         .card-title .icon { font-size: 1rem; }
 
-        /* ── Form ── */
         .form-group { margin-bottom: 0.85rem; }
         .form-label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
-        .form-control {
-            width: 100%;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 9px 13px;
-            color: var(--text);
-            font-family: 'Barlow', sans-serif;
-            font-size: 0.9rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
+        .form-control { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 9px 13px; color: var(--text); font-family: 'Barlow', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
         .form-control:focus { border-color: var(--lime); }
         .form-control::placeholder { color: var(--muted); }
         select.form-control option { background: var(--surface2); }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 
-        /* ── Buttons ── */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1rem;
-            letter-spacing: 0.08em;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 20px; border-radius: 4px; font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.08em; cursor: pointer; border: none; transition: all 0.2s; text-decoration: none; }
         .btn-primary { background: var(--lime); color: #000; }
         .btn-primary:hover { background: #d4f500; transform: translateY(-1px); }
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--muted); }
@@ -203,102 +78,40 @@
         .btn-full { flex: 1; }
         .btn-sm { padding: 6px 14px; font-size: 0.8rem; }
 
-        /* ── Alert ── */
         .alert { padding: 9px 14px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 0.75rem; }
         .alert-success { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); color: var(--green); }
         .alert-error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: var(--red); }
 
-        /* ── Search ── */
         .search-bar { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
         .search-bar .form-control { flex: 1; }
 
-        /* ── Table ── */
         .table-wrap { overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; }
-        thead th {
-            font-size: 0.68rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--muted);
-            padding: 8px 12px;
-            border-bottom: 1px solid var(--border);
-            text-align: left;
-            white-space: nowrap;
-        }
+        thead th { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
         tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s; }
         tbody tr:hover { background: rgba(255,255,255,0.03); }
         tbody td { padding: 10px 12px; font-size: 0.85rem; vertical-align: middle; }
 
-        /* ── Member Row ── */
         .member-name { font-weight: 600; color: #fff; }
         .member-email { font-size: 0.75rem; color: var(--muted); }
-        .avatar {
-            width: 32px; height: 32px;
-            background: var(--lime-dim);
-            border: 1px solid var(--lime-border);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 0.9rem;
-            color: var(--lime);
-            flex-shrink: 0;
-        }
+        .avatar { width: 32px; height: 32px; background: var(--lime-dim); border: 1px solid var(--lime-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; color: var(--lime); flex-shrink: 0; }
         .member-cell { display: flex; align-items: center; gap: 9px; }
 
-        /* ── Badges ── */
-        .badge {
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 0.68rem;
-            font-weight: 700;
-            letter-spacing: 0.07em;
-            text-transform: uppercase;
-        }
+        .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
         .badge-active   { background: rgba(34,197,94,0.12);  color: var(--green);  border: 1px solid rgba(34,197,94,0.3); }
         .badge-expired  { background: rgba(239,68,68,0.12);  color: var(--red);    border: 1px solid rgba(239,68,68,0.3); }
         .badge-expiring { background: rgba(245,158,11,0.12); color: var(--yellow); border: 1px solid rgba(245,158,11,0.3); }
         .badge-inactive { background: rgba(168,85,247,0.12); color: var(--purple); border: 1px solid rgba(168,85,247,0.3); }
 
-        /* ── Action buttons ── */
-        .action-btn {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            color: var(--muted);
-            padding: 4px 10px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+        .action-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; color: var(--muted); padding: 4px 10px; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
         .action-btn:hover { border-color: var(--lime); color: var(--lime); }
         .action-btn.del:hover { border-color: var(--red); color: var(--red); }
 
-        /* ── Section label ── */
-        .section-heading {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2rem;
-            letter-spacing: 0.06em;
-            color: #fff;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+        .section-heading { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.06em; color: #fff; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
         .section-heading span { color: var(--lime); }
-        .section-heading::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
+        .section-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-        @media (max-width: 900px) {
-            .two-col { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: repeat(3, 1fr); }
-        }
+        @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: repeat(3, 1fr); } }
     </style>
 </head>
 <body>
@@ -309,18 +122,17 @@
     }
 </script>
 
-<!-- Marquee -->
 <div class="marquee-bar">
     <span class="marquee-inner">⚡ CONVENIENT LOCATION &amp; SCHEDULE &nbsp;★&nbsp; INDIVIDUAL TRAINING PROGRAMS &nbsp;★&nbsp; PROFESSIONAL COACHES &nbsp;★&nbsp; PREMIUM FACILITIES &nbsp;★&nbsp; BEST RESULTS GUARANTEED &nbsp;★&nbsp; FITNESS REVOLUTION &nbsp;★&nbsp; CONVENIENT LOCATION &amp; SCHEDULE &nbsp;★&nbsp; INDIVIDUAL TRAINING PROGRAMS &nbsp;★&nbsp;</span>
 </div>
 
-<!-- Navbar -->
 <nav class="navbar">
     <a class="navbar-brand" href="admin.html"><span class="brand-dot">⚡</span> FITNESS REVOLUTION</a>
     <span class="admin-badge">🔐 ADMIN PANEL</span>
     <div class="nav-links">
         <a href="admin.html">Dashboard</a>
         <a href="members.html" class="active">Members</a>
+        <a href="memberships.html">Membership</a>
         <a href="payments.html">Payments</a>
         <a href="trainers.html">Trainers</a>
         <a href="attendance.html">Attendance</a>
@@ -333,7 +145,6 @@
 
     <div class="section-heading">MEMBERS <span>MANAGEMENT</span></div>
 
-    <!-- Stats -->
     <div class="stats-grid">
         <div class="stat-card"><div class="stat-label">Total Members</div><div class="stat-value c-green" id="sTotal">—</div></div>
         <div class="stat-card"><div class="stat-label">Active</div><div class="stat-value c-green" id="sActive">—</div></div>
@@ -342,10 +153,8 @@
         <div class="stat-card"><div class="stat-label">Inactive</div><div class="stat-value c-purple" id="sInactive">—</div></div>
     </div>
 
-    <!-- Two-col -->
     <div class="two-col">
 
-        <!-- Add Member Form -->
         <div class="card">
             <div class="card-title"><span class="icon">👤</span><span id="formTitle">ADD MEMBER</span></div>
             <input type="hidden" id="editId"/>
@@ -367,15 +176,7 @@
                     <input class="form-control" id="fAddress" placeholder="Colombo"/>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="form-label">Membership Type</label>
-                <select class="form-control" id="fType">
-                    <option value="MONTHLY">Monthly – Rs. 2,500</option>
-                    <option value="YEARLY">Yearly – Rs. 12,000</option>
-                    <option value="STUDENT">Student – Rs. 4,000</option>
-                    <option value="FAMILY">Family – Rs. 18,000</option>
-                </select>
-            </div>
+
             <div id="formAlert"></div>
             <div style="display:flex;gap:0.6rem">
                 <button class="btn btn-primary btn-full" onclick="submitMember()">
@@ -385,7 +186,6 @@
             </div>
         </div>
 
-        <!-- Members Table -->
         <div class="card">
             <div class="card-title"><span class="icon">👥</span>ALL MEMBERS</div>
             <div class="search-bar">

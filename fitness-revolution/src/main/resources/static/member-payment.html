@@ -164,10 +164,39 @@
         .invoice-row span:last-child { color: #e8e8e0; font-weight: 600; }
         .invoice-total { display: flex; justify-content: space-between; font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.05em; color: var(--green); padding-top: 1rem; margin-top: 0.5rem; }
 
+        @keyframes spin { to { transform: rotate(360deg); } }
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: #333; }
         ::-webkit-scrollbar-thumb:hover { background: var(--green); }
+
+        /* ── PRINT STYLES ─────────────────────────────────────── */
+        @media print {
+            body > * { display: none !important; }
+            #invoiceModal {
+                display: block !important;
+                position: static !important;
+                background: none !important;
+                padding: 0 !important;
+            }
+            .modal-box {
+                border: none !important;
+                box-shadow: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 1.5cm !important;
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            .modal-box > div:last-child { display: none !important; }
+            body, .modal-box { background: #fff !important; color: #000 !important; }
+            .invoice-header  { border-bottom: 1px solid #ccc !important; }
+            .invoice-logo    { color: #000 !important; }
+            .invoice-sub, .invoice-id { color: #444 !important; }
+            .invoice-row     { color: #000 !important; border-bottom: 1px solid #ddd !important; }
+            .invoice-row span:last-child { color: #000 !important; }
+            .invoice-total   { color: #000 !important; border-top: 2px solid #000 !important; padding-top: 0.5rem; }
+        }
     </style>
 </head>
 <body>
@@ -215,48 +244,83 @@
     <div class="card">
         <div class="card-title"><i class="ti ti-credit-card icon"></i> Make a Payment</div>
 
-        <div style="padding: 1.25rem 1.5rem 0;">
-            <span class="section-label" style="padding:0;margin-bottom:0.6rem;display:block;">Select Plan</span>
+        <div class="card-body" style="padding-bottom:0;">
+            <!-- Membership Type Display -->
+            <div class="form-group">
+                <label class="form-label">Membership Type</label>
+                <div id="membershipTypeDisplay" style="width:100%;background:rgba(200,240,38,0.06);border:1px solid rgba(200,240,38,0.25);color:#e8e8e0;padding:0.65rem 0.9rem;font-size:0.875rem;font-family:'Barlow',sans-serif;border-radius:0;display:flex;align-items:center;justify-content:space-between;">
+                    <span id="membershipTypeName" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--green);">Loading...</span>
+                    <span id="membershipTypePrice" style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.05em;color:var(--green);"></span>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding: 0 1.5rem 0.5rem;">
+            <span class="section-label">Select Plan</span>
         </div>
         <div class="plan-grid" id="planGrid">
-            <label class="plan-card selected">
-                <input type="radio" name="plan" value="MONTHLY" checked onchange="selectPlan(this)"/>
-                <div class="plan-name">Monthly</div>
-                <div class="plan-price">Rs. 2,500</div>
-                <div class="plan-desc">Every month</div>
-            </label>
-            <label class="plan-card">
-                <input type="radio" name="plan" value="YEARLY" onchange="selectPlan(this)"/>
-                <div class="plan-name">Yearly</div>
-                <div class="plan-price">Rs. 12,000</div>
-                <div class="plan-desc">Full year</div>
-            </label>
-            <label class="plan-card">
-                <input type="radio" name="plan" value="STUDENT" onchange="selectPlan(this)"/>
-                <div class="plan-name">Student</div>
-                <div class="plan-price">Rs. 4,000</div>
-                <div class="plan-desc">6 months</div>
-            </label>
-            <label class="plan-card">
-                <input type="radio" name="plan" value="FAMILY" onchange="selectPlan(this)"/>
-                <div class="plan-name">Family</div>
-                <div class="plan-price">Rs. 18,000</div>
-                <div class="plan-desc">1 year · 4 members</div>
-            </label>
+            <!-- Dynamically loaded from /api/membership-types -->
+            <div style="padding:1.5rem;color:var(--muted);font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.1em;font-size:0.75rem;">Loading plans...</div>
         </div>
 
         <div style="padding: 1.25rem 1.5rem 0;">
             <span class="section-label" style="padding:0;margin-bottom:0.6rem;display:block;">Payment Method</span>
         </div>
-        <div class="method-grid">
-            <div class="method-btn selected" onclick="selectMethod('CASH',this)">
-                <i class="ti ti-cash method-icon"></i>Cash
+
+        <!-- Online only method button -->
+        <div style="padding: 0 1.5rem 1rem;">
+            <div style="background:var(--green-glow);border:1px solid rgba(200,240,38,0.3);border-bottom:2px solid var(--green);padding:0.85rem 1.25rem;display:flex;align-items:center;gap:0.75rem;">
+                <i class="ti ti-device-mobile" style="font-size:1.4rem;color:var(--green);"></i>
+                <div>
+                    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);font-size:0.85rem;">Online Payment</div>
+                    <div style="font-size:0.7rem;color:var(--muted);margin-top:2px;">Secure card payment</div>
+                </div>
+                <i class="ti ti-shield-check" style="margin-left:auto;color:var(--green);opacity:0.6;font-size:1.1rem;"></i>
             </div>
-            <div class="method-btn" onclick="selectMethod('CARD',this)">
-                <i class="ti ti-credit-card method-icon"></i>Card
-            </div>
-            <div class="method-btn" onclick="selectMethod('ONLINE',this)">
-                <i class="ti ti-device-mobile method-icon"></i>Online
+        </div>
+
+        <!-- Card details form -->
+        <div style="padding: 0 1.5rem 0.5rem;" id="cardForm">
+            <div style="border:1px solid var(--border);padding:1.25rem;background:#0e0e0e;">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;">
+                    <i class="ti ti-lock" style="color:var(--green);"></i> Secure Card Details
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Cardholder Name</label>
+                    <input class="form-control" id="cardName" placeholder="Name on card" autocomplete="cc-name"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Card Number</label>
+                    <div style="position:relative;">
+                        <input class="form-control" id="cardNumber" placeholder="0000 0000 0000 0000"
+                               maxlength="19" autocomplete="cc-number"
+                               oninput="formatCardNumber(this)"
+                               style="padding-right:3rem;letter-spacing:0.08em;font-family:'Barlow Condensed',sans-serif;font-size:1rem;"/>
+                        <i class="ti ti-credit-card" id="cardTypeIcon"
+                           style="position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:1.1rem;pointer-events:none;"></i>
+                    </div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Expiry Date</label>
+                        <input class="form-control" id="cardExpiry" placeholder="MM / YY"
+                               maxlength="7" autocomplete="cc-exp"
+                               oninput="formatExpiry(this)"/>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">CVV</label>
+                        <input class="form-control" id="cardCvv" placeholder="•••"
+                               maxlength="4" type="password" autocomplete="cc-csc"/>
+                    </div>
+                </div>
+
+                <div style="margin-top:1rem;padding:0.6rem 0.75rem;background:rgba(200,240,38,0.04);border:1px solid rgba(200,240,38,0.1);display:flex;align-items:center;gap:0.5rem;">
+                    <i class="ti ti-shield-check" style="color:var(--green);font-size:0.95rem;"></i>
+                    <span style="font-size:0.72rem;color:var(--muted);font-family:'Barlow Condensed',sans-serif;letter-spacing:0.05em;">256-bit SSL encrypted · Your card info is never stored</span>
+                </div>
             </div>
         </div>
 
@@ -264,7 +328,7 @@
 
         <div style="padding: 1.25rem 1.5rem;">
             <button class="btn btn-primary btn-full" onclick="submitPayment()">
-                <i class="ti ti-check"></i> Process Payment
+                <i class="ti ti-lock"></i> Pay Securely
             </button>
         </div>
     </div>
@@ -275,17 +339,34 @@
         <div class="table-wrap">
             <table>
                 <thead>
-                <tr><th>Date</th><th>Plan</th><th>Method</th><th>Amount</th><th>Status</th></tr>
+                <tr><th>Date</th><th>Plan</th><th>Method</th><th>Amount</th><th>Status</th><th></th></tr>
                 </thead>
                 <tbody id="myPayTable">
-                <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.08em;text-transform:uppercase;font-size:0.75rem;">Loading...</td></tr>
+                <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.08em;text-transform:uppercase;font-size:0.75rem;">Loading...</td></tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
-<!-- Invoice Modal -->
+<!-- Refund Modal -->
+<div class="modal-overlay" id="refundModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:999;align-items:center;justify-content:center;">
+    <div class="modal-box">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.05em;color:#fff;margin-bottom:1.25rem;">PROCESS <span style="color:var(--green);">REFUND</span></div>
+        <input type="hidden" id="refundPayId"/>
+        <div class="form-group">
+            <label class="form-label">Reason</label>
+            <input class="form-control" id="refundReason" placeholder="e.g. Cancelled membership"/>
+        </div>
+        <div id="refundAlert"></div>
+        <div style="display:flex;gap:0.75rem;margin-top:1rem">
+            <button class="btn btn-full" style="background:#ef4444;color:#fff;" onclick="submitRefund()"><i class="ti ti-arrow-back-up"></i> Confirm Refund</button>
+            <button class="btn btn-outline btn-full" onclick="closeRefundModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+
 <div class="modal-overlay" id="invoiceModal">
     <div class="modal-box">
         <div class="invoice-header">
@@ -299,30 +380,84 @@
             <span id="invTotal"></span>
         </div>
         <div style="margin-top:1.25rem;display:flex;gap:0.75rem">
-            <button class="btn btn-primary btn-full" onclick="window.print()"><i class="ti ti-printer"></i> Print / PDF</button>
+            <button class="btn btn-primary btn-full" onclick="printInvoice()"><i class="ti ti-printer"></i> Print / PDF</button>
             <button class="btn btn-outline btn-full" onclick="document.getElementById('invoiceModal').classList.remove('show')">Close</button>
         </div>
     </div>
 </div>
 
 <script>
-    const API      = 'http://localhost:8080/api/payments';
-    const memberId   = sessionStorage.getItem('memberId');
-    const memberName = sessionStorage.getItem('memberName');
-    let selectedPlan   = 'MONTHLY';
-    let selectedMethod = 'CASH';
+    const API        = 'http://localhost:8080/api/payments';
+    const MEMBERS_API = 'http://localhost:8080/api/members';
+    const PLANS_API   = 'http://localhost:8080/api/membership-types';
+    const memberId    = sessionStorage.getItem('memberId');
+    const memberName  = sessionStorage.getItem('memberName');
+    let selectedPlan   = null;
+    let selectedMethod = 'ONLINE';   // member portal = online only
+    let allPlans       = [];
 
     document.addEventListener('DOMContentLoaded', async () => {
-        const members = await fetch('http://localhost:8080/api/members').then(r => r.json());
-        const member  = members.find(m => m.id === memberId);
-        if (!member) { window.location.href = 'index.html'; return; }
-        document.getElementById('mAvatar').textContent = member.name.charAt(0);
-        document.getElementById('mName').textContent   = member.name;
-        document.getElementById('mId').textContent     = member.id;
-        document.getElementById('mType').textContent   = member.membershipType;
-        document.getElementById('mExpiry').textContent = member.expiryDate;
-        loadMyPayments();
+        try {
+            // Load member info
+            const members = await fetch(MEMBERS_API).then(r => r.json());
+            const member  = members.find(m => m.id === memberId);
+            if (!member) { window.location.href = 'index.html'; return; }
+
+            document.getElementById('mAvatar').textContent = member.name.charAt(0).toUpperCase();
+            document.getElementById('mName').textContent   = member.name;
+            document.getElementById('mId').textContent     = member.id;
+            document.getElementById('mType').textContent   = member.membershipType || 'N/A';
+            document.getElementById('mExpiry').textContent = member.expiryDate || 'N/A';
+
+            // Load membership types from backend
+            allPlans = await fetch(PLANS_API).then(r => r.json());
+            const activePlans = allPlans.filter(p => p.active !== false);
+
+            // Render plan cards dynamically
+            const grid = document.getElementById('planGrid');
+            grid.innerHTML = activePlans.map(p => `
+                <label class="plan-card" id="plan-${p.code}">
+                    <input type="radio" name="plan" value="${p.code}" onchange="selectPlan(this)"/>
+                    <div class="plan-name">${p.name}</div>
+                    <div class="plan-price">Rs. ${p.price.toLocaleString()}</div>
+                    <div class="plan-desc">${p.durationMonths} Month${p.durationMonths > 1 ? 's' : ''}</div>
+                </label>`).join('');
+
+            // Show member's current membership type in the form header
+            const memberTypeCode = (member.membershipType || '').toUpperCase().trim();
+            const matchedPlan = activePlans.find(p => p.code === memberTypeCode);
+            const typeEl  = document.getElementById('membershipTypeName');
+            const priceEl = document.getElementById('membershipTypePrice');
+
+            if (matchedPlan) {
+                typeEl.textContent  = matchedPlan.name + ' Plan';
+                priceEl.textContent = 'Rs. ' + matchedPlan.price.toLocaleString();
+                autoSelectPlan(matchedPlan.code);
+            } else if (activePlans.length > 0) {
+                typeEl.textContent  = activePlans[0].name + ' Plan';
+                priceEl.textContent = 'Rs. ' + activePlans[0].price.toLocaleString();
+                autoSelectPlan(activePlans[0].code);
+            } else {
+                typeEl.textContent  = 'No plans available';
+                priceEl.textContent = '';
+            }
+
+            loadMyPayments();
+        } catch(e) {
+            console.error('Failed to load:', e);
+            window.location.href = 'index.html';
+        }
     });
+
+    function autoSelectPlan(code) {
+        selectedPlan = code;
+        document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+        const radio = document.querySelector(`input[name="plan"][value="${code}"]`);
+        if (radio) {
+            radio.checked = true;
+            radio.closest('.plan-card').classList.add('selected');
+        }
+    }
 
     function selectPlan(radio) {
         selectedPlan = radio.value;
@@ -330,24 +465,85 @@
         radio.closest('.plan-card').classList.add('selected');
     }
 
-    function selectMethod(method, el) {
-        selectedMethod = method;
-        document.querySelectorAll('.method-btn').forEach(b => b.classList.remove('selected'));
-        el.classList.add('selected');
+    // Member portal uses ONLINE only - no method switching needed
+    function selectMethod(method, el) { selectedMethod = 'ONLINE'; }
+
+    function formatCardNumber(input) {
+        let v = input.value.replace(/\D/g, '').substring(0, 16);
+        input.value = v.match(/.{1,4}/g)?.join(' ') || v;
+        // Card type icon
+        const icon = document.getElementById('cardTypeIcon');
+        if (v.startsWith('4'))       { icon.className = 'ti ti-brand-visa'; icon.style.color = '#1a72d4'; }
+        else if (/^5[1-5]/.test(v)) { icon.className = 'ti ti-brand-mastercard'; icon.style.color = '#eb001b'; }
+        else                         { icon.className = 'ti ti-credit-card'; icon.style.color = 'var(--muted)'; }
+    }
+
+    function formatExpiry(input) {
+        let v = input.value.replace(/\D/g, '').substring(0, 4);
+        if (v.length >= 3) v = v.substring(0,2) + ' / ' + v.substring(2);
+        input.value = v;
+    }
+
+    function validateCard() {
+        const name   = document.getElementById('cardName').value.trim();
+        const num    = document.getElementById('cardNumber').value.replace(/\s/g,'');
+        const expiry = document.getElementById('cardExpiry').value.replace(/\s/g,'');
+        const cvv    = document.getElementById('cardCvv').value.trim();
+
+        if (!name)              { showAlert('payAlert','Cardholder name enter කරන්න.','danger'); return false; }
+        if (num.length < 16)    { showAlert('payAlert','Valid card number enter කරන්න.','danger'); return false; }
+        if (expiry.length < 4)  { showAlert('payAlert','Expiry date enter කරන්න (MM/YY).','danger'); return false; }
+
+        // Check expiry not in past
+        const mm = parseInt(expiry.substring(0,2));
+        const yy = parseInt(expiry.substring(2,4)) + 2000;
+        const now = new Date();
+        if (mm < 1 || mm > 12 || new Date(yy, mm) <= now) {
+            showAlert('payAlert','Card expired or invalid expiry date.','danger'); return false;
+        }
+        if (cvv.length < 3)     { showAlert('payAlert','CVV enter කරන්න.','danger'); return false; }
+        return true;
     }
 
     async function submitPayment() {
-        const res = await fetch(API, {
-            method: 'POST', headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ memberId, memberName, plan: selectedPlan, method: selectedMethod })
-        });
-        if (res.ok) {
-            const data = await res.json();
-            showAlert('payAlert', '✓ Payment successful! Membership activated.', 'success');
-            loadMyPayments();
-            showInvoice(data.invoice);
-        } else {
-            showAlert('payAlert', 'Payment failed. Please try again.', 'danger');
+        if (!selectedPlan) {
+            showAlert('payAlert', 'Please select a plan first.', 'danger');
+            return;
+        }
+        if (!validateCard()) return;
+
+        // Show processing state
+        const btn = document.querySelector('[onclick="submitPayment()"]');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="ti ti-loader-2" style="animation:spin 1s linear infinite"></i> Processing...';
+
+        try {
+            const res = await fetch(API, {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ memberId, memberName, plan: selectedPlan, method: selectedMethod })
+            });
+            if (res.ok) {
+                const data = await res.json();
+                showAlert('payAlert', '✓ Payment successful! Membership activated.', 'success');
+                // Clear card fields
+                ['cardName','cardNumber','cardExpiry','cardCvv'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = '';
+                });
+                loadMyPayments();
+                showInvoice(data.invoice);
+            } else {
+                const errText = await res.text();
+                console.error('Payment error:', errText);
+                showAlert('payAlert', 'Payment failed: ' + (errText || 'Please try again.'), 'danger');
+            }
+        } catch(e) {
+            console.error('Network error:', e);
+            showAlert('payAlert', 'Network error. Is the server running?', 'danger');
+        } finally {
+            const btn = document.querySelector('[onclick="submitPayment()"]');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="ti ti-lock"></i> Pay Securely';
         }
     }
 
@@ -355,7 +551,7 @@
         const list = await fetch(`${API}/member/${memberId}`).then(r => r.json());
         const tb = document.getElementById('myPayTable');
         if (!list.length) {
-            tb.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.08em;text-transform:uppercase;font-size:0.75rem;">No payments yet</td></tr>`;
+            tb.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.08em;text-transform:uppercase;font-size:0.75rem;">No payments yet</td></tr>`;
             return;
         }
         tb.innerHTML = [...list].reverse().map(p => `
@@ -365,7 +561,41 @@
               <td><span class="badge badge-${p.method.toLowerCase()}">${p.method}</span></td>
               <td style="color:var(--green);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.05em;">Rs.${p.amount.toLocaleString()}</td>
               <td><span class="badge badge-${p.status.toLowerCase()}">${p.status}</span></td>
+              <td>${p.status === 'SUCCESS'
+            ? `<button class="btn btn-outline" style="padding:3px 10px;font-size:0.65rem;" onclick="openRefund('${p.paymentId}')">↩ Refund</button>`
+            : ''}</td>
             </tr>`).join('');
+    }
+
+    function openRefund(paymentId) {
+        document.getElementById('refundPayId').value     = paymentId;
+        document.getElementById('refundReason').value    = '';
+        document.getElementById('refundAlert').innerHTML = '';
+        const modal = document.getElementById('refundModal');
+        modal.style.display = 'flex';
+    }
+
+    function closeRefundModal() {
+        document.getElementById('refundModal').style.display = 'none';
+    }
+
+    async function submitRefund() {
+        const id     = document.getElementById('refundPayId').value;
+        const reason = document.getElementById('refundReason').value.trim();
+        if (!reason) { showAlert('refundAlert', 'Reason දාන්න', 'danger'); return; }
+        const res = await fetch(`${API}/${id}/refund`, {
+            method: 'POST', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({reason})
+        });
+        if (res.ok) {
+            showAlert('refundAlert', 'Refund done! ✓', 'success');
+            setTimeout(() => {
+                closeRefundModal();
+                loadMyPayments();
+            }, 1200);
+        } else {
+            showAlert('refundAlert', 'Refund failed', 'danger');
+        }
     }
 
     function showInvoice(inv) {
@@ -390,6 +620,50 @@
     document.getElementById('invoiceModal').addEventListener('click', function(e) {
         if (e.target === this) this.classList.remove('show');
     });
+    document.getElementById('refundModal').addEventListener('click', function(e) {
+        if (e.target === this) closeRefundModal();
+    });
+
+    function printInvoice() {
+        const invId    = document.getElementById('invId').textContent;
+        const invBody  = document.getElementById('invBody').innerHTML;
+        const invTotal = document.getElementById('invTotal').textContent;
+
+        const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>Invoice – Fitness Revolution</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&family=Barlow+Condensed:wght@600;700&display=swap');
+    body { font-family: 'Barlow', sans-serif; background: #fff; color: #111; margin: 0; padding: 2cm; }
+    .invoice-header { text-align: center; border-bottom: 2px solid #c8f026; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+    .invoice-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.05em; color: #111; }
+    .invoice-sub { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #777; margin-top: 4px; }
+    .invoice-id { font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.1em; color: #555; margin-top: 8px; }
+    .invoice-row { display: flex; justify-content: space-between; font-size: 0.9rem; padding: 0.5rem 0; color: #333; border-bottom: 1px solid #e5e5e5; }
+    .invoice-row span:last-child { color: #000; font-weight: 600; }
+    .invoice-total { display: flex; justify-content: space-between; font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.05em; color: #111; padding-top: 1rem; margin-top: 0.5rem; border-top: 2px solid #111; }
+    .footer { margin-top: 2rem; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; }
+  </style>
+</head>
+<body>
+  <div class="invoice-header">
+    <div class="invoice-logo">⚡ Fitness Revolution</div>
+    <div class="invoice-sub">Official Invoice</div>
+    <div class="invoice-id">\${invId}</div>
+  </div>
+  \${invBody}
+  <div class="invoice-total"><span>Total Paid</span><span>\${invTotal}</span></div>
+  <div class="footer">Thank you for choosing Fitness Revolution</div>
+  <script>window.onload = function(){ window.print(); window.onafterprint = function(){ window.close(); }; }<\/script>
+</body>
+</html>`;
+
+        const win = window.open('', '_blank', 'width=700,height=900');
+        win.document.write(html);
+        win.document.close();
+    }
 </script>
 </body>
 </html>
