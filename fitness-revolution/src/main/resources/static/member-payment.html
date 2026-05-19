@@ -198,6 +198,8 @@
             .invoice-total   { color: #000 !important; border-top: 2px solid #000 !important; padding-top: 0.5rem; }
         }
     </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
 <script>
@@ -207,8 +209,8 @@
 </script>
 
 <nav class="navbar">
-    <a class="navbar-brand" href="portal.html"><span class="dot">⚡</span> Fitness Revolution</a>
-    <span class="member-pill">👤 Member Portal</span>
+    <a class="navbar-brand" href="portal.html"><span class="dot"><i class="fa-solid fa-bolt"></i></span> Fitness Revolution</a>
+    <span class="member-pill"><i class="fa-solid fa-user"></i> Member Portal</span>
     <div class="nav-links">
         <a href="portal.html">My Dashboard</a>
         <a href="member-payment.html" class="active">Make Payment</a>
@@ -370,7 +372,7 @@
 <div class="modal-overlay" id="invoiceModal">
     <div class="modal-box">
         <div class="invoice-header">
-            <div class="invoice-logo">⚡ Fitness Revolution</div>
+            <div class="invoice-logo"><i class="fa-solid fa-bolt"></i> Fitness Revolution</div>
             <div class="invoice-sub">Official Invoice</div>
             <div class="invoice-id" id="invId"></div>
         </div>
@@ -524,7 +526,7 @@
             });
             if (res.ok) {
                 const data = await res.json();
-                showAlert('payAlert', '✓ Payment successful! Membership activated.', 'success');
+                showAlert('payAlert', '<i class="fa-solid fa-check"></i> Payment successful! Membership activated.', 'success');
                 // Clear card fields
                 ['cardName','cardNumber','cardExpiry','cardCvv'].forEach(id => {
                     const el = document.getElementById(id);
@@ -588,7 +590,7 @@
             body: JSON.stringify({reason})
         });
         if (res.ok) {
-            showAlert('refundAlert', 'Refund done! ✓', 'success');
+            showAlert('refundAlert', 'Refund done! <i class="fa-solid fa-check"></i>', 'success');
             setTimeout(() => {
                 closeRefundModal();
                 loadMyPayments();
@@ -607,7 +609,7 @@
             <div class="invoice-row"><span>Plan</span><span>${inv.plan}</span></div>
             <div class="invoice-row"><span>Issue Date</span><span>${inv.issueDate}</span></div>
             <div class="invoice-row"><span>Due Date</span><span>${inv.dueDate}</span></div>
-            <div class="invoice-row"><span>Status</span><span style="color:var(--green);">✓ PAID</span></div>`;
+            <div class="invoice-row"><span>Status</span><span style="color:var(--green);"><i class="fa-solid fa-check"></i> PAID</span></div>`;
         document.getElementById('invoiceModal').classList.add('show');
     }
 
@@ -646,10 +648,12 @@
     .invoice-total { display: flex; justify-content: space-between; font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.05em; color: #111; padding-top: 1rem; margin-top: 0.5rem; border-top: 2px solid #111; }
     .footer { margin-top: 2rem; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; }
   </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
   <div class="invoice-header">
-    <div class="invoice-logo">⚡ Fitness Revolution</div>
+    <div class="invoice-logo"><i class="fa-solid fa-bolt"></i> Fitness Revolution</div>
     <div class="invoice-sub">Official Invoice</div>
     <div class="invoice-id">\${invId}</div>
   </div>

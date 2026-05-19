@@ -75,7 +75,7 @@ async function submitPayment() {
     });
     if (res.ok) {
         const data = await res.json();
-        showAlert('payAlert', 'Payment successful! Member is now ACTIVE ✅', 'success');
+        showAlert('payAlert', 'Payment successful! Member is now ACTIVE <i class="fa-solid fa-circle-check"></i>', 'success');
         loadPayments();
         loadStats();
         loadRefunds();
@@ -134,7 +134,7 @@ function showInvoice(inv) {
     <div class="invoice-row"><span>Issue Date</span><span>${inv.issueDate}</span></div>
     <div class="invoice-row"><span>Due Date</span><span>${inv.dueDate}</span></div>
     <div class="invoice-row"><span>Status</span>
-      <span style="color:var(--green)">✓ PAID</span></div>`;
+      <span style="color:var(--green)"><i class="fa-solid fa-check"></i> PAID</span></div>`;
     document.getElementById('invoiceModal').classList.add('show');
 }
 
