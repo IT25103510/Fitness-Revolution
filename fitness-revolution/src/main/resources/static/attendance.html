@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Attendance — Fitness Revolution</title>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css"/>
     <link rel="stylesheet" href="css/style.css"/>
     <style>
-        /* ── GYMTEAM colour overrides (lime palette) ── */
         :root {
             --green:      #c8f026;
             --green-dark: #a8cc10;
@@ -21,341 +19,146 @@
             --border:     #222222;
             --muted:      #5a5a5a;
         }
-        body { background: var(--bg); color: #e8e8e0; font-family: 'Barlow', sans-serif; }
+        body { background:var(--bg); color:#e8e8e0; font-family:'Barlow',sans-serif; margin:0; }
 
-        /* ── NAVBAR ── */
-        .navbar {
-            background: #050505;
-            border-bottom: 2px solid var(--green);
-            padding: 0 2rem;
-            height: 60px;
+        /* NAVBAR */
+        .navbar { background:#050505; border-bottom:2px solid var(--green); padding:0 2rem; height:60px; display:flex; align-items:center; gap:1rem; position:sticky; top:0; z-index:100; }
+        .navbar-brand { font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:#fff; text-decoration:none; }
+        .navbar-brand .dot { color:var(--green); }
+        .admin-pill { font-family:'Barlow Condensed',sans-serif; font-size:.65rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:#ef4444; background:rgba(239,68,68,.08); border:1px solid rgba(239,68,68,.25); padding:3px 10px; }
+        .nav-links { margin-left:auto; display:flex; }
+        .nav-links a { color:var(--muted); text-decoration:none; font-family:'Barlow Condensed',sans-serif; font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:.5rem 1rem; border-bottom:2px solid transparent; margin-bottom:-2px; transition:all .15s; }
+        .nav-links a:hover { color:var(--green); }
+        .nav-links a.active { color:var(--green); border-bottom-color:var(--green); }
+
+        /* LAYOUT */
+        .container { max-width:1280px; margin:0 auto; padding:2rem 1.5rem; }
+        .page-header { display:flex; align-items:flex-end; gap:1.5rem; margin-bottom:2rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border); }
+        .page-subtitle { font-family:'Barlow Condensed',sans-serif; font-size:.65rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-bottom:.2rem; }
+        .page-title { font-family:'Bebas Neue',sans-serif; font-size:2.8rem; letter-spacing:.05em; line-height:1; color:#fff; }
+        .page-title span { color:var(--green); }
+
+        /* STATS */
+        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); margin-bottom:2rem; }
+        .stat-card { background:var(--bg-card); padding:1.25rem 1.5rem; position:relative; overflow:hidden; }
+        .stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--green); transform:scaleX(0); transform-origin:left; transition:transform .3s; }
+        .stat-card:hover::before { transform:scaleX(1); }
+        .stat-icon { font-size:1.3rem; color:var(--green); opacity:.6; margin-bottom:.6rem; }
+        .stat-label { font-family:'Barlow Condensed',sans-serif; font-size:.6rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); margin-bottom:.3rem; }
+        .stat-value { font-family:'Bebas Neue',sans-serif; font-size:2.5rem; letter-spacing:.05em; line-height:1; color:#fff; }
+        .c-green  { color:var(--green) !important; }
+        .c-blue   { color:#60a5fa !important; }
+        .c-yellow { color:#f59e0b !important; }
+
+        /* TWO COL */
+        .two-col { display:grid; grid-template-columns:400px 1fr; gap:1.5rem; align-items:start; }
+        @media(max-width:1000px){ .two-col { grid-template-columns:1fr; } }
+
+        /* CARD */
+        .card { background:var(--bg-card); border:1px solid var(--border); margin-bottom:1.5rem; }
+        .card-title { font-family:'Barlow Condensed',sans-serif; font-size:.85rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:#fff; display:flex; align-items:center; gap:.5rem; padding:1rem 1.5rem; border-bottom:1px solid var(--border); }
+        .card-title .icon { color:var(--green); font-size:1.1rem; }
+        .card-body { padding:1.5rem; }
+
+        /* FORM */
+        .form-group { margin-bottom:1rem; }
+        .form-label { display:block; font-family:'Barlow Condensed',sans-serif; font-size:.62rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); margin-bottom:.4rem; }
+        .form-control { width:100%; box-sizing:border-box; background:var(--bg-input); border:1px solid var(--border); color:#e8e8e0; padding:.65rem .9rem; font-size:.875rem; font-family:'Barlow',sans-serif; outline:none; transition:border-color .2s; }
+        .form-control:focus { border-color:var(--green); box-shadow:0 0 0 2px var(--green-glow); }
+        .form-control::placeholder { color:#3a3a3a; }
+
+        /* BUTTONS */
+        .btn { padding:.65rem 1.5rem; font-family:'Barlow Condensed',sans-serif; font-size:.72rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; cursor:pointer; border:none; transition:all .15s; display:inline-flex; align-items:center; gap:.5rem; }
+        .btn-primary { background:var(--green); color:#000; }
+        .btn-primary:hover { background:var(--green-dark); }
+        .btn-outline { background:transparent; color:var(--muted); border:1px solid var(--border); }
+        .btn-outline:hover { border-color:var(--green); color:var(--green); }
+        .btn-full { width:100%; justify-content:center; box-sizing:border-box; }
+        .btn-icon { background:transparent; border:none; cursor:pointer; color:var(--muted); font-size:1rem; padding:.2rem .4rem; transition:color .15s; }
+        .btn-icon:hover { color:#ef4444; }
+
+        /* ACTION ROW */
+        .action-row { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; padding:1.25rem 1.5rem; border-top:1px solid var(--border); }
+
+        /* ALERT */
+        .alert { padding:.7rem 1rem; font-size:.85rem; border-left:3px solid; margin:0 1.5rem .75rem; }
+        .alert-success { background:rgba(200,240,38,.06); border-color:var(--green); color:var(--green); }
+        .alert-danger  { background:rgba(239,68,68,.06); border-color:#ef4444; color:#ef4444; }
+
+        /* TABLE */
+        .table-wrap { overflow-x:auto; }
+        table { width:100%; border-collapse:collapse; }
+        thead th { font-family:'Barlow Condensed',sans-serif; font-size:.6rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); padding:.75rem 1rem; border-bottom:2px solid var(--border); text-align:left; white-space:nowrap; background:#0d0d0d; }
+        tbody td { padding:.8rem 1rem; border-bottom:1px solid #191919; font-size:.84rem; vertical-align:middle; }
+        tbody tr:hover { background:rgba(200,240,38,.02); }
+        tbody tr:last-child td { border-bottom:none; }
+
+        /* BADGES */
+        .badge { padding:2px 8px; font-family:'Barlow Condensed',sans-serif; font-size:.58rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+        .badge-present   { background:rgba(200,240,38,.12); color:var(--green); border:1px solid rgba(200,240,38,.3); }
+        .badge-completed { background:rgba(96,165,250,.12); color:#60a5fa; border:1px solid rgba(96,165,250,.3); }
+        .badge-active    { background:rgba(200,240,38,.12); color:var(--green); border:1px solid rgba(200,240,38,.3); }
+        .badge-inactive  { background:rgba(90,90,90,.15); color:#888; border:1px solid #333; }
+
+        /* SEARCH BAR */
+        .search-bar { display:flex; gap:.5rem; padding:1rem 1.5rem; border-bottom:1px solid var(--border); }
+        .search-bar .form-control { flex:1; }
+
+        /* SECTION DIVIDER */
+        .card-section-title { font-family:'Barlow Condensed',sans-serif; font-size:.72rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); display:flex; align-items:center; gap:.5rem; padding:.85rem 1.5rem; border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:#0d0d0d; }
+        .card-section-title i { color:var(--green); }
+
+        /* ── MEMBER SEARCH DROPDOWN ── */
+
+        .member-search-wrap .form-label {
+            margin-bottom: .4rem;
+        }
+
+        .dd-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .navbar-brand {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.6rem;
-            letter-spacing: 0.05em;
-            color: #fff;
-            text-decoration: none;
-        }
-        .navbar-brand .dot { color: var(--green); }
-        .admin-pill {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: #ef4444;
-            background: rgba(239,68,68,0.08);
-            border: 1px solid rgba(239,68,68,0.25);
-            padding: 3px 10px;
-        }
-        .nav-links { margin-left: auto; display: flex; gap: 0; }
-        .nav-links a {
-            color: var(--muted);
-            text-decoration: none;
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            padding: 0.5rem 1rem;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-            transition: all 0.15s;
-        }
-        .nav-links a:hover       { color: var(--green); }
-        .nav-links a.active      { color: var(--green); border-bottom-color: var(--green); }
-        .nav-links a[style*="ef4444"] { color: #ef4444 !important; }
-        .nav-links a[style*="ef4444"]:hover { opacity: 0.8; }
-
-        /* ── PAGE HEADER ── */
-        .page-header {
-            display: flex;
-            align-items: flex-end;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .page-subtitle {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 0.2rem;
-        }
-        .page-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.8rem;
-            letter-spacing: 0.05em;
-            line-height: 1;
-            color: #fff;
-        }
-        .page-title span { color: var(--green); }
-
-        /* ── STATS ── */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1px;
-            background: var(--border);
-            border: 1px solid var(--border);
-            margin-bottom: 2rem;
-        }
-        .stat-card {
-            background: var(--bg-card);
-            padding: 1.25rem 1.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: var(--green);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s;
-        }
-        .stat-card:hover::before { transform: scaleX(1); }
-        .stat-icon { font-size: 1.3rem; color: var(--green); opacity: 0.6; margin-bottom: 0.6rem; }
-        .stat-label {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 0.3rem;
-        }
-        .stat-value {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.5rem;
-            letter-spacing: 0.05em;
-            line-height: 1;
-            color: #fff;
-        }
-        .c-green  { color: var(--green) !important; }
-        .c-blue   { color: #60a5fa !important; }
-        .c-yellow { color: #f59e0b !important; }
-        .c-red    { color: #ef4444 !important; }
-
-        /* ── TWO COL ── */
-        .two-col { display: grid; grid-template-columns: 380px 1fr; gap: 1.5rem; align-items: start; }
-        @media(max-width:1000px) { .two-col { grid-template-columns: 1fr; } }
-
-        /* ── CARD ── */
-        .card { background: var(--bg-card); border: 1px solid var(--border); margin-bottom: 1.5rem; }
-        .card-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 0;
-        }
-        .card-title .icon { color: var(--green); font-size: 1.1rem; }
-        .card-body { padding: 1.5rem; }
-
-        /* ── FORMS ── */
-        .form-group { margin-bottom: 1rem; }
-        .form-label {
-            display: block;
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.62rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 0.4rem;
-        }
-        .form-control {
-            width: 100%;
-            background: var(--bg-input);
-            border: 1px solid var(--border);
-            color: #e8e8e0;
-            padding: 0.65rem 0.9rem;
-            font-size: 0.875rem;
-            font-family: 'Barlow', sans-serif;
-            outline: none;
-            border-radius: 0;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            appearance: none;
-        }
-        .form-control:focus { border-color: var(--green); box-shadow: 0 0 0 2px var(--green-glow); }
-        .form-control::placeholder { color: #3a3a3a; }
-
-        /* ── BUTTONS ── */
-        .btn {
-            padding: 0.65rem 1.5rem;
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
+            gap: .75rem;
+            padding: .65rem 1rem;
             cursor: pointer;
-            border: none;
-            border-radius: 0;
-            transition: all 0.15s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+            border-bottom: 1px solid #1e1e1e;
+            background: transparent;
         }
-        .btn-primary { background: var(--green); color: #000; }
-        .btn-primary:hover { background: var(--green-dark); }
-        .btn-outline { background: transparent; color: var(--muted); border: 1px solid var(--border); }
-        .btn-outline:hover { border-color: var(--green); color: var(--green); }
-        .btn-danger  { background: #ef4444; color: #fff; }
-        .btn-danger:hover { background: #dc2626; }
-        .btn-full { width: 100%; justify-content: center; }
-
-        /* ── ACTION BUTTONS ROW ── */
-        .action-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.6rem;
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        /* ── ALERT ── */
-        .alert {
-            padding: 0.7rem 1rem;
-            font-size: 0.85rem;
-            border-left: 3px solid;
-            margin: 0 1.5rem 1rem;
-        }
-        .alert-success { background: rgba(200,240,38,0.06); border-color: var(--green); color: var(--green); }
-        .alert-danger  { background: rgba(239,68,68,0.06); border-color: #ef4444; color: #ef4444; }
-
-        /* ── TABLE ── */
-        .table-wrap { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; }
-        thead th {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--muted);
-            padding: 0.75rem 1rem;
-            border-bottom: 2px solid var(--border);
-            text-align: left;
-            white-space: nowrap;
-            background: #0d0d0d;
-        }
-        tbody td { padding: 0.8rem 1rem; border-bottom: 1px solid #191919; font-size: 0.84rem; vertical-align: middle; }
-        tbody tr:hover { background: rgba(200,240,38,0.02); }
-        tbody tr:last-child td { border-bottom: none; }
-        .empty-row td { text-align: center; color: var(--muted); padding: 2rem !important; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.75rem; }
-
-        /* ── BADGES ── */
-        .badge {
-            padding: 2px 8px;
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.58rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            border-radius: 0;
-        }
-        .badge-present   { background: rgba(200,240,38,0.12); color: var(--green); border: 1px solid rgba(200,240,38,0.3); }
-        .badge-completed { background: rgba(96,165,250,0.12); color: #60a5fa; border: 1px solid rgba(96,165,250,0.3); }
-        .badge-active    { background: rgba(200,240,38,0.12); color: var(--green); border: 1px solid rgba(200,240,38,0.3); }
-        .badge-inactive  { background: rgba(90,90,90,0.15); color: #888; border: 1px solid #333; }
-
-        /* ── AVATAR ── */
-        .avatar {
-            width: 34px; height: 34px;
-            background: var(--green-glow);
-            border: 1px solid rgba(200,240,38,0.3);
+        .dd-item:last-child { border-bottom: none; }
+        .dd-avatar {
+            width: 34px; height: 34px; flex-shrink: 0;
+            background: rgba(200,240,38,.08);
+            border: 1px solid rgba(200,240,38,.25);
             display: flex; align-items: center; justify-content: center;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 0.9rem;
-            letter-spacing: 0.05em;
-            color: var(--green);
-            flex-shrink: 0;
+            color: var(--green); font-size: .9rem;
         }
+        .dd-name { font-weight: 600; font-size: .875rem; color: #e8e8e0; }
+        .dd-sub  { font-size: .7rem; color: var(--muted); margin-top: 1px; }
 
-        /* ── SEARCH BAR ── */
-        .search-bar { display: flex; gap: 0.5rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); }
-        .search-bar .form-control { flex: 1; }
+        /* ── SELECTED MEMBER BOX ── */
 
-        /* ── TIME DISPLAY ── */
-        .time-badge {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.82rem;
-            letter-spacing: 0.05em;
-            color: #e8e8e0;
-        }
-        .time-badge.empty { color: var(--muted); }
 
-        /* ── DELETE BTN ── */
-        .btn-icon {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            color: var(--muted);
-            font-size: 1rem;
-            padding: 0.2rem 0.4rem;
-            transition: color 0.15s;
-        }
-        .btn-icon:hover { color: #ef4444; }
 
-        /* ── DIVIDER INSIDE CARD ── */
-        .card-section-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--muted);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.85rem 1.5rem;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            background: #0d0d0d;
-        }
-        .card-section-title i { color: var(--green); }
 
-        /* ── SCROLLBAR ── */
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: #333; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--green); }
+
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width:4px; height:4px; }
+        ::-webkit-scrollbar-track { background:var(--bg); }
+        ::-webkit-scrollbar-thumb { background:#333; }
+        ::-webkit-scrollbar-thumb:hover { background:var(--green); }
     </style>
 </head>
 <body>
-<script>
-    if (sessionStorage.getItem('role') !== 'admin') {
-        window.location.href = 'index.html';
-    }
-</script>
+<script>if(sessionStorage.getItem('role')!=='admin'){window.location.href='index.html';}</script>
 
-<!-- NAVBAR -->
 <nav class="navbar">
     <a class="navbar-brand" href="admin.html"><span class="dot">⚡</span> Fitness Revolution</a>
     <span class="admin-pill">🔐 Admin Panel</span>
     <div class="nav-links">
         <a href="admin.html">Dashboard</a>
         <a href="members.html">Members</a>
+        <a href="memberships.html">Memberships</a>
         <a href="payments.html">Payments</a>
         <a href="trainers.html">Trainers</a>
         <a href="attendance.html" class="active">Attendance</a>
@@ -364,7 +167,7 @@
     </div>
 </nav>
 
-<div class="container" style="max-width:1280px;margin:0 auto;padding:2rem 1.5rem;">
+<div class="container">
 
     <!-- PAGE HEADER -->
     <div class="page-header">
@@ -376,50 +179,38 @@
 
     <!-- STATS -->
     <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon"><i class="ti ti-list-numbers"></i></div>
-            <div class="stat-label">Total Records</div>
-            <div class="stat-value c-green" id="sTotal">—</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon"><i class="ti ti-calendar-today"></i></div>
-            <div class="stat-label">Today</div>
-            <div class="stat-value c-blue" id="sToday">—</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon"><i class="ti ti-user-check"></i></div>
-            <div class="stat-label">Present Now</div>
-            <div class="stat-value c-yellow" id="sPresent">—</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon"><i class="ti ti-checkbox"></i></div>
-            <div class="stat-label">Completed</div>
-            <div class="stat-value c-green" id="sCompleted">—</div>
-        </div>
+        <div class="stat-card"><div class="stat-icon"><i class="ti ti-list-numbers"></i></div><div class="stat-label">Total Records</div><div class="stat-value c-green" id="sTotal">—</div></div>
+        <div class="stat-card"><div class="stat-icon"><i class="ti ti-calendar-today"></i></div><div class="stat-label">Today</div><div class="stat-value c-blue" id="sToday">—</div></div>
+        <div class="stat-card"><div class="stat-icon"><i class="ti ti-user-check"></i></div><div class="stat-label">Present Now</div><div class="stat-value c-yellow" id="sPresent">—</div></div>
+        <div class="stat-card"><div class="stat-icon"><i class="ti ti-checkbox"></i></div><div class="stat-label">Completed</div><div class="stat-value c-green" id="sCompleted">—</div></div>
     </div>
 
-    <!-- TWO COL -->
     <div class="two-col">
 
-        <!-- LEFT: Check In/Out + Today's list -->
+        <!-- LEFT: Check In / Out -->
         <div>
             <div class="card">
-                <div class="card-title">
-                    <i class="ti ti-scan icon"></i> Check In / Out
-                </div>
-                <div class="card-body" style="padding-bottom:1rem;">
+                <div class="card-title"><i class="ti ti-scan icon"></i> Check In / Out</div>
+                <div class="card-body">
+
+                    <!-- Member Select Dropdown -->
                     <div class="form-group">
-                        <label class="form-label">Member ID</label>
-                        <input class="form-control" id="fMemberId" placeholder="MBR-0001"/>
+                        <label class="form-label">Select Member</label>
+                        <select class="form-control" id="memberSelect" onchange="onMemberSelect()">
+                            <option value="">— Select Member —</option>
+                        </select>
                     </div>
-                    <div class="form-group" style="margin-bottom:0;">
-                        <label class="form-label">Member Name</label>
-                        <input class="form-control" id="fMemberName" placeholder="Full name"/>
-                    </div>
-                </div>
 
-                <div id="attAlert" style="display:none;"></div>
+                    <!-- Hidden fields used by check in/out -->
+                    <input type="hidden" id="fMemberId"/>
+                    <input type="hidden" id="fMemberName"/>
 
+                </div><!-- /card-body -->
+
+                <!-- Alert -->
+                <div id="attAlert"></div>
+
+                <!-- Buttons -->
                 <div class="action-row">
                     <button class="btn btn-primary btn-full" onclick="doCheckIn()">
                         <i class="ti ti-login"></i> Check In
@@ -429,22 +220,15 @@
                     </button>
                 </div>
 
-                <div class="card-section-title">
-                    <i class="ti ti-users"></i> Today's Attendance
-                </div>
+                <!-- Today's list -->
+                <div class="card-section-title"><i class="ti ti-users"></i> Today's Attendance</div>
                 <div class="table-wrap">
                     <table>
                         <thead>
-                        <tr>
-                            <th>Member</th>
-                            <th>Check In</th>
-                            <th>Check Out</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
+                        <tr><th>Member</th><th>Check In</th><th>Check Out</th><th>Status</th><th>Action</th></tr>
                         </thead>
                         <tbody id="todayTable">
-                        <tr class="empty-row"><td colspan="4">Loading...</td></tr>
+                        <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem;">Loading...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -454,9 +238,7 @@
         <!-- RIGHT: All Records -->
         <div>
             <div class="card">
-                <div class="card-title">
-                    <i class="ti ti-clipboard-list icon"></i> All Attendance Records
-                </div>
+                <div class="card-title"><i class="ti ti-clipboard-list icon"></i> All Attendance Records</div>
                 <div class="search-bar">
                     <input class="form-control" id="attSearch" placeholder="Search by member name or ID..." oninput="filterAtt()"/>
                     <button class="btn btn-outline" onclick="filterAtt()"><i class="ti ti-search"></i></button>
@@ -464,18 +246,10 @@
                 <div class="table-wrap">
                     <table>
                         <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Member</th>
-                            <th>Date</th>
-                            <th>In</th>
-                            <th>Out</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
+                        <tr><th>ID</th><th>Member</th><th>Date</th><th>In</th><th>Out</th><th>Status</th><th></th></tr>
                         </thead>
                         <tbody id="attTable">
-                        <tr class="empty-row"><td colspan="7">Loading...</td></tr>
+                        <tr><td colspan="7" style="text-align:center;color:var(--muted);padding:2rem;">Loading...</td></tr>
                         </tbody>
                     </table>
                 </div>
