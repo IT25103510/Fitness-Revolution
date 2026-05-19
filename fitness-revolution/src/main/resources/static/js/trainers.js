@@ -39,9 +39,9 @@ function renderTrainers(list) {
       <td>Rs.${Number(t.monthlyFee).toLocaleString()}</td>
       <td><span class="badge ${t.available?'badge-available':'badge-unavailable'}">${t.available?'Available':'Unavailable'}</span></td>
       <td><div style="display:flex;gap:4px">
-        <button class="btn btn-outline btn-sm" onclick="editTrainer('${t.trainerId}')">✏</button>
+        <button class="btn btn-outline btn-sm" onclick="editTrainer('${t.trainerId}')"><i class="fa-solid fa-pen-to-square"></i></button>
         <button class="btn btn-outline btn-sm" onclick="toggleTrainer('${t.trainerId}')">⇄</button>
-        <button class="btn btn-outline btn-sm" style="color:#ef4444" onclick="deleteTrainer('${t.trainerId}')">🗑</button>
+        <button class="btn btn-outline btn-sm" style="color:#ef4444" onclick="deleteTrainer('${t.trainerId}')"><i class="fa-solid fa-trash-can"></i></button>
       </div></td>
     </tr>`;
     }).join('');
@@ -76,7 +76,7 @@ function editTrainer(id) {
     document.getElementById('fExp').value    = t.experienceYears;
     document.getElementById('fFee').value    = t.monthlyFee;
     document.getElementById('formTitle').textContent = 'Edit Trainer';
-    document.getElementById('submitLabel').textContent = '✓ Update Trainer';
+    document.getElementById('submitLabel').innerHTML = '<i class="fa-solid fa-check"></i> Update Trainer';
     window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -114,8 +114,8 @@ function renderSessions(list) {
       <td><span class="badge badge-${s.status.toLowerCase()}">${s.status}</span></td>
       <td><div style="display:flex;gap:4px">
         ${s.status==='SCHEDULED'?`
-          <button class="btn btn-outline btn-sm" style="color:var(--green)" onclick="setStatus('${s.sessionId}','COMPLETED')">✓</button>
-          <button class="btn btn-outline btn-sm" style="color:#ef4444" onclick="cancelSess('${s.sessionId}')">✕</button>`:''}
+          <button class="btn btn-outline btn-sm" style="color:var(--green)" onclick="setStatus('${s.sessionId}','COMPLETED')"><i class="fa-solid fa-check"></i></button>
+          <button class="btn btn-outline btn-sm" style="color:#ef4444" onclick="cancelSess('${s.sessionId}')"><i class="fa-solid fa-xmark"></i></button>`:''}
       </div></td>
     </tr>`).join('');
 }
@@ -133,7 +133,7 @@ function clearTrainerForm() {
     ['editId','fName','fEmail','fPhone','fExp','fFee'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('fSpec').value='WEIGHT_TRAINING';
     document.getElementById('formTitle').textContent='Add Trainer';
-    document.getElementById('submitLabel').textContent='✓ Add Trainer';
+    document.getElementById('submitLabel').innerHTML='<i class="fa-solid fa-check"></i> Add Trainer';
     document.getElementById('trainerAlert').innerHTML='';
 }
 
