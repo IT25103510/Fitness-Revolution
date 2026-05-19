@@ -41,31 +41,30 @@ public class AttendanceController {
                 .count();
     }
 
-    // ── All attendance records ────────────────────────────────────
+    
     @GetMapping
     public List<AttendanceRecord> getAll() {
         return service.getAll();
     }
 
-    // ── Today's attendance ────────────────────────────────────────
+    
     @GetMapping("/today")
     public List<AttendanceRecord> today() {
-        return service.getToday();                   // ✅ fix: getToday()
+        return service.getToday();                  
     }
 
-    // ── Stats ─────────────────────────────────────────────────────
+   
     @GetMapping("/stats")
     public Map<String, Object> stats() {
         return service.getStats();
     }
 
-    // ── By member ─────────────────────────────────────────────────
+   
     @GetMapping("/member/{memberId}")
-    public List<AttendanceRecord> byMember(@PathVariable String memberId) {  // ✅ fix: String
-        return service.getByMember(memberId);        // ✅ fix: getByMember()
-    }
+    public List<AttendanceRecord> byMember(@PathVariable String memberId) {  
+        return service.getByMember(memberId);       
 
-    // ── Check-in ──────────────────────────────────────────────────
+   
     @PostMapping("/checkin")
     public ResponseEntity<?> checkIn(@RequestBody Map<String, String> b) {
         try {
@@ -74,14 +73,14 @@ public class AttendanceController {
             if (memberId == null || memberId.isBlank()) {
                 return ResponseEntity.badRequest().body("Member ID is required");
             }
-            AttendanceRecord rec = service.checkIn(memberId, memberName); // ✅ fix: 2 params
+            AttendanceRecord rec = service.checkIn(memberId, memberName); 
             return ResponseEntity.ok(rec);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    // ── Check-out ─────────────────────────────────────────────────
+   
     @PutMapping("/checkout/{memberId}")
     public ResponseEntity<?> checkOut(@PathVariable String memberId) {
         return service.checkOut(memberId)
@@ -89,7 +88,7 @@ public class AttendanceController {
                 : ResponseEntity.notFound().build();
     }
 
-    // ── Delete ────────────────────────────────────────────────────
+   
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
         return service.delete(id)
