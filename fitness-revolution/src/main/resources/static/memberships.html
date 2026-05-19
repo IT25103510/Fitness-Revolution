@@ -215,6 +215,8 @@
         @media (max-width: 900px) { .plans-grid { grid-template-columns: 1fr; } }
         @media (max-width: 600px) { .container { padding: 1.5rem 1rem 3rem; } }
     </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
 
@@ -225,12 +227,12 @@
 </script>
 
 <div class="marquee-bar">
-    <span class="marquee-inner">⚡ CONVENIENT LOCATION &amp; SCHEDULE &nbsp;★&nbsp; INDIVIDUAL TRAINING PROGRAMS &nbsp;★&nbsp; PROFESSIONAL COACHES &nbsp;★&nbsp; PREMIUM FACILITIES &nbsp;★&nbsp; BEST RESULTS GUARANTEED &nbsp;★&nbsp; FITNESS REVOLUTION &nbsp;★&nbsp; CHOOSE YOUR PLAN &nbsp;★&nbsp;</span>
+    <span class="marquee-inner"><i class="fa-solid fa-bolt"></i> CONVENIENT LOCATION &amp; SCHEDULE &nbsp;★&nbsp; INDIVIDUAL TRAINING PROGRAMS &nbsp;★&nbsp; PROFESSIONAL COACHES &nbsp;★&nbsp; PREMIUM FACILITIES &nbsp;★&nbsp; BEST RESULTS GUARANTEED &nbsp;★&nbsp; FITNESS REVOLUTION &nbsp;★&nbsp; CHOOSE YOUR PLAN &nbsp;★&nbsp;</span>
 </div>
 
 <nav class="navbar">
-    <a class="navbar-brand" href="admin.html"><span class="brand-dot">⚡</span> FITNESS REVOLUTION</a>
-    <span class="admin-badge">🔐 ADMIN PANEL</span>
+    <a class="navbar-brand" href="admin.html"><span class="brand-dot"><i class="fa-solid fa-bolt"></i></span> FITNESS REVOLUTION</a>
+    <span class="admin-badge"><i class="fa-solid fa-lock"></i> ADMIN PANEL</span>
     <div class="nav-links">
         <a href="admin.html">Dashboard</a>
         <a href="members.html">Members</a>
@@ -253,9 +255,9 @@
 
         <!-- REGULAR -->
         <div class="plan-card plan-regular" id="card-REGULAR" onclick="selectPlan('REGULAR')">
-            <div class="plan-check">✓</div>
+            <div class="plan-check"><i class="fa-solid fa-check"></i></div>
             <span class="plan-pill pill-outline">Standard</span>
-            <span class="plan-icon">🏃</span>
+            <span class="plan-icon"><i class="fa-solid fa-person-running"></i></span>
             <div class="plan-name">Regular</div>
             <div class="plan-dur">Monthly · 1 Month Access</div>
             <div class="plan-price-row">
@@ -274,9 +276,9 @@
 
         <!-- PREMIUM -->
         <div class="plan-card plan-premium" id="card-PREMIUM" onclick="selectPlan('PREMIUM')">
-            <div class="plan-check">✓</div>
-            <span class="plan-pill pill-lime">⚡ Popular</span>
-            <span class="plan-icon">💪</span>
+            <div class="plan-check"><i class="fa-solid fa-check"></i></div>
+            <span class="plan-pill pill-lime"><i class="fa-solid fa-bolt"></i> Popular</span>
+            <span class="plan-icon"><i class="fa-solid fa-hand-fist"></i></span>
             <div class="plan-name">Premium</div>
             <div class="plan-dur">Quarterly · 3 Months Access</div>
             <div class="plan-price-row">
@@ -295,8 +297,8 @@
 
         <!-- VIP -->
         <div class="plan-card plan-vip" id="card-VIP" onclick="selectPlan('VIP')">
-            <div class="plan-check">✓</div>
-            <span class="plan-pill pill-yellow">👑 Best Value</span>
+            <div class="plan-check"><i class="fa-solid fa-check"></i></div>
+            <span class="plan-pill pill-yellow"><i class="fa-solid fa-crown"></i> Best Value</span>
             <span class="plan-icon">⭐</span>
             <div class="plan-name">VIP</div>
             <div class="plan-dur">Annual · 12 Months Access</div>
@@ -318,7 +320,7 @@
 
     <!-- ── Selected Plan + Continue ── -->
     <div class="bottom-card">
-        <div class="bottom-title">🏷️ SELECTED PLAN</div>
+        <div class="bottom-title"><i class="fa-solid fa-tag"></i>️ SELECTED PLAN</div>
 
         <div class="selected-box" id="selectedBox">
             <span class="sel-empty">No plan selected — click a plan above to choose</span>
@@ -336,8 +338,8 @@
 
 <script>
     const PLANS = {
-        REGULAR: { code:'REGULAR', name:'Regular',  price:3000,  duration:'1 Month',   icon:'🏃', period:'per month'   },
-        PREMIUM: { code:'PREMIUM', name:'Premium',  price:7500,  duration:'3 Months',  icon:'💪', period:'per quarter' },
+        REGULAR: { code:'REGULAR', name:'Regular',  price:3000,  duration:'1 Month',   icon:'<i class="fa-solid fa-person-running"></i>', period:'per month'   },
+        PREMIUM: { code:'PREMIUM', name:'Premium',  price:7500,  duration:'3 Months',  icon:'<i class="fa-solid fa-hand-fist"></i>', period:'per quarter' },
         VIP:     { code:'VIP',     name:'VIP',      price:25000, duration:'12 Months', icon:'⭐', period:'per year'    }
     };
 
@@ -390,7 +392,7 @@
             banner.style.cssText = 'background:rgba(200,240,0,0.08);border:1.5px solid #c8f026;padding:1rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;';
             banner.innerHTML = `
                 <div>
-                    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.08em;color:#c8f026;">✓ MEMBER ASSIGNED</div>
+                    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.08em;color:#c8f026;"><i class="fa-solid fa-check"></i> MEMBER ASSIGNED</div>
                     <div style="font-size:0.85rem;color:#aaa;margin-top:2px;">${assignName} (${assignId}) — Type: <strong style="color:#fff">${assignType}</strong></div>
                     <div style="font-size:0.78rem;color:#c8f026;margin-top:4px;">Select a plan below to proceed to payment →</div>
                 </div>
