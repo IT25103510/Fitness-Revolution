@@ -28,6 +28,61 @@ A modern, lightweight, and comprehensive **Gym Management System** built with **
 
 ---
 
+## 📁 Project Directory Structure
+
+```text
+fitness-revolution/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/fitnessRevolution/
+│   │   │       ├── controller/             # REST Controllers (API Endpoints)
+│   │   │       │   ├── AttendanceController.java
+│   │   │       │   ├── MemberController.java
+│   │   │       │   ├── MembershipTypeController.java
+│   │   │       │   └── TrainerController.java
+│   │   │       ├── model/                  # Data Entity Models
+│   │   │       │   ├── AttendanceRecord.java
+│   │   │       │   ├── Member.java
+│   │   │       │   ├── MembershipType.java
+│   │   │       │   ├── Trainer.java
+│   │   │       │   └── TrainingSession.java
+│   │   │       ├── service/                # Business Logic Services
+│   │   │       │   ├── AttendanceService.java
+│   │   │       │   ├── MemberService.java
+│   │   │       │   ├── MembershipTypeService.java
+│   │   │       │   └── TrainerService.java
+│   │   │       ├── storage/                # Storage Helpers
+│   │   │       │   └── FileStorageUtil.java
+│   │   │       └── FitnessRevolutionApplication.java  # Main Class
+│   │   └── resources/
+│   │       ├── data/                       # CSV Flat File Data Storage
+│   │       │   ├── attendance.txt
+│   │       │   ├── members.txt
+│   │       │   ├── membership_types.txt
+│   │       │   └── trainers.txt
+│   │       ├── static/                     # Frontend Web Pages & Scripts
+│   │       │   ├── css/
+│   │       │   │   └── style.css           # Premium Dark Mode Styling
+│   │       │   ├── js/
+│   │       │   │   ├── attendance.js       # Attendance Scripts
+│   │       │   │   ├── members.js          # Member Scripts
+│   │       │   │   ├── trainers.js         # Trainer Scripts
+│   │       │   │   ├── payments.js
+│   │       │   │   └── reports.js
+│   │       │   ├── admin.html              # Admin Control Panel
+│   │       │   ├── attendance.html         # Attendance Management UI
+│   │       │   ├── index.html              # Login Landing Page
+│   │       │   ├── members.html            # Member Dashboard
+│   │       │   ├── memberships.html        # Membership Plans UI
+│   │       │   ├── portal.html             # Member Self-Service Portal
+│   │       │   └── trainers.html           # Trainer Dashboard
+│   │       └── application.properties       # Spring Configurations
+└── pom.xml                                 # Maven Dependencies
+```
+
+---
+
 ## 🛠️ Technology Stack
 
 * **Backend:** Java 17, Spring Boot (Web, DevTools)
