@@ -99,7 +99,7 @@ async function saveTypeFromModal() {
         });
         if (res.ok) {
             closeTypeModalDirect();
-            // Member info save කරලා memberships page ට redirect
+            // Save member info then redirect to memberships page
             sessionStorage.setItem('assignMemberId',   modalMemberId);
             sessionStorage.setItem('assignMemberName', m.name);
             sessionStorage.setItem('assignMemberType', modalSelectedType);

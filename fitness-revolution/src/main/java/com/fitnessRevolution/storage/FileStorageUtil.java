@@ -6,14 +6,14 @@ import java.util.*;
 
 public class FileStorageUtil {
 
-    // Project root ekata relative නොව, src/main/resources/data/ folder
-    // එකේ absolute path එක runtime හිදී හොයාගනී
+    // Not relative for project root
+    // Absolute path will be find during runtime
     private static final String DATA_DIR;
 
     static {
         try {
-            // FileStorageUtil.class file එකේ location එකෙන් project root හොයනවා
-            // target/classes → project root → src/main/resources/data/
+            // Find project root from fileStorageUtil.class file's location
+            // target/classes - project root - src/main/resources/data/
             Path classPath = Paths.get(
                     FileStorageUtil.class.getProtectionDomain()
                             .getCodeSource().getLocation().toURI()
@@ -22,7 +22,7 @@ public class FileStorageUtil {
                     .resolve("src/main/resources/data/");
             DATA_DIR = dataPath.toString() + File.separator;
         } catch (Exception e) {
-            throw new RuntimeException("DATA_DIR resolve කරන්න බැරි වුණා: " + e.getMessage(), e);
+            throw new RuntimeException("couldn't resolve DATA_DIR: " + e.getMessage(), e);
         }
     }
 

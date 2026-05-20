@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Service
 public class MemberService {
 
-    // Membership type walata monthly fee (Rs.)
+    // Monthly fee for membership type (Rs.)
     private static final Map<String, Double> PLAN_FEES = Map.of(
             "MONTHLY", 3000.0,
             "YEARLY",  25000.0,
@@ -103,7 +103,7 @@ public class MemberService {
         s.put("expiringSoon", all.stream().filter(m -> "EXPIRING_SOON".equals(m.getStatus())).count());
         s.put("inactive",     all.stream().filter(m -> "INACTIVE".equals(m.getStatus())).count());
 
-        // Membership Breakdown — plan eke members count
+        // Membership Breakdown
         Map<String, Long> breakdown = new LinkedHashMap<>();
         breakdown.put("Monthly",  all.stream().filter(m -> "MONTHLY".equals(m.getMembershipType())).count());
         breakdown.put("Yearly",   all.stream().filter(m -> "YEARLY".equals(m.getMembershipType())).count());
@@ -111,7 +111,7 @@ public class MemberService {
         breakdown.put("Family",   all.stream().filter(m -> "FAMILY".equals(m.getMembershipType())).count());
         s.put("membershipBreakdown", breakdown);
 
-        // Revenue By Plan — plan eke active members * fee
+        // Revenue By Plan
         Map<String, Double> revenue = new LinkedHashMap<>();
         revenue.put("Monthly", all.stream()
                 .filter(m -> "MONTHLY".equals(m.getMembershipType()) && m.isActive())
